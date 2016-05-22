@@ -23,7 +23,7 @@ sudo apt-get install curl git htop -y
 sudo apt-get install oracle-java8-jdk -y
 
 # Get and Install Elasticsearch
-cd /tmp && wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i elasticsearch-${E_VERSION}.deb
+wget -P/tmp https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
 
 # Set Elasticsearch Memory Configuration
 sudo sed -i '/#ES_HEAP_SIZE=2g/a ES_MIN_MEM=300m' /etc/default/elasticsearch
@@ -51,10 +51,10 @@ sudo apt-get install python-pip -y && sudo pip install elasticsearch-curator && 
 
 
 # Get and Install Logstash
-cd /tmp && wget https://download.elastic.co/logstash/logstash/packages/debian/logstash_${L_VERSION}_all.deb && sudo dpkg -i logstash_${L_VERSION}_all.deb
+wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logstash_${L_VERSION}_all.deb && sudo dpkg -i /tmp/logstash_${L_VERSION}_all.deb
 
 # Get and Compile JFFI library for Logstash
-sudo apt-get install ant -y && git clone https://github.com/jnr/jffi.git && cd jffi && ant jar && cd .. && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
+sudo apt-get install ant -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
 
 # Set Logstash Memory Configuration
 sudo sed -i '/#LS_OPTS=""/a LS_OPTS="-w 4"' /etc/default/logstash
@@ -98,10 +98,10 @@ sudo /bin/systemctl start logstash.service
 
 
 # Get and Install Kibana
-cd /tmp && wget https://download.elastic.co/kibana/kibana/kibana-${K_VERSION}-linux-x86.tar.gz && sudo tar -xf /tmp/kibana-${K_VERSION}-linux-x86.tar.gz -C /opt && sudo mv /opt/kibana-${K_VERSION}-linux-x86 /opt/kibana
+wget -P/tmp https://download.elastic.co/kibana/kibana/kibana-${K_VERSION}-linux-x86.tar.gz && sudo tar -xf /tmp/kibana-${K_VERSION}-linux-x86.tar.gz -C /opt && sudo mv /opt/kibana-${K_VERSION}-linux-x86 /opt/kibana
 
 # Get and Update NodeJS for Kibana
-wget https://nodejs.org/download/release/v${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz && sudo tar -xf /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz -C /opt/kibana && sudo mv /opt/kibana/node /opt/kibana/node.ori && sudo mv /opt/kibana/node-v${N_VERSION}-linux-armv7l /opt/kibana/node
+wget -P/tmp https://nodejs.org/download/release/v${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz && sudo tar -xf /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz -C /opt/kibana && sudo mv /opt/kibana/node /opt/kibana/node.ori && sudo mv /opt/kibana/node-v${N_VERSION}-linux-armv7l /opt/kibana/node
 
 # Set Kibana Memory Configuration
 sudo sed -i 's/exec "${NODE}" $NODE_OPTIONS "${DIR}\/src\/cli" ${@}/NODE_OPTIONS="--max-old-space-size=100" exec "${NODE}" $NODE_OPTIONS "${DIR}\/src\/cli" ${@}/' /opt/kibana/bin/kibana
@@ -127,7 +127,7 @@ if ! getent passwd kibana >/dev/null; then
 fi
 
 # Configure and Start Kibana as Daemon
-sudo cp -f /tmp/kibana_init /etc/init.d/kibana
+sudo cp -f ./Kibana/kibana_init /etc/init.d/kibana
 
 sudo mkdir /var/log/kibana && sudo chown kibana /var/log/kibana
 sudo mkdir /var/run/kibana
