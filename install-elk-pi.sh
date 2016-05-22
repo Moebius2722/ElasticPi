@@ -144,7 +144,5 @@ sudo cp -f ./Nginx/nginx_restricted /etc/pam.d/nginx_restricted
 # Set Nginx Default Site redirect on local Kibana with PAM authentication
 sudo cp -f ./Nginx/default /etc/nginx/sites-available/default
 
-# Configure and Start Nginx as Daemon
-sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable nginx.service
-sudo /bin/systemctl start nginx.service
+# Restart Nginx Daemon for Update Configuration
+sudo /bin/systemctl restart nginx.service
