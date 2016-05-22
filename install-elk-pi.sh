@@ -51,6 +51,12 @@ sudo sed -i '/# network\.host: .*/a network.host: 0.0.0.0' /etc/elasticsearch/el
 sudo sed -i '/# http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/# bootstrap\.mlockall: true/a bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/# node\.max_local_storage_nodes: 1/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i '/# discovery\.zen\.ping\.unicast\.hosts: ["host1", "host2"]/a discovery.zen.ping.unicast.hosts: ["192.168.0.22", "192.168.0.23"]' /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i '/# discovery\.zen\.minimum_master_nodes: 3/a discovery.zen.minimum_master_nodes: 2' /etc/elasticsearch/elasticsearch.yml
+
+# Install Head and Kopf plugins for ElasticSearch
+sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+sudo /usr/share/elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf
 
 # Configure and Start Elasticsearch as Daemon
 sudo /bin/systemctl daemon-reload
