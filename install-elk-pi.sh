@@ -61,35 +61,7 @@ sudo sed -i '/#LS_OPTS=""/a LS_OPTS="-w 4"' /etc/default/logstash
 sudo sed -i '/#LS_HEAP_SIZE="1g"/a LS_HEAP_SIZE="300m"' /etc/default/logstash
 
 # Set Logstash Node Configuration
-echo -e "input {
-        tcp {
-                port => 5000
-                type => syslog
-                tags => [\"syslog\"]
-        }
-}
-filter {
-        if [type] == \"syslog\" {
-                syslog_pri { }
-        }
-        if [sysloghost] {
-                mutate {
-                        replace => [ \"host\", \"%{sysloghost}\" ]
-                        remove_field => \"sysloghost\"
-                }
-        }
-}
-output {
-        if \"syslog\" in [tags] {
-                elasticsearch {
-                        hosts => [\"localhost:9200\", \"localhost:9200\"]
-                        index => \"logstash-%{+YYYY.MM.dd}\"
-                }
-        }
-        stdout {
-                codec => rubydebug
-        }
-}" | sudo tee /etc/logstash/conf.d/00-default.conf
+sudo cp -f ./Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
 
 # Configure and Start Logstash as Daemon
 sudo /bin/systemctl daemon-reload
@@ -140,6 +112,7 @@ sudo cp /etc/logrotate.d/logstash /etc/logrotate.d/kibana
 sudo sed -i 's/\/var\/log\/logstash\/\*\.log.*/\/var\/log\/kibana\/kibana.log {/' /etc/logrotate.d/kibana
 sudo chmod 0644 /etc/logrotate.d/kibana
 
+# Configure and Start Kibana as Daemon
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable kibana.service
 sudo /bin/systemctl start kibana.service
@@ -156,39 +129,22 @@ if ! getent group kibana-usr >/dev/null; then
   sudo groupadd -r kibana-usr
 fi
 
+# Add "pi" user to Kibana User Group
 sudo usermod -a -G kibana-usr pi
 
-echo 'kibana-usr
-' | sudo tee /etc/nginx/restricted_groups
+# Create Restricted Groups File for Nginx PAM authentication with "kibana-usr" default access group
+sudo cp -f ./Nginx/restricted_groups /etc/nginx/restricted_groups
 
+# Allow Nginx to read /etc/shadow file for PAM authentication
 sudo usermod -a -G shadow www-data
 
-echo 'auth    required     pam_listfile.so onerr=fail item=group sense=allow file=/etc/nginx/restricted_groups
-@include common-auth
-' | sudo tee /etc/pam.d/nginx_restricted
+# Set PAM Authentication for Nginx
+sudo cp -f ./Nginx/nginx_restricted /etc/pam.d/nginx_restricted
 
-echo -e "server {
-    listen 80;
+# Set Nginx Default Site redirect on local Kibana with PAM authentication
+sudo cp -f ./Nginx/default /etc/nginx/sites-available/default
 
-    listen 443 ssl;
-    server_name `hostname -I`;
-    ssl_certificate /etc/nginx/ssl/nginx.crt;
-    ssl_certificate_key /etc/nginx/ssl/nginx.key;
-
-    auth_pam \"Restricted Zone\";
-    auth_pam_service_name \"nginx_restricted\";
-    auth_pam_set_pam_env on;
-
-    location / {
-        proxy_pass http://localhost:5601;
-        proxy_set_header  X-Real-IP  \$remote_addr;
-        proxy_set_header Host \$http_host;
-        proxy_set_header X-forwarded-for \$proxy_add_x_forwarded_for;
-        port_in_redirect off;
-    }
-}
-" | sudo tee /etc/nginx/sites-available/default
-
+# Configure and Start Nginx as Daemon
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable nginx.service
 sudo /bin/systemctl start nginx.service

@@ -1,0 +1,4 @@
+auth    required     pam_listfile.so onerr=fail item=group sense=allow file=/etc/nginx/restricted_groups
+@include common-auth
+
+
