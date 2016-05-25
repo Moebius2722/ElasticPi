@@ -99,7 +99,7 @@ wget -P/tmp https://download.elastic.co/kibana/kibana/kibana-${K_VERSION}-linux-
 wget -P/tmp https://nodejs.org/download/release/v${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz && sudo tar -xf /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz -C /opt/kibana && sudo mv /opt/kibana/node /opt/kibana/node.ori && sudo mv /opt/kibana/node-v${N_VERSION}-linux-armv7l /opt/kibana/node
 
 # Set Kibana Memory Configuration (Max 100mb of memory)
-sudo sed -i 's/exec "${NODE}" $NODE_OPTIONS "${DIR}\/src\/cli" ${@}/NODE_OPTIONS="--max-old-space-size=100" exec "${NODE}" $NODE_OPTIONS "${DIR}\/src\/cli" ${@}/' /opt/kibana/bin/kibana
+sudo sed -i '/exec "${NODE}" $NODE_OPTIONS "${DIR}\/src\/cli" ${@}/i NODE_OPTIONS="--max-old-space-size=100"' /opt/kibana/bin/kibana
 
 # Set Kibana Node Configuration
 sudo sed -i '/# server\.port: .*/a server.port: 5601' /opt/kibana/config/kibana.yml
