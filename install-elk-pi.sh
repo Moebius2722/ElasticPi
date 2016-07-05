@@ -17,6 +17,7 @@ N_VERSION=4.4.4
 
 # Disable IPv6
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disableipv6.conf
+sudo sed -i '/#net.ipv4.ip_forward=1/a net.ipv4.ip_forward=1' /etc/sysctl.d/99-sysctl.conf
 
 # Full System Update
 sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
@@ -172,3 +173,16 @@ sudo cp -f ./Nginx/default /etc/nginx/sites-available/default
 
 # Restart Nginx Daemon for Update Configuration
 sudo /bin/systemctl restart nginx.service
+
+
+
+####### KEEPALIVED #######
+
+# Prevent loopback ARP response for Keepalived.
+echo net.ipv4.conf.lo.rp_filter=0 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.all.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.all.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+sudo sysctl -p
+
+# Install Keepalived Load Balancer
+sudo apt-get install keepalived -y
