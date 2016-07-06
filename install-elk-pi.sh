@@ -17,7 +17,6 @@ N_VERSION=4.4.4
 
 # Disable IPv6
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disableipv6.conf
-sudo sed -i '/#net.ipv4.ip_forward=1/a net.ipv4.ip_forward=1' /etc/sysctl.d/99-sysctl.conf
 
 # Full System Update
 sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
@@ -75,7 +74,7 @@ sudo apt-get install python-pip -y && sudo pip install elasticsearch-curator && 
 wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logstash_${L_VERSION}_all.deb && sudo dpkg -i /tmp/logstash_${L_VERSION}_all.deb
 
 # Get and Compile JFFI library for Logstash
-sudo apt-get install ant -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
+sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
 
 # Set Logstash Memory Configuration (Max 300mb of memory)
 sudo sed -i '/#LS_OPTS=""/a LS_OPTS="-w 4"' /etc/default/logstash
@@ -179,9 +178,12 @@ sudo /bin/systemctl restart nginx.service
 ####### KEEPALIVED #######
 
 # Prevent loopback ARP response for Keepalived.
-echo net.ipv4.conf.lo.rp_filter=0 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.ip_forward=1 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.rp_filter=0 | sudo tee -a /etc/sysctl.d/keepalived.conf
 echo net.ipv4.conf.all.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
 echo net.ipv4.conf.all.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
 sudo sysctl -p
 
 # Install Keepalived Load Balancer
