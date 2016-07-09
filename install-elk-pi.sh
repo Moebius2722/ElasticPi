@@ -10,10 +10,10 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.3.3
-L_VERSION=2.3.2-1
-K_VERSION=4.5.1
-N_VERSION=4.4.4
+E_VERSION=2.3.4
+L_VERSION=2.3.4-1
+K_VERSION=4.5.2
+N_VERSION=4.4.7
 
 # Disable IPv6
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disableipv6.conf
@@ -54,9 +54,15 @@ sudo sed -i '/# node\.max_local_storage_nodes: 1/a node.max_local_storage_nodes:
 #sudo sed -i '/# discovery\.zen\.ping\.unicast\.hosts: ["host1", "host2"]/a discovery.zen.ping.unicast.hosts: ["192.168.0.22", "192.168.0.23"]' /etc/elasticsearch/elasticsearch.yml
 #sudo sed -i '/# discovery\.zen\.minimum_master_nodes: 3/a discovery.zen.minimum_master_nodes: 2' /etc/elasticsearch/elasticsearch.yml
 
-# Install Head and Kopf plugins for ElasticSearch
+# Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
 sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+#http://server:9200/_plugin/head
 sudo /usr/share/elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf
+#http://server:9200/_plugin/kopf
+sudo /usr/share/elasticsearch/bin/plugin install royrusso/elasticsearch-HQ
+#http://server:9200/_plugin/hq
+sudo /usr/share/elasticsearch/bin/plugin install karmi/elasticsearch-paramedic
+#http://server:9200/_plugin/paramedic
 
 # Configure and Start Elasticsearch as Daemon
 sudo /bin/systemctl daemon-reload
@@ -103,7 +109,7 @@ sudo sed -i '/exec "${NODE}" $NODE_OPTIONS "${DIR}\/src\/cli" ${@}/i NODE_OPTION
 
 # Set Kibana Node Configuration
 sudo sed -i '/# server\.port: .*/a server.port: 5601' /opt/kibana/config/kibana.yml
-sudo sed -i '/# server\.host: .*/a server.host: "localhost"' /opt/kibana/config/kibana.yml
+sudo sed -i '/# server\.host: .*/a server.host: "127.0.0.1"' /opt/kibana/config/kibana.yml
 sudo sed -i '/# elasticsearch\.url: .*/a elasticsearch.url: "http://localhost:9200"' /opt/kibana/config/kibana.yml
 sudo sed -i '/# kibana\.index: .*/a kibana.index: ".kibana"' /opt/kibana/config/kibana.yml
 sudo sed -i '/# kibana\.defaultAppId: .*/a kibana.defaultAppId: "dashboard"' /opt/kibana/config/kibana.yml
@@ -179,12 +185,20 @@ sudo /bin/systemctl restart nginx.service
 
 # Prevent loopback ARP response for Keepalived.
 echo net.ipv4.ip_forward=1 | sudo tee /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.lo.rp_filter=0 | sudo tee -a /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.all.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.all.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.lo.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.eth0.arp_ignore=1 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.eth0.arp_announce=2 | sudo tee /etc/sysctl.d/keepalived.conf
 sudo sysctl -p
 
 # Install Keepalived Load Balancer
 sudo apt-get install keepalived -y
+
+#/etc/network/interfaces
+# auto lo:0
+# iface lo:0 inet static
+# address 192.168.0.10
+# netmask 255.255.255.255
+
+# auto lo:1
+# iface lo:0 inet static
+# address 192.168.0.11
+# netmask 255.255.255.255
