@@ -64,6 +64,10 @@ wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logsta
 # Get and Compile JFFI library for Logstash
 sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
 
+# Set Logstash Memory Configuration (Max 300mb of memory)
+sudo sed -i '/#LS_OPTS=""/a LS_OPTS="-w 4"' /etc/default/logstash
+sudo sed -i '/#LS_HEAP_SIZE="1g"/a LS_HEAP_SIZE="300m"' /etc/default/logstash
+
 # Configure and Start Logstash as Daemon
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable logstash.service
