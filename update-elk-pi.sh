@@ -24,15 +24,22 @@ sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -
 sudo /bin/systemctl stop elasticsearch.service
 
 # Get and Update Elasticsearch
-wget -P/tmp https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
+wget -P/tmp https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i --force-all /tmp/elasticsearch-${E_VERSION}.deb
 
-# Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
+# Set Elasticsearch Memory Configuration (Max 300mb of memory)
+sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
+
+# Update Head, Kopf, HQ and Paramedic plugins for ElasticSearch
+sudo /usr/share/elasticsearch/bin/plugin remove head
 sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
 #http://server:9200/_plugin/head
+sudo /usr/share/elasticsearch/bin/plugin remove kopf
 sudo /usr/share/elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf
 #http://server:9200/_plugin/kopf
+sudo /usr/share/elasticsearch/bin/plugin remove hq
 sudo /usr/share/elasticsearch/bin/plugin install royrusso/elasticsearch-HQ
 #http://server:9200/_plugin/hq
+sudo /usr/share/elasticsearch/bin/plugin remove paramedic
 sudo /usr/share/elasticsearch/bin/plugin install karmi/elasticsearch-paramedic
 #http://server:9200/_plugin/paramedic
 
@@ -52,7 +59,7 @@ sudo pip install --upgrade elasticsearch-curator
 sudo /bin/systemctl stop logstash.service
 
 # Get and Update Logstash
-wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logstash_${L_VERSION}_all.deb && sudo dpkg -i /tmp/logstash_${L_VERSION}_all.deb
+wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logstash_${L_VERSION}_all.deb && sudo dpkg -i --force-all /tmp/logstash_${L_VERSION}_all.deb
 
 # Get and Compile JFFI library for Logstash
 sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
