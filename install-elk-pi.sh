@@ -10,9 +10,9 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.3.4
+E_VERSION=2.3.5
 L_VERSION=2.3.4-1
-K_VERSION=4.5.2
+K_VERSION=4.5.4
 N_VERSION=4.4.7
 
 # Disable IPv6
@@ -184,21 +184,35 @@ sudo /bin/systemctl restart nginx.service
 ####### KEEPALIVED #######
 
 # Prevent loopback ARP response for Keepalived.
-echo net.ipv4.ip_forward=1 | sudo tee /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.eth0.arp_ignore=1 | sudo tee /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.eth0.arp_announce=2 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.eth0.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.eth0.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
+
 sudo sysctl -p
 
 # Install Keepalived Load Balancer
 sudo apt-get install keepalived -y
 
 #/etc/network/interfaces
+
+# auto eth0
+# iface eth0 inet static
+# address 192.168.0.21
+# netmask 255.255.255.0
+# gateway 192.168.0.254
+
 # auto lo:0
 # iface lo:0 inet static
 # address 192.168.0.10
 # netmask 255.255.255.255
 
 # auto lo:1
-# iface lo:0 inet static
+# iface lo:1 inet static
 # address 192.168.0.11
+# netmask 255.255.255.255
+
+# auto lo:2
+# iface lo:2 inet static
+# address 192.168.0.12
 # netmask 255.255.255.255

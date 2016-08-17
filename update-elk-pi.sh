@@ -10,9 +10,9 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.3.4
+E_VERSION=2.3.5
 L_VERSION=2.3.4-1
-K_VERSION=4.5.2
+K_VERSION=4.5.4
 N_VERSION=4.4.7
 
 # Full System Update
