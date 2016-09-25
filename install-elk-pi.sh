@@ -10,10 +10,10 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.3.5
-L_VERSION=2.3.4-1
-K_VERSION=4.5.4
-N_VERSION=4.4.7
+E_VERSION=2.4.0
+L_VERSION=2.4.0
+K_VERSION=4.6.1
+N_VERSION=6.4.0
 
 # Disable IPv6
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disableipv6.conf
@@ -184,6 +184,16 @@ sudo /bin/systemctl restart nginx.service
 ####### KEEPALIVED #######
 
 # Prevent loopback ARP response for Keepalived.
+
+#net.ipv4.conf.lo:0.arp_ignore=1
+#net.ipv4.conf.lo:1.arp_ignore=1
+#net.ipv4.conf.lo:2.arp_ignore=1
+#net.ipv4.conf.lo:0.arp_announce=2
+#net.ipv4.conf.lo:1.arp_announce=2
+#net.ipv4.conf.lo:2.arp_announce=2
+#net.ipv4.ip_forward=1
+#net.ipv4.ip_nonlocal_bind=1
+
 echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/keepalived.conf
 echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
 echo net.ipv4.conf.eth0.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
@@ -191,8 +201,14 @@ echo net.ipv4.conf.eth0.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.co
 
 sudo sysctl -p
 
+sudo iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+sudo iptables-restore /etc/network/iptables
+sudo iptables-save
+
 # Install Keepalived Load Balancer
 sudo apt-get install keepalived -y
+
+# Set Static IP Addresses
 
 #/etc/network/interfaces
 
@@ -216,3 +232,15 @@ sudo apt-get install keepalived -y
 # iface lo:2 inet static
 # address 192.168.0.12
 # netmask 255.255.255.255
+
+
+# Disable DHCP Client and enable manual network configuation
+sudo systemctl disable dhcpcd
+sudo systemctl enable networking
+
+# Set DNS server with "resolvconf"
+echo name_servers=192.168.0.254 | sudo tee -a /etc/resolvconf.conf
+
+# Set DNS server with classic method and lock "resolv.conf" file
+echo "nameserver 192.168.0.254" | sudo tee /etc/resolv.conf
+sudo chattr +i /etc/resolv.conf

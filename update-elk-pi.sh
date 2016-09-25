@@ -10,10 +10,10 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.3.5
-L_VERSION=2.3.4-1
-K_VERSION=4.5.4
-N_VERSION=4.4.7
+E_VERSION=2.4.0
+L_VERSION=2.4.0
+K_VERSION=4.6.1
+N_VERSION=6.4.0
 
 # Full System Update
 sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
