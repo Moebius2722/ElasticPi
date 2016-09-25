@@ -77,7 +77,7 @@ sudo apt-get install python-pip -y && sudo pip install elasticsearch-curator && 
 ####### LOGSTASH #######
 
 # Get and Install Logstash
-wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logstash_${L_VERSION}_all.deb && sudo dpkg -i /tmp/logstash_${L_VERSION}_all.deb
+wget -P/tmp https://download.elastic.co/logstash/logstash/packages/debian/logstash-${L_VERSION}_all.deb && sudo dpkg -i /tmp/logstash-${L_VERSION}_all.deb
 
 # Get and Compile JFFI library for Logstash
 sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /opt/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
