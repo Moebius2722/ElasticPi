@@ -81,6 +81,7 @@ sudo /bin/systemctl start logstash.service
 sudo /bin/systemctl stop kibana.service
 
 # Backup Kibana previous installation
+sudo rm -rf /opt/kibana-old
 sudo mv /opt/kibana /opt/kibana-old
 
 # Get and Update Kibana
