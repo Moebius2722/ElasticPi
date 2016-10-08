@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.4.0
+E_VERSION=2.4.1
 L_VERSION=2.4.0
 K_VERSION=4.6.1
 N_VERSION=6.4.0
