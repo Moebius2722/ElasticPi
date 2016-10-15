@@ -70,7 +70,10 @@ sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl start elasticsearch.service
 
 # Install and Configure Curator for Elasticsearch
-sudo apt-get install python-pip -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   root    /usr/local/bin/curator delete indices --older-than 7 --time-unit days --timestring '%Y.%m.%d'" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
+sudo cp -f ./Curator/curator-config.yml /etc/elasticsearch/curator-config.yml
+sudo cp -f ./Curator/curator-actions.yml /etc/elasticsearch/curator-actions.yml
+#sudo apt-get install python-pip -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   root    /usr/local/bin/curator delete indices --older-than 7 --time-unit days --timestring '%Y.%m.%d'" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
+sudo apt-get install python-pip -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   root    /usr/local/bin/curator --config /etc/elasticsearch/curator-config.yml /etc/elasticsearch/curator-actions.yml" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
 
 
 
