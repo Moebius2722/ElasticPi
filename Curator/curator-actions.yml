@@ -20,7 +20,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 30
+      unit_count: 7
       exclude:
   2:
     action: delete_indices
@@ -42,8 +42,8 @@ actions:
       source: name
       direction: older
       timestring: '%Y.%m.%d'
-      unit: months
-      unit_count: 12
+      unit: days
+      unit_count: 30
       exclude:
   3:
     action: close
@@ -66,7 +66,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 30
+      unit_count: 7
       exclude:
   4:
     action: delete_indices
@@ -88,6 +88,6 @@ actions:
       source: name
       direction: older
       timestring: '%Y.%m.%d'
-      unit: months
-      unit_count: 12
+      unit: days
+      unit_count: 30
       exclude:
