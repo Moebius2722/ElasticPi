@@ -70,7 +70,7 @@ sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl start elasticsearch.service
 
 # Install and Configure Curator for Elasticsearch
-sudo apt-get install python-pip -y && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   root    /usr/local/bin/curator delete indices --older-than 7 --time-unit days --timestring '%Y.%m.%d'" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
+sudo apt-get install python-pip -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   root    /usr/local/bin/curator delete indices --older-than 7 --time-unit days --timestring '%Y.%m.%d'" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
 
 
 
@@ -185,25 +185,24 @@ sudo /bin/systemctl restart nginx.service
 
 # Prevent loopback ARP response for Keepalived.
 
-#net.ipv4.conf.lo:0.arp_ignore=1
-#net.ipv4.conf.lo:1.arp_ignore=1
-#net.ipv4.conf.lo:2.arp_ignore=1
-#net.ipv4.conf.lo:0.arp_announce=2
-#net.ipv4.conf.lo:1.arp_announce=2
-#net.ipv4.conf.lo:2.arp_announce=2
-#net.ipv4.ip_forward=1
-#net.ipv4.ip_nonlocal_bind=1
-
 echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/keepalived.conf
 echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.eth0.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
-echo net.ipv4.conf.eth0.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
 
 sudo sysctl -p
+sudo apt-get install iptables-persistent -y
 
-sudo iptables -I INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
-sudo iptables-restore /etc/network/iptables
-sudo iptables-save
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t mangle -F
+sudo iptables -F
+sudo iptables -X
+
+sudo sh -c "iptables-save > /etc/iptables/rules.v4"
+echo "iptables-restore < /etc/iptables/rules.v4" | sudo tee -a /etc/rc.local
 
 # Install Keepalived Load Balancer
 sudo apt-get install keepalived -y

@@ -49,6 +49,7 @@ sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl start elasticsearch.service
 
 # Upgrade Curator for Elasticsearch
+sudo pip install --upgrade PySocks
 sudo pip install --upgrade elasticsearch-curator
 
 
