@@ -24,7 +24,7 @@ sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -
 # Install Tools
 # If you get script via GitHub, git tool is already installed ;)
 # Htop is a good tool for monitoring cpu and memory usage by ELK Stack
-sudo apt-get install curl git htop -y
+sudo apt-get install curl jq git htop -y
 
 
 
@@ -42,6 +42,9 @@ sudo sed -i '/ES_MIN_MEM=300m/a ES_MAX_MEM=300m' /etc/default/elasticsearch
 sudo sed -i '/ES_MAX_MEM=300m/a ES_HEAP_SIZE=300m' /etc/default/elasticsearch
 sudo sed -i '/#MAX_LOCKED_MEMORY=unlimited/a MAX_LOCKED_MEMORY=unlimited' /etc/default/elasticsearch
 sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
+echo vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf
+#echo vm.swappiness=0 | sudo tee -a /etc/sysctl.conf
+echo vm.swappiness=1 | sudo tee -a /etc/sysctl.conf
 
 # Set Elasticsearch Node Configuration
 sudo sed -i '/# cluster\.name: .*/a cluster.name: espi' /etc/elasticsearch/elasticsearch.yml
@@ -51,8 +54,8 @@ sudo sed -i '/# network\.host: .*/a network.host: 0.0.0.0' /etc/elasticsearch/el
 sudo sed -i '/# http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/# bootstrap\.mlockall: true/a bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/# node\.max_local_storage_nodes: 1/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
-#sudo sed -i '/# discovery\.zen\.ping\.unicast\.hosts: ["host1", "host2"]/a discovery.zen.ping.unicast.hosts: ["192.168.0.22", "192.168.0.23"]' /etc/elasticsearch/elasticsearch.yml
-#sudo sed -i '/# discovery\.zen\.minimum_master_nodes: 3/a discovery.zen.minimum_master_nodes: 2' /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i '/# discovery\.zen\.ping\.unicast\.hosts: \["host1", "host2"\]/a discovery.zen.ping.unicast.hosts: ["192.168.0.22", "192.168.0.23"]' /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i '/# discovery\.zen\.minimum_master_nodes: 3/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 
 # Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
 sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
@@ -220,6 +223,11 @@ sudo apt-get install keepalived -y
 # netmask 255.255.255.0
 # gateway 192.168.0.254
 
+# auto eth0:0
+# iface eth0:0 inet static
+# address 192.168.1.21
+# netmask 255.255.255.0
+
 # auto lo:0
 # iface lo:0 inet static
 # address 192.168.0.10
@@ -234,7 +242,6 @@ sudo apt-get install keepalived -y
 # iface lo:2 inet static
 # address 192.168.0.12
 # netmask 255.255.255.255
-
 
 # Disable DHCP Client and enable manual network configuation
 sudo systemctl disable dhcpcd
