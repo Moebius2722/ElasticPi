@@ -35,15 +35,7 @@ sudo chmod a+x /mnt/target/chroot.sh
 
 # Upgrade USB Drive OS Installation and Firmware with Boot On USB Feature
 sudo chroot /mnt/target ./chroot.sh
-
 sudo rm -f /mnt/target/chroot.sh
-
-#rm /etc/ssh/ssh_host*
-#dpkg-reconfigure openssh-server
-# Upgrade USB Drive OS Installation and Firmware with Boot On USB Feature
-#rm /etc/ssh/ssh_host* && dpkg-reconfigure openssh-server && sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rm /boot/.firmware_revision && sudo BRANCH=next rpi-update && exit
-#exit
-
 sudo umount dev
 sudo umount sys
 sudo umount proc
