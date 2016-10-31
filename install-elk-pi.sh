@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=2.4.1
+E_VERSION=5.0.0
 L_VERSION=2.4.0
 K_VERSION=4.6.1
 N_VERSION=6.4.0
@@ -34,7 +34,8 @@ sudo apt-get install curl jq git htop -y
 sudo apt-get install oracle-java8-jdk -y
 
 # Get and Install Elasticsearch
-wget -P/tmp https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
+#wget -P/tmp https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
+wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
 
 # Set Elasticsearch Memory Configuration (Max 300mb of memory)
 sudo sed -i '/#ES_HEAP_SIZE=2g/a ES_MIN_MEM=300m' /etc/default/elasticsearch
@@ -47,18 +48,21 @@ echo vm.max_map_count=262144 | sudo tee -a /etc/sysctl.conf
 echo vm.swappiness=1 | sudo tee -a /etc/sysctl.conf
 
 # Set Elasticsearch Node Configuration
-sudo sed -i '/# cluster\.name: .*/a cluster.name: espi' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/# node\.name: .*/a node.name: ${HOSTNAME}' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/# node\.rack: .*/a node.rack: espi-rack-1' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/# network\.host: .*/a network.host: 0.0.0.0' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/# http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/# bootstrap\.mlockall: true/a bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/# node\.max_local_storage_nodes: 1/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/#cluster\.name: .*/a cluster.name: espi' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/#node\.name: .*/a node.name: ${HOSTNAME}' /etc/elasticsearch/elasticsearch.yml
+#node.attr.rack: r1
+sudo sed -i '/#node.attr.rack: .*/a node.attr.rack: espi-rack-1' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/#network\.host: .*/a network.host: 0.0.0.0' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/#http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i '/#bootstrap\.mlockall: true/a bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/bootstrap.memory_lock: true/a bootstrap.memory_lock: true' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/#node\.max_local_storage_nodes: 1/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 #sudo sed -i '/# discovery\.zen\.ping\.unicast\.hosts: \["host1", "host2"\]/a discovery.zen.ping.unicast.hosts: ["192.168.0.22", "192.168.0.23"]' /etc/elasticsearch/elasticsearch.yml
 #sudo sed -i '/# discovery\.zen\.minimum_master_nodes: 3/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 
 # Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
-sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+#sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install mobz/elasticsearch-head
 #http://server:9200/_plugin/head
 sudo /usr/share/elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf
 #http://server:9200/_plugin/kopf
