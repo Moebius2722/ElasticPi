@@ -48,15 +48,17 @@ cd /tmp
 git clone https://github.com/openstack/pyeclib.git
 cd pyeclib
 # For Python 2.x
-sudo python setup.py install
 sudo pip install -U bindep -r test-requirements.txt
 sudo bindep -f bindep.txt
+sudo python setup.py install
+sudo ldconfig
 # Check PyEClib for Python 2.x
 ./.unittests
 # For Python 3.x
-sudo python3 setup.py install
 sudo pip3 install -U bindep -r test-requirements.txt
 sudo bindep -f bindep.txt
+sudo python3 setup.py install
+sudo ldconfig
 # Check PyEClib for Python 3.x
 cp .unittests .unittests3
 sudo sed -i "s,python,python3," .unittests3
