@@ -8,8 +8,11 @@
 
 ####### COMMON #######
 
-# Set Version Cerebro
-C_VERSION=0.4.1
+# Set Version
+if [[ ${C_VERSION} = '' ]]; then
+  C_VERSION=0.4.1
+fi
+
 
 ####### CEREBRO #######
 
@@ -28,10 +31,10 @@ fi
 
 sudo chown -R cerebro:cerebro /usr/share/cerebro
 
-# Configure and Start Cerebro as Daemon
+# Adding Autostart capability using SystemD
 sudo cp -f ./Cerebro/cerebro.service /etc/systemd/system/.
-
-# Configure and Start Cerebro as Daemon
 sudo /bin/systemctl daemon-reload
+
+# Enable and start Cerebro daemon
 sudo /bin/systemctl enable cerebro.service
 sudo /bin/systemctl start cerebro.service

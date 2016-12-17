@@ -5,6 +5,15 @@
 
 # Full Automated Installation Script for Lastest Node-RED on Raspberry Pi 2 or 3
 
+
+####### COMMON #######
+
+# Full System Update
+sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
+
+
+####### NODERED #######
+
 # Remove Old Node-RED
 node-red-stop
 sudo apt-get remove nodered -q -y

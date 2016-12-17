@@ -6,7 +6,6 @@
 # Full Automated Installation Script for Kibana on Raspberry Pi 2 or 3
 
 
-
 ####### COMMON #######
 
 # Set Version

@@ -6,7 +6,6 @@
 # Full Automated Installation Script for Nginx on Raspberry Pi 2 or 3 to Secured Kibana
 
 
-
 ####### COMMON #######
 
 # Full System Update
