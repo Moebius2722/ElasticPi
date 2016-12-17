@@ -41,8 +41,10 @@ sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/s
 sudo sed -i '/#MAX_MAP_COUNT=262144/a MAX_MAP_COUNT=262144' /etc/default/elasticsearch
 echo vm.max_map_count=262144 | sudo tee /etc/sysctl.d/96-elasticsearch.conf
 echo vm.swappiness=1 | sudo tee -a /etc/sysctl.d/96-elasticsearch.conf
-sudo sed -i 's/CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2048/' /etc/dphys-swapfile
-sudo systemctl restart dphys-swapfile.service
+#sudo sed -i 's/CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2048/' /etc/dphys-swapfile
+# Set 2000 for Netboot configuration
+#sudo sed -i 's/CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2000/' /etc/dphys-swapfile
+#sudo systemctl restart dphys-swapfile.service
 sudo sed -i '/#bootstrap.memory_lock: true/a bootstrap.memory_lock: true' /etc/elasticsearch/elasticsearch.yml
 
 # Set Elasticsearch Node Configuration
