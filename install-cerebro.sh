@@ -30,3 +30,8 @@ sudo chown -R cerebro:cerebro /usr/share/cerebro
 
 # Configure and Start Cerebro as Daemon
 sudo cp -f ./Cerebro/cerebro.service /etc/systemd/system/.
+
+# Configure and Start Cerebro as Daemon
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable cerebro.service
+sudo /bin/systemctl start cerebro.service
