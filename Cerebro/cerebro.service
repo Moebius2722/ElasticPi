@@ -1,0 +1,22 @@
+# systemd service file to start Cerebro
+
+[Unit]
+Description=Cerebro Elasticsearch management web console.
+After=network.target
+Documentation=https://github.com/lmenezes/cerebro
+
+[Service]
+Type=simple
+# Run as normal cerebro user - feel free to change...
+User=cerebro
+Group=cerebro
+WorkingDirectory=/usr/share/cerebro
+ExecStart=/usr/share/cerebro/bin/cerebro -J-Xms100m -J-Xmx100m
+# Auto restart on crash
+Restart=always
+# Tag things in the log
+SyslogIdentifier=Cerebro
+#StandardOutput=syslog
+
+[Install]
+WantedBy=multi-user.target
