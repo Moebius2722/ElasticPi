@@ -16,7 +16,7 @@ K_VERSION=4.6.1
 N_VERSION=6.4.0
 
 # Disable IPv6
-echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disableipv6.conf
+echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.conf
 
 # Full System Update
 sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y
@@ -34,8 +34,8 @@ sudo apt-get install curl jq git htop -y
 sudo apt-get install oracle-java8-jdk -y
 
 # Get and Install Elasticsearch
-#wget -P/tmp https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
+wget -P/tmp https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
+#wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
 
 # Set Elasticsearch Memory Configuration (Max 300mb of memory)
 sudo sed -i '/#ES_HEAP_SIZE=2g/a ES_MIN_MEM=300m' /etc/default/elasticsearch
@@ -61,8 +61,7 @@ sudo sed -i '/#node\.max_local_storage_nodes: 1/a node.max_local_storage_nodes: 
 #sudo sed -i '/# discovery\.zen\.minimum_master_nodes: 3/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 
 # Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
-#sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
-sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install mobz/elasticsearch-head
+sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
 #http://server:9200/_plugin/head
 sudo /usr/share/elasticsearch/bin/plugin install lmenezes/elasticsearch-kopf
 #http://server:9200/_plugin/kopf
