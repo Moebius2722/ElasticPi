@@ -15,6 +15,7 @@ fi
 
 # Disable IPv6
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.conf
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 
 # Full System Update
 sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
@@ -41,7 +42,9 @@ sudo sed -i '/#MAX_LOCKED_MEMORY=unlimited/a MAX_LOCKED_MEMORY=unlimited' /etc/d
 sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
 sudo sed -i '/#MAX_MAP_COUNT=262144/a MAX_MAP_COUNT=262144' /etc/default/elasticsearch
 echo vm.max_map_count=262144 | sudo tee /etc/sysctl.d/96-elasticsearch.conf
+sudo sysctl -w vm.max_map_count=262144
 echo vm.swappiness=1 | sudo tee -a /etc/sysctl.d/96-elasticsearch.conf
+sudo sysctl -w vm.swappiness=1
 sudo sed -i '/#bootstrap.memory_lock: true/a bootstrap.memory_lock: true' /etc/elasticsearch/elasticsearch.yml
 
 # Set Elasticsearch Node Configuration
@@ -80,6 +83,14 @@ sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasti
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl start elasticsearch.service
+
+# Create Snapshot Repository for Backup NFS mount point
+curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{
+ "type": "fs",
+ "settings": {
+  "location": "/mnt/espibackup/repo"
+ }
+}'
 
 # Install and Configure Curator for Elasticsearch
 sudo cp -f ./Curator/curator-config.yml /etc/elasticsearch/curator-config.yml
