@@ -5,7 +5,6 @@
 
 # Full Automated Installation Script for Elasticsearch on Raspberry Pi 2 or 3
 
-
 # Disable IPv6
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.conf
 
@@ -28,9 +27,10 @@ sudo apt-get install curl jq git -q -y
 ####### ELASTICSEARCH #######
 
 # Install Elasticsearch Prerequisites
-sudo apt-get install oracle-java8-jdk -y
+sudo apt-get install oracle-java8-jdk -q -y
 
 # Get and Install Elasticsearch
+#--force-confold
 wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
 
 # Set Elasticsearch Memory Configuration (Max 300mb of memory)
@@ -78,9 +78,9 @@ echo '192.168.0.23' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_host
 #sudo /usr/share/elasticsearch/bin/plugin install karmi/elasticsearch-paramedic
 #http://server:9200/_plugin/paramedic
 
-echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+#echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 #echo 'http.cors.allow-origin: /https?:\/\/localhost(:[0-9]+)?/' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-echo 'http.cors.allow-origin: /*/' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+#echo 'http.cors.allow-origin: /*/' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
 # Configure and Start Elasticsearch as Daemon
 sudo /bin/systemctl daemon-reload
