@@ -28,8 +28,8 @@ wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION
 sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
 
 # Set Logstash Memory Configuration (Max 300mb of memory)
-sudo sed -i 's/-Xms.*/-Xms300m/' /etc/logstash/jvm.options
-sudo sed -i 's/-Xmx.*/-Xmx300m/' /etc/logstash/jvm.options
+sudo sed -i 's/-Xms.*/-Xms200m/' /etc/logstash/jvm.options
+sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
 
 # Set Logstash Node Configuration
 sudo cp -f ./Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf

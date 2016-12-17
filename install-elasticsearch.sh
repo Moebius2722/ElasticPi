@@ -34,8 +34,8 @@ sudo apt-get install oracle-java8-jdk -q -y
 wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
 
 # Set Elasticsearch Memory Configuration (Max 300mb of memory)
-sudo sed -i 's/-Xms.*/-Xms300m/' /etc/elasticsearch/jvm.options
-sudo sed -i 's/-Xmx.*/-Xmx300m/' /etc/elasticsearch/jvm.options
+sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
+sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/elasticsearch/jvm.options
 sudo sed -i '/#MAX_LOCKED_MEMORY=unlimited/a MAX_LOCKED_MEMORY=unlimited' /etc/default/elasticsearch
 sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
 sudo sed -i '/#MAX_MAP_COUNT=262144/a MAX_MAP_COUNT=262144' /etc/default/elasticsearch
