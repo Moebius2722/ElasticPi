@@ -57,7 +57,7 @@ sudo sed -i '/#node\.max_local_storage_nodes: .*/a node.max_local_storage_nodes:
 
 # Enable Site Plugins
 echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-echo 'http.cors.allow-origin: "*"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'http.cors.allow-origin: ".*"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
 # Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
 #sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
