@@ -32,3 +32,7 @@ N_VERSION=6.9.0
 ####### NGINX #######
 
 ./install-nginx.sh
+
+####### CEREBRO #######
+
+./install-cerebro.sh
