@@ -59,6 +59,13 @@ sudo sed -i '/#node\.max_local_storage_nodes: .*/a node.max_local_storage_nodes:
 echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 echo 'http.cors.allow-origin: ".*"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-file
+sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_provider: file' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
+echo . | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.21' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.23' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+
 # Install Head, Kopf, HQ and Paramedic plugins for ElasticSearch
 #sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
 #http://server:9200/_plugin/head
