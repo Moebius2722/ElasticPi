@@ -1,5 +1,29 @@
 actions:
   1:
+    action: snapshot
+    description: >-
+      Snapshot selected indices to 'repository' with the snapshot name or name
+      pattern in 'name'.  Use all other options as assigned
+    options:
+      repository: 'espibackup'
+      name: 'all-%Y%m%d%H%M%S'
+      ignore_unavailable: False
+      include_global_state: True
+      partial: False
+      wait_for_completion: True
+      skip_repo_fs_check: False
+      timeout_override:
+      continue_if_exception: False
+      disable_action: False
+    filters:
+    - filtertype: age
+      source: name
+      direction: younger
+      timestring: '%Y.%m.%d'
+      unit: days
+      unit_count: 1
+      exclude:
+  2:
     action: close
     description: >-
       Close indices older than 30 days (based on index name), for squid-
@@ -22,7 +46,7 @@ actions:
       unit: days
       unit_count: 30
       exclude:
-  2:
+  3:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for squid-
@@ -45,7 +69,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
-  3:
+  4:
     action: close
     description: >-
       Close indices older than 30 days (based on index name), for syslog-
@@ -68,7 +92,7 @@ actions:
       unit: days
       unit_count: 30
       exclude:
-  4:
+  5:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for syslog-
@@ -91,7 +115,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
-  5:
+  6:
     action: close
     description: >-
       Close indices older than 30 days (based on index name), for logstash-
@@ -114,7 +138,7 @@ actions:
       unit: days
       unit_count: 30
       exclude:
-  6:
+  7:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for logstash-
@@ -137,7 +161,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
-  7:
+  8:
     action: close
     description: >-
       Close indices older than 30 days (based on index name), for measure-
@@ -160,7 +184,7 @@ actions:
       unit: days
       unit_count: 30
       exclude:
-  8:
+  9:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for measure-
