@@ -10,7 +10,9 @@
 ####### COMMON #######
 
 # Set Version
-E_VERSION=5.0.0
+if [[ ${E_VERSION} = '' ]]; then
+  E_VERSION=5.1.1
+fi
 
 # Full System Update
 sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
