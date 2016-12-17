@@ -10,8 +10,12 @@
 ####### COMMON #######
 
 # Set Version
-K_VERSION=5.0.0
-N_VERSION=6.9.0
+if [[ ${K_VERSION} = '' ]]; then
+  K_VERSION=5.1.1
+fi
+if [[ ${N_VERSION} = '' ]]; then
+  N_VERSION=6.9.0
+fi
 
 # Full System Update
 sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
@@ -20,6 +24,7 @@ sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -
 ####### KIBANA #######
 
 # Get and Install Kibana with i386 package (Just NodeJS is i386 in package)
+#--force-confold
 wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-${K_VERSION}-i386.deb && sudo dpkg --force-architecture -i /tmp/kibana-${K_VERSION}-i386.deb
 
 # Get and Replace NodeJS i386 by ARMv7l in Kibana
