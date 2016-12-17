@@ -6,7 +6,7 @@ actions:
       pattern in 'name'.  Use all other options as assigned
     options:
       repository: 'espibackup'
-      name: 'all-%Y-%m-%d-%H-%M-%S'
+      name: 'all-%Y-%m-%d-%H-%M'
       ignore_unavailable: False
       include_global_state: True
       partial: False
