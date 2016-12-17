@@ -6,6 +6,8 @@
 # Full Automated Installation Script for Elasticsearch on Raspberry Pi 2 or 3
 
 
+# Disable IPv6
+echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.conf
 
 ####### COMMON #######
 
