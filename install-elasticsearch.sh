@@ -64,6 +64,18 @@ echo . | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.21' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.23' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
+# Create and configure Backup NFS mount point
+sudo mkdir /mnt/espibackup
+sudo chown elasticsearch:elasticsearch /mnt/espibackup
+sudo systemctl enable rpcbind.service
+sudo systemctl start rpcbind.service
+echo '192.168.0.1:/volume1/espibackup /mnt/espibackup nfs rw         0       0' | sudo tee -a /etc/fstab
+sudo mount /mnt/espibackup
+sudo mkdir /mnt/espibackup/repo
+sudo chown elasticsearch:elasticsearch /mnt/espibackup/repo
+sudo chmod -R 770 /mnt/espibackup
+sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
+
 # Configure and Start Elasticsearch as Daemon
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
