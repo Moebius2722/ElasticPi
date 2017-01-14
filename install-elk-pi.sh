@@ -9,11 +9,11 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=5.1.1
-L_VERSION=5.1.1
-K_VERSION=5.1.1
+E_VERSION=5.1.2
+L_VERSION=5.1.2
+K_VERSION=5.1.2
 N_VERSION=6.9.0
-C_VERSION=0.4.1
+C_VERSION=0.4.2
 
 ####### ELASTICSEARCH #######
 
@@ -34,6 +34,12 @@ C_VERSION=0.4.1
 
 ./install-nginx.sh
 
+
 ####### CEREBRO #######
 
 ./install-cerebro.sh
+
+
+####### NODERED #######
+
+./install-nodered.sh
