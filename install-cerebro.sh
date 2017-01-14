@@ -10,7 +10,7 @@
 
 # Set Version
 if [[ ${C_VERSION} = '' ]]; then
-  C_VERSION=0.4.1
+  C_VERSION=0.4.2
 fi
 
 
