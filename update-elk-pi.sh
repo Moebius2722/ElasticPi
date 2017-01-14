@@ -17,24 +17,24 @@ C_VERSION=0.4.2
 
 ####### ELASTICSEARCH #######
 
-source update-elasticsearch.sh
+sh ./update-elasticsearch.sh
 
 
 ####### LOGSTASH #######
 
-source update-logstash.sh
+sh ./update-logstash.sh
 
 
 ####### KIBANA #######
 
-source update-kibana.sh
+sh ./update-kibana.sh
 
 
 ####### CEREBRO #######
 
-source update-cerebro.sh
+sh ./update-cerebro.sh
 
 
 ####### NODERED #######
 
-source update-nodered.sh
+sh ./update-nodered.sh
