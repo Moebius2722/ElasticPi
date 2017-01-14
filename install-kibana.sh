@@ -10,14 +10,18 @@
 
 # Set Version
 if [[ ${K_VERSION} = '' ]]; then
-  K_VERSION=5.1.1
+  K_VERSION=5.1.2
 fi
 if [[ ${N_VERSION} = '' ]]; then
   N_VERSION=6.9.0
 fi
 
+# Stop Kibana Daemon
+sudo /bin/systemctl stop kibana.service
+
+
 # Full System Update
-sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
+sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y &&  && sudo rpi-update
 
 
 ####### KIBANA #######
