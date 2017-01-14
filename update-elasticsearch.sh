@@ -9,7 +9,7 @@
 ####### COMMON #######
 
 # Set Version
-if [[ ${E_VERSION} = '' ]]; then
+if [[ "${E_VERSION}" = '' ]]; then
   E_VERSION=5.1.2
 fi
 
