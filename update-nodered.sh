@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Author : Moebius2722
 # Mail : moebius2722@laposte.net

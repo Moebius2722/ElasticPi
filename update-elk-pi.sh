@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Author : Moebius2722
 # Mail : moebius2722@laposte.net
@@ -17,24 +17,24 @@ C_VERSION=0.4.2
 
 ####### ELASTICSEARCH #######
 
-sh ./update-elasticsearch.sh
+./update-elasticsearch.sh
 
 
 ####### LOGSTASH #######
 
-sh ./update-logstash.sh
+./update-logstash.sh
 
 
 ####### KIBANA #######
 
-sh ./update-kibana.sh
+./update-kibana.sh
 
 
 ####### CEREBRO #######
 
-sh ./update-cerebro.sh
+./update-cerebro.sh
 
 
 ####### NODERED #######
 
-sh ./update-nodered.sh
+./update-nodered.sh

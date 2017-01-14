@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Install dependencies
 #sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get install git build-essential autoconf automake libtool python python3 python-dev python3-dev python-pip python3-pip libjerasure-dev libjerasure2 -q -y

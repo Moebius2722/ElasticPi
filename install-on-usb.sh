@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Upgrade Firmware with Boot On USB Feature
 sudo apt-get update && sudo apt-get install rpi-update rsync -q -y && sudo BRANCH=next rpi-update
