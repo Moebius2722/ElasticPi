@@ -13,6 +13,9 @@ if [[ ${C_VERSION} = '' ]]; then
   C_VERSION=0.4.2
 fi
 
+# Full System Update
+sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get install rpi-update -q -y && sudo rpi-update
+
 
 ####### CEREBRO #######
 

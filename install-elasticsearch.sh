@@ -18,7 +18,7 @@ echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.co
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 
 # Full System Update
-sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
+sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get install rpi-update -q -y && sudo rpi-update
 
 # Install Tools
 # If you get script via GitHub, git tool is already installed ;)
@@ -65,6 +65,7 @@ sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_pr
 sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 echo . | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.21' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.22' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.23' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
 # Create and configure Backup NFS mount point
