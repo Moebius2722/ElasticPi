@@ -13,6 +13,13 @@ if [[ "${E_VERSION}" = '' ]]; then
   E_VERSION=5.1.2
 fi
 
+# Check if already up to date
+E_CVERSION=`curl -s 'localhost:9200' | jq -c -r '.version.number'`
+if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
+  echo "Elasticsearch is up to date to ${E_CVERSION} version"
+  exit 0
+fi
+
 # Stop Elasticsearch Daemon
 sudo /bin/systemctl stop elasticsearch.service
 
