@@ -34,9 +34,6 @@ hash -r
 sudo npm install -g node-gyp
 sudo npm install -g --unsafe-perm node-red
 
-# Install Elasticsearch Node to Node-RED
-npm install --prefix /home/pi/.node-red node-red-contrib-elasticsearchcdb
-
 # Adding Autostart capability using SystemD
 sudo wget https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/nodered.service -O /lib/systemd/system/nodered.service
 sudo sed -i 's/Wants=/After=/' /lib/systemd/system/nodered.service
@@ -48,3 +45,9 @@ sudo /bin/systemctl daemon-reload
 # Enable and start Node-RED daemon
 sudo /bin/systemctl enable nodered.service
 sudo /bin/systemctl start nodered.service
+
+# Install Node-RED-Admin Tool
+sudo npm install -g node-red-admin
+
+# Install Elasticsearch Node to Node-RED
+node-red-admin install node-red-contrib-elasticsearchcdb
