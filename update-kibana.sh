@@ -19,7 +19,7 @@ fi
 # Check if already up to date
 K_CVERSION=`dpkg-query -W -f='${Version}\n' kibana`
 if [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
-  echo "Kibana is up to date to ${K_CVERSION} version"
+  echo "Kibana is already up to date to ${K_CVERSION} version"
   exit 0
 fi
 

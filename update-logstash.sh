@@ -16,7 +16,7 @@ fi
 # Check if already up to date
 L_CVERSION=`dpkg-query -W -f='${Version}\n' logstash | cut -d : -f2 | cut -d - -f1`
 if [[ "${L_VERSION}" = "${L_CVERSION}" ]]; then
-  echo "Logstash is up to date to ${L_CVERSION} version"
+  echo "Logstash is already up to date to ${L_CVERSION} version"
   exit 0
 fi
 

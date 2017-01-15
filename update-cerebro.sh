@@ -16,7 +16,7 @@ fi
 # Check if already up to date
 C_CVERSION=`ls /usr/share/cerebro/lib/cerebro.cerebro-*-assets.jar | cut -d - -f2`
 if [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
-  echo "Cerebro is up to date to ${C_CVERSION} version"
+  echo "Cerebro is already up to date to ${C_CVERSION} version"
   exit 0
 fi
 
