@@ -1,0 +1,914 @@
+[
+    {
+        "id": "8fb58125.cf3cf",
+        "type": "tab",
+        "label": "MAIN"
+    },
+    {
+        "id": "efacaa16.506768",
+        "type": "tab",
+        "label": "HOSTNAME"
+    },
+    {
+        "id": "84d9ba49.e15a58",
+        "type": "tab",
+        "label": "CPU_TEMP"
+    },
+    {
+        "id": "18c606f7.bf3d39",
+        "type": "tab",
+        "label": "MEMORY"
+    },
+    {
+        "id": "d76ed0.062a113",
+        "type": "tab",
+        "label": "CPU_LOAD"
+    },
+    {
+        "id": "7e7cca39.be2334",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "192.168.0.21",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "29409a7e.7549d6",
+        "type": "inject",
+        "z": "efacaa16.506768",
+        "name": "Inject Hostname",
+        "topic": "Hostname",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 167,
+        "y": 77,
+        "wires": [
+            [
+                "795f19f0.79f6d8"
+            ]
+        ]
+    },
+    {
+        "id": "ede4715c.9b035",
+        "type": "debug",
+        "z": "efacaa16.506768",
+        "name": "Debug Hostname",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 907,
+        "y": 344,
+        "wires": []
+    },
+    {
+        "id": "fd9bf98c.96e2d8",
+        "type": "change",
+        "z": "efacaa16.506768",
+        "name": "Set Global Hostname",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\\n",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "hostname",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 649,
+        "y": 254,
+        "wires": [
+            [
+                "ede4715c.9b035"
+            ]
+        ]
+    },
+    {
+        "id": "5768ab72.602954",
+        "type": "exec",
+        "z": "84d9ba49.e15a58",
+        "command": "vcgencmd",
+        "addpay": false,
+        "append": "measure_temp",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Get CPU Temp",
+        "x": 457,
+        "y": 383.5,
+        "wires": [
+            [
+                "dc137b01.23f188"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "dc137b01.23f188",
+        "type": "change",
+        "z": "84d9ba49.e15a58",
+        "name": "Extract CPU Temp",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "temp=",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "'C\\n",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 588.5,
+        "y": 486.5,
+        "wires": [
+            [
+                "befcba7c.2516a8"
+            ]
+        ]
+    },
+    {
+        "id": "b41c8b16.2e7fc8",
+        "type": "debug",
+        "z": "84d9ba49.e15a58",
+        "name": "Debug CPU Temp",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1189.5,
+        "y": 611.5,
+        "wires": []
+    },
+    {
+        "id": "340a5ccb.4730f4",
+        "type": "change",
+        "z": "84d9ba49.e15a58",
+        "name": "Init Document",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.cpu_temp",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 911,
+        "y": 686,
+        "wires": [
+            [
+                "b41c8b16.2e7fc8",
+                "caa355e9.dca978"
+            ]
+        ]
+    },
+    {
+        "id": "befcba7c.2516a8",
+        "type": "function",
+        "z": "84d9ba49.e15a58",
+        "name": "Convert Str2Float",
+        "func": "msg.payload = parseFloat(msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 730,
+        "y": 583,
+        "wires": [
+            [
+                "340a5ccb.4730f4"
+            ]
+        ]
+    },
+    {
+        "id": "7f685c1a.31a9f4",
+        "type": "link in",
+        "z": "84d9ba49.e15a58",
+        "name": "Link In CPU Temp",
+        "links": [
+            "45eae62d.3b8868"
+        ],
+        "x": 151,
+        "y": 57,
+        "wires": [
+            [
+                "b4b0c635.e7a5f8"
+            ]
+        ]
+    },
+    {
+        "id": "caa355e9.dca978",
+        "type": "link out",
+        "z": "84d9ba49.e15a58",
+        "name": "Link Out CPU Temp",
+        "links": [
+            "a7f4d853.aee378"
+        ],
+        "x": 1115,
+        "y": 766,
+        "wires": []
+    },
+    {
+        "id": "658113c0.423cbc",
+        "type": "delay",
+        "z": "84d9ba49.e15a58",
+        "name": "Delay CPU Temp",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 331,
+        "y": 263,
+        "wires": [
+            [
+                "5768ab72.602954"
+            ]
+        ]
+    },
+    {
+        "id": "b4b0c635.e7a5f8",
+        "type": "change",
+        "z": "84d9ba49.e15a58",
+        "name": "Set CPU Temp Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "CPU Temp",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 231,
+        "y": 149,
+        "wires": [
+            [
+                "658113c0.423cbc"
+            ]
+        ]
+    },
+    {
+        "id": "873f2474.7e48b8",
+        "type": "debug",
+        "z": "18c606f7.bf3d39",
+        "name": "Debug Memory",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1194,
+        "y": 555,
+        "wires": []
+    },
+    {
+        "id": "b12571cb.edd7c",
+        "type": "file in",
+        "z": "18c606f7.bf3d39",
+        "name": "Read Memory File",
+        "filename": "/proc/meminfo",
+        "format": "utf8",
+        "x": 412,
+        "y": 296,
+        "wires": [
+            [
+                "8532cb44.b85998"
+            ]
+        ]
+    },
+    {
+        "id": "8532cb44.b85998",
+        "type": "change",
+        "z": "18c606f7.bf3d39",
+        "name": "Extract Memory",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": " ",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "\\n",
+                "fromt": "re",
+                "to": ", \"",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": ":",
+                "fromt": "str",
+                "to": "\" : ",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "kB",
+                "fromt": "str",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 477,
+        "y": 356,
+        "wires": [
+            [
+                "935b8348.454ea"
+            ]
+        ]
+    },
+    {
+        "id": "709d52b6.85e16c",
+        "type": "json",
+        "z": "18c606f7.bf3d39",
+        "name": "Convert StrJson2Object",
+        "x": 744,
+        "y": 475,
+        "wires": [
+            [
+                "872b4b52.4d03c8"
+            ]
+        ]
+    },
+    {
+        "id": "935b8348.454ea",
+        "type": "function",
+        "z": "18c606f7.bf3d39",
+        "name": "Format Json String",
+        "func": "msg.payload = \"{ \\\"\" + msg.payload + \"End\\\" : 0 }\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 602,
+        "y": 415,
+        "wires": [
+            [
+                "709d52b6.85e16c"
+            ]
+        ]
+    },
+    {
+        "id": "872b4b52.4d03c8",
+        "type": "change",
+        "z": "18c606f7.bf3d39",
+        "name": "Delete End Property",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.End",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 821,
+        "y": 537,
+        "wires": [
+            [
+                "873f2474.7e48b8",
+                "6cebb06d.da707"
+            ]
+        ]
+    },
+    {
+        "id": "af7b0083.8c929",
+        "type": "link in",
+        "z": "18c606f7.bf3d39",
+        "name": "Link In Memory",
+        "links": [
+            "45eae62d.3b8868"
+        ],
+        "x": 156,
+        "y": 113,
+        "wires": [
+            [
+                "bee0f308.d746b"
+            ]
+        ]
+    },
+    {
+        "id": "6cebb06d.da707",
+        "type": "link out",
+        "z": "18c606f7.bf3d39",
+        "name": "Link Out Memory",
+        "links": [
+            "a7f4d853.aee378"
+        ],
+        "x": 1123,
+        "y": 650,
+        "wires": []
+    },
+    {
+        "id": "ad7d49e5.3f2468",
+        "type": "delay",
+        "z": "18c606f7.bf3d39",
+        "name": "Delay Memory",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 317,
+        "y": 236,
+        "wires": [
+            [
+                "b12571cb.edd7c"
+            ]
+        ]
+    },
+    {
+        "id": "bee0f308.d746b",
+        "type": "change",
+        "z": "18c606f7.bf3d39",
+        "name": "Set Memory Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Memory",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 230,
+        "y": 172,
+        "wires": [
+            [
+                "ad7d49e5.3f2468"
+            ]
+        ]
+    },
+    {
+        "id": "e02af45c.42b088",
+        "type": "debug",
+        "z": "d76ed0.062a113",
+        "name": "Debug CPU Load",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1183,
+        "y": 544,
+        "wires": []
+    },
+    {
+        "id": "3f1f283a.e51338",
+        "type": "file in",
+        "z": "d76ed0.062a113",
+        "name": "Read CPU Load File",
+        "filename": "/proc/stat",
+        "format": "utf8",
+        "x": 558,
+        "y": 327,
+        "wires": [
+            [
+                "3080983a.8b6018"
+            ]
+        ]
+    },
+    {
+        "id": "9139509f.c4b67",
+        "type": "change",
+        "z": "d76ed0.062a113",
+        "name": "Backup CPU Info",
+        "rules": [
+            {
+                "t": "set",
+                "p": "userCpu",
+                "pt": "flow",
+                "to": "payload.userCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "niceCpu",
+                "pt": "flow",
+                "to": "payload.niceCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "systemCpu",
+                "pt": "flow",
+                "to": "payload.systemCpu",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "idleCpu",
+                "pt": "flow",
+                "to": "payload.idleCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "iowaitCpu",
+                "pt": "flow",
+                "to": "payload.iowaitCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "irqCpu",
+                "pt": "flow",
+                "to": "payload.irqCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "softirqCpu",
+                "pt": "flow",
+                "to": "payload.softirqCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "stealCpu",
+                "pt": "flow",
+                "to": "payload.stealCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "guestCpu",
+                "pt": "flow",
+                "to": "payload.guestCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "guestNiceCpu",
+                "pt": "flow",
+                "to": "payload.guestNiceCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "loadCpu",
+                "pt": "flow",
+                "to": "payload.loadCpu",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "totalCpu",
+                "pt": "flow",
+                "to": "payload.totalCpu",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 945,
+        "y": 606,
+        "wires": [
+            [
+                "e02af45c.42b088",
+                "3456fece.e20522"
+            ]
+        ]
+    },
+    {
+        "id": "3080983a.8b6018",
+        "type": "split",
+        "z": "d76ed0.062a113",
+        "name": "Split String at CR",
+        "splt": "\\n",
+        "x": 621,
+        "y": 401,
+        "wires": [
+            [
+                "c3d68d6.7316d7"
+            ]
+        ]
+    },
+    {
+        "id": "c3d68d6.7316d7",
+        "type": "switch",
+        "z": "d76ed0.062a113",
+        "name": "Extract CPU Info",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "cpu ",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 1,
+        "x": 696,
+        "y": 472,
+        "wires": [
+            [
+                "9cf4007e.a7536"
+            ]
+        ]
+    },
+    {
+        "id": "9cf4007e.a7536",
+        "type": "function",
+        "z": "d76ed0.062a113",
+        "name": "Calculate CPU Load",
+        "func": "tabCpu = msg.payload.split(\" \");\nmsg.payload = {};\nmsg.payload.userCpu = parseFloat(tabCpu[2]);\nmsg.payload.niceCpu = parseFloat(tabCpu[3]);\nmsg.payload.systemCpu = parseFloat(tabCpu[4]);\nmsg.payload.idleCpu = parseFloat(tabCpu[5]);\nmsg.payload.iowaitCpu = parseFloat(tabCpu[6]);\nmsg.payload.irqCpu = parseFloat(tabCpu[7]);\nmsg.payload.softirqCpu = parseFloat(tabCpu[8]);\nmsg.payload.stealCpu = parseFloat(tabCpu[9]);\nmsg.payload.guestCpu = parseFloat(tabCpu[10]);\nmsg.payload.guestNiceCpu = parseFloat(tabCpu[11]);\nmsg.payload.loadCpu = msg.payload.userCpu + msg.payload.systemCpu;\nmsg.payload.totalCpu = msg.payload.userCpu + msg.payload.systemCpu + msg.payload.idleCpu;\nmsg.payload.percentLoadCpu = (msg.payload.loadCpu - flow.get('loadCpu')) / (msg.payload.totalCpu - flow.get('totalCpu') );\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 819,
+        "y": 541,
+        "wires": [
+            [
+                "9139509f.c4b67"
+            ]
+        ]
+    },
+    {
+        "id": "3d4fb620.b98a5a",
+        "type": "link in",
+        "z": "d76ed0.062a113",
+        "name": "Link In CPU Load",
+        "links": [
+            "45eae62d.3b8868"
+        ],
+        "x": 230,
+        "y": 124,
+        "wires": [
+            [
+                "bd856ced.01ab6"
+            ]
+        ]
+    },
+    {
+        "id": "3456fece.e20522",
+        "type": "link out",
+        "z": "d76ed0.062a113",
+        "name": "Link Out CPU Load",
+        "links": [
+            "a7f4d853.aee378"
+        ],
+        "x": 1102,
+        "y": 684,
+        "wires": []
+    },
+    {
+        "id": "8cc3d0eb.467bf",
+        "type": "delay",
+        "z": "d76ed0.062a113",
+        "name": "Delay CPU Load",
+        "pauseType": "delay",
+        "timeout": "25",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 432,
+        "y": 263,
+        "wires": [
+            [
+                "3f1f283a.e51338"
+            ]
+        ]
+    },
+    {
+        "id": "bd856ced.01ab6",
+        "type": "change",
+        "z": "d76ed0.062a113",
+        "name": "Set CPU Load Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "CPU Load",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 309,
+        "y": 197,
+        "wires": [
+            [
+                "8cc3d0eb.467bf"
+            ]
+        ]
+    },
+    {
+        "id": "e7c29f96.619b6",
+        "type": "inject",
+        "z": "8fb58125.cf3cf",
+        "name": "Inject BEGIN",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "x": 148,
+        "y": 48,
+        "wires": [
+            [
+                "45eae62d.3b8868"
+            ]
+        ]
+    },
+    {
+        "id": "45eae62d.3b8868",
+        "type": "link out",
+        "z": "8fb58125.cf3cf",
+        "name": "Link Out BEGIN",
+        "links": [
+            "1ecc4585.859bea",
+            "6df3fa11.4e6db4",
+            "b161b4be.1c5358",
+            "7f685c1a.31a9f4",
+            "af7b0083.8c929",
+            "3d4fb620.b98a5a"
+        ],
+        "x": 253,
+        "y": 128,
+        "wires": []
+    },
+    {
+        "id": "a7f4d853.aee378",
+        "type": "link in",
+        "z": "8fb58125.cf3cf",
+        "name": "Link In END",
+        "links": [
+            "86221ef4.a2008",
+            "5e67f101.c8185",
+            "5c3fa2fd.1fb3fc",
+            "caa355e9.dca978",
+            "6cebb06d.da707",
+            "3456fece.e20522"
+        ],
+        "x": 603,
+        "y": 132,
+        "wires": [
+            [
+                "6f9f1e1a.ed463"
+            ]
+        ]
+    },
+    {
+        "id": "606b33fa.b6363c",
+        "type": "mqtt out",
+        "z": "8fb58125.cf3cf",
+        "name": "Send To MQTT",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "7e7cca39.be2334",
+        "x": 1083,
+        "y": 53,
+        "wires": []
+    },
+    {
+        "id": "a4d9a9ca.0d8058",
+        "type": "debug",
+        "z": "8fb58125.cf3cf",
+        "name": "Debug MQTT In",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1067,
+        "y": 157,
+        "wires": []
+    },
+    {
+        "id": "6f9f1e1a.ed463",
+        "type": "change",
+        "z": "8fb58125.cf3cf",
+        "name": "Set Host Property",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.host",
+                "pt": "msg",
+                "to": "hostname",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 757,
+        "y": 132,
+        "wires": [
+            [
+                "606b33fa.b6363c",
+                "a4d9a9ca.0d8058"
+            ]
+        ]
+    },
+    {
+        "id": "795f19f0.79f6d8",
+        "type": "exec",
+        "z": "efacaa16.506768",
+        "command": "hostname",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Get Hosname",
+        "x": 387,
+        "y": 174.5,
+        "wires": [
+            [
+                "fd9bf98c.96e2d8"
+            ],
+            [],
+            []
+        ]
+    }
+]
