@@ -16,9 +16,6 @@ if [[ ${N_VERSION} = '' ]]; then
   N_VERSION=6.9.0
 fi
 
-# Stop Kibana Daemon
-sudo /bin/systemctl stop kibana.service
-
 # Full System Update
 sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get install rpi-update -q -y && sudo rpi-update
 

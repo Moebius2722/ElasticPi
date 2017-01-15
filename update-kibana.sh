@@ -23,6 +23,9 @@ if [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
   exit 0
 fi
 
+# Stop Kibana Daemon
+sudo /bin/systemctl stop kibana.service
+
 # Full System Update
 sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
 

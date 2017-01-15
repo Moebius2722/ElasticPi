@@ -20,7 +20,6 @@ sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -
 ####### LOGSTASH #######
 
 # Get and Install Logstash
-#--force-confold
 wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION}.deb && sudo dpkg -i /tmp/logstash-${L_VERSION}.deb
 
 # Get and Compile JFFI library for Logstash
