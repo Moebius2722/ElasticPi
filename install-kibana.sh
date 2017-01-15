@@ -46,8 +46,10 @@ sudo sed -i 's/.*logging\.verbose:.*/logging\.verbose: true/' /etc/kibana/kibana
 # Create Log Directory
 sudo mkdir /var/log/kibana && sudo chown kibana /var/log/kibana
 
-# Create PID Directory
-sudo mkdir /var/run/kibana && sudo chown kibana /var/run/kibana
+# Add PID File Management to Kibana Service
+sudo sed -i '/Type=.*/a PermissionsStartOnly=true' /etc/systemd/system/kibana.service
+sudo sed -i '/PermissionsStartOnly=.*/a ExecStartPre=\/usr\/bin\/install -o kibana -g kibana -d \/var/run/kibana' /etc/systemd/system/kibana.service
+sudo sed -i '/ExecStartPre=.*/a PIDFile=\/var\/run\/kibana\/kibana\.pid' /etc/systemd/system/kibana.service
 
 # Configure and Start Kibana as Daemon
 sudo /bin/systemctl daemon-reload
