@@ -51,3 +51,8 @@ sudo npm install -g node-red-admin
 
 # Install Elasticsearch Node to Node-RED
 node-red-admin install node-red-contrib-elasticsearchcdb
+
+# Import Flows into Node-RED
+sudo /bin/systemctl stop nodered.service
+cp -f ./Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
+sudo /bin/systemctl start nodered.service
