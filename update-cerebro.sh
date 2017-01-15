@@ -13,6 +13,13 @@ if [[ ${C_VERSION} = '' ]]; then
   C_VERSION=0.4.2
 fi
 
+# Check if already up to date
+C_CVERSION=`ls /usr/share/cerebro/lib/cerebro.cerebro-*-assets.jar | cut -d - -f2`
+if [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
+  echo "Cerebro is up to date to ${C_CVERSION} version"
+  exit 0
+fi
+
 # Stop Cerebro Daemon
 sudo /bin/systemctl stop cerebro.service
 

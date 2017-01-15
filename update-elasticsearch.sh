@@ -14,7 +14,7 @@ if [[ "${E_VERSION}" = '' ]]; then
 fi
 
 # Check if already up to date
-E_CVERSION=`curl -s 'localhost:9200' | jq -c -r '.version.number'`
+E_CVERSION=`dpkg-query -W -f='${Version}\n' elasticsearch`
 if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
   echo "Elasticsearch is up to date to ${E_CVERSION} version"
   exit 0

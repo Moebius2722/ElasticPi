@@ -8,6 +8,16 @@
 
 ####### COMMON #######
 
+# Set Version
+NR_VERSION=`npm info node-red version`
+
+# Check if already up to date
+NR_CVERSION=`npm -g ls --depth=0 node-red | grep -i node-red | cut -d @ -f2 | cut -d ' ' -f1`
+if [[ "${NR_VERSION}" = "${NR_CVERSION}" ]]; then
+  echo "Node-RED is up to date to ${NR_CVERSION} version"
+  exit 0
+fi
+
 # Stop Node-RED Daemon
 sudo /bin/systemctl stop nodered.service
 
