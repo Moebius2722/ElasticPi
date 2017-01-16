@@ -4,6 +4,7 @@
 # Mail : moebius2722@laposte.net
 # Git : https://github.com/Moebius2722/ElkPi.git
 
+# Full Automated On USB Raspbian Installation Script for Raspberry Pi 2 or 3
 
 
 ####### INSTALL ON USB #######
