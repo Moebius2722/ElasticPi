@@ -67,6 +67,7 @@ echo . | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.21' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.22' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 echo '192.168.0.23' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.24' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
 # Create and configure Backup NFS mount point
 sudo mkdir /mnt/espibackup
