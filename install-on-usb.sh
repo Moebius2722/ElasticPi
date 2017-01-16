@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElkPi.git
+
+
+
+####### INSTALL ON USB #######
+
 # Upgrade Firmware with Boot On USB Feature
 sudo apt-get update && sudo apt-get install rpi-update rsync -q -y && sudo BRANCH=next rpi-update
 

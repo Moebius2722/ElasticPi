@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElkPi.git
+
+
+
+####### CONFIGURE ELK PI #######
+
 # Install sshpass utility for ssh connection without password prompt
 sudo apt-get install sshpass -y
 
