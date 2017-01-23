@@ -1,0 +1,17 @@
+packages=nano
+firmware_packages=1
+
+timezone=Europe/Paris
+keyboard_layout=fr
+locales=en_GB.UTF-8,fr_FR.UTF-8
+system_default_locale=fr_FR.UTF-8
+
+username=pi
+userpw=raspberry
+user_is_admin=1
+usergpu=1
+
+rootpw=raspbian
+root_ssh_allow=0
+
+gpu_mem=128
