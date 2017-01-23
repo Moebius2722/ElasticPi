@@ -7,6 +7,9 @@ Documentation=https://github.com/lmenezes/cerebro
 
 [Service]
 Type=simple
+PermissionsStartOnly=true
+ExecStartPre=/usr/bin/install -o cerebro -g cerebro -d /var/run/cerebro
+PIDFile=/var/run/cerebro/cerebro.pid
 # Run as normal cerebro user - feel free to change...
 User=cerebro
 Group=cerebro
