@@ -1,6 +1,6 @@
 #Package
 #preset=server
-packages=nano,chromium-browser
+packages=nano,git,chromium-browser
 firmware_packages=1
 #mirror=http://mirrordirector.raspbian.org/raspbian/
 #release=jessie
