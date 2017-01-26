@@ -1,6 +1,13 @@
+# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElkPi.git
+
+# Configuration file for "raspberrypi-ua-netinst" project
+# Site : https://github.com/FooDeas/raspberrypi-ua-netinst
+
 #Package
 #preset=server
-packages=nano,git,chromium-browser
+packages=nano,git
 firmware_packages=1
 #mirror=http://mirrordirector.raspbian.org/raspbian/
 #release=jessie
