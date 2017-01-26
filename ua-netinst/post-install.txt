@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElkPi.git
+
+# Post Install Script File for "raspberrypi-ua-netinst" project
+# Site : https://github.com/FooDeas/raspberrypi-ua-netinst
+
+
+####### INSTALL ELK #######
+
+# Get Elk Git
+git clone https://github.com/Moebius2722/ElkPi.git
+cd ElkPi
+chmod a+x *.sh
+./install-elk-pi.sh
