@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ ${C_VERSION} = '' ]]; then
-  C_VERSION=0.4.2
+  C_VERSION=0.5.0
 fi
 
 # Full System Update
