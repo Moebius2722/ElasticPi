@@ -17,7 +17,7 @@ N_VERSION=6.9.0
 C_VERSION=0.5.0
 
 # Set Pi Updated Flag
-PI_UPDATED=0
+export PI_UPDATED=1
 
 ####### ELASTICSEARCH #######
 

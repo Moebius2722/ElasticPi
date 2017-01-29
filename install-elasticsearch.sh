@@ -22,7 +22,7 @@ sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
-  PI_UPDATED=1
+  export PI_UPDATED=1
 fi
 
 # Install Tools
