@@ -19,7 +19,11 @@ echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.co
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 
 # Full System Update
-sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get install rpi-update -q -y && sudo rpi-update
+if [[ ! "${PI_UPDATED}" = "1" ]]; then
+  echo "Full System Update"
+  sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
+  PI_UPDATED=1
+fi
 
 # Install Tools
 # If you get script via GitHub, git tool is already installed ;)

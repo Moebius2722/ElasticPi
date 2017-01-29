@@ -16,6 +16,9 @@ K_VERSION=5.1.2
 N_VERSION=6.9.0
 C_VERSION=0.5.0
 
+# Set Pi Updated Flag
+PI_UPDATED=0
+
 ####### ELASTICSEARCH #######
 
 ./update-elasticsearch.sh

@@ -18,7 +18,11 @@ if [[ ${N_VERSION} = '' ]]; then
 fi
 
 # Full System Update
-sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo apt-get install rpi-update -q -y && sudo rpi-update
+if [[ ! "${PI_UPDATED}" = "1" ]]; then
+  echo "Full System Update"
+  sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
+  PI_UPDATED=1
+fi
 
 
 ####### KIBANA #######
