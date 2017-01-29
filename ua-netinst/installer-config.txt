@@ -65,7 +65,7 @@ hdmi_monitor_res=1920x1080
 
 #Partitioning / Filesystem
 #usbroot=
-rootfstype=ext4
+#rootfstype=f2fs
 boot_volume_label=MINIPI
 #bootsize=+128M
 #bootoffset=8192
