@@ -61,7 +61,21 @@ sudo /bin/systemctl start elasticsearch.service
 # Install and Configure Curator for Elasticsearch
 sudo pip install --upgrade PySocks && sudo pip install --upgrade elasticsearch-curator
 
+# Wait for start-up the upgraded node
+echo "Wait for start-up the upgraded node."
+SHORTHOSTNAME=`hostname -s`
+b_check=0
+int_cpt=0
+while [ $b_check -eq 0 -a $int_cpt -lt 120 ]; do
+  b_check=`curl -XGET 'localhost:9200/_cat/nodes?pretty'|grep -ic $SHORTHOSTNAME`
+  sleep 5
+  int_cpt=$[$int_cpt+1]
+done
+if [ $b_check -eq 0 -a $int_cpt -eq 120 ]; then
+  echo "Time Out for start-up the upgraded node."
+else
 # Reenable shard allocation
+echo "Reenable shard allocation."
 curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
 {
   "transient": {
@@ -69,3 +83,17 @@ curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: applicati
   }
 }
 '
+fi
+
+# Wait for the node to recover
+echo "Wait for the node to recover."
+b_check=0
+int_cpt=0
+while [ $b_check -eq 0 -a $int_cpt -lt 180 ]; do
+  b_check=`curl -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4|grep -ci green`
+  sleep 10
+  int_cpt=$[$int_cpt+1]
+done
+if [ $b_check -eq 0 -a $int_cpt -eq 180 ]; then
+  echo "Time Out for the node to recover."
+fi
