@@ -21,6 +21,18 @@ if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
   exit 0
 fi
 
+# Disable shard allocation
+curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+{
+  "transient": {
+    "cluster.routing.allocation.enable": "none"
+  }
+}
+'
+
+# Stop non-essential indexing and perform a synced flush
+curl -XPOST 'localhost:9200/_flush/synced?pretty'
+
 # Stop Elasticsearch Daemon
 sudo /bin/systemctl stop elasticsearch.service
 
@@ -48,3 +60,12 @@ sudo /bin/systemctl start elasticsearch.service
 
 # Install and Configure Curator for Elasticsearch
 sudo pip install --upgrade PySocks && sudo pip install --upgrade elasticsearch-curator
+
+# Reenable shard allocation
+curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+{
+  "transient": {
+    "cluster.routing.allocation.enable": "all"
+  }
+}
+'
