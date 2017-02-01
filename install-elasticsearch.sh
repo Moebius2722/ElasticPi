@@ -64,6 +64,9 @@ sudo sed -i '/#node\.max_local_storage_nodes: .*/a node.max_local_storage_nodes:
 echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 echo 'http.cors.allow-origin: ".*"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
+# Disable System Call Filter Check (Since 5.2.0 this check blocking start-up daemon)
+echo 'bootstrap.system_call_filter: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+
 # Install and Configure Discovery-File plugin
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-file
 sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_provider: file' /etc/elasticsearch/elasticsearch.yml
