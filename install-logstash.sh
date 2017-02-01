@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
-  L_VERSION=5.1.2
+  L_VERSION=5.2.0
 fi
 
 # Full System Update

@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ ${K_VERSION} = '' ]]; then
-  K_VERSION=5.1.2
+  K_VERSION=5.2.0
 fi
 if [[ ${N_VERSION} = '' ]]; then
   N_VERSION=6.9.0

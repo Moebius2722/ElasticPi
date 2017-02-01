@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ "${E_VERSION}" = '' ]]; then
-  E_VERSION=5.1.2
+  E_VERSION=5.2.0
 fi
 
 # Check if already up to date
