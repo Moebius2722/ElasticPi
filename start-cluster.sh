@@ -39,22 +39,23 @@ while [ $b_check -eq 0 -a $int_cpt -lt 120 ]; do
   sleep 5
   int_cpt=$[$int_cpt+1]
 done
+echo
 if [ $b_check -eq 0 -a $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
 else
   # Reenable shard allocation
-  echo "Reenable shard allocation."
+  echo "Reenable shard allocation"
   curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
   {
     "transient": {
       "cluster.routing.allocation.enable": "all"
     }
   }
-  '
+  ' >/dev/null 2>/dev/null
 fi
 
 # Wait for the node to recover
-echo "Wait for the nodes to recover."
+echo "Wait for the nodes to recover"
 b_check=0
 int_cpt=0
 while [ $b_check -eq 0 -a $int_cpt -lt 180 ]; do
@@ -63,6 +64,7 @@ while [ $b_check -eq 0 -a $int_cpt -lt 180 ]; do
   sleep 10
   int_cpt=$[$int_cpt+1]
 done
+echo
 if [ $b_check -eq 0 -a $int_cpt -eq 180 ]; then
   echo "Time Out for the node to recover."
 fi
