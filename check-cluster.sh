@@ -11,6 +11,7 @@
 
 echo " HOST             ES LS KB NG CB NR MQ "
 
+
 # Get IP Nodes
 ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort` )
 
@@ -23,45 +24,48 @@ for ipnode in "${ipnodes[@]}"
 do
   ssh $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    ses=OK
+    ses=ok
   else
     ses=KO
   fi
   ssh $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    sls=OK
+    sls=ok
   else
     sls=KO
   fi
   ssh $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    skb=OK
+    skb=ok
   else
     skb=KO
   fi
   ssh $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    sng=OK
+    sng=ok
   else
     sng=KO
   fi
   ssh $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    scb=OK
+    scb=ok
   else
     scb=KO
   fi
   ssh $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    snr=OK
+    snr=ok
   else
     snr=KO
   fi
   ssh $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    smq=OK
+    smq=ok
   else
     smq=KO
   fi
-  echo "$ipnode $ses $sls $skb $sng $scb $snr $smq"
+  iipnode=${#ipnode}
+  iend=$((15-iipnode))
+  send=`printf "%${iend}s"`
+  echo " $ipnode$send  $ses $sls $skb $sng $scb $snr $smq"
 done
