@@ -15,7 +15,7 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 
 ####### STOP-CLUSTER #######
 
-# Check and Start Cluster Services
+# Check and Stop Cluster Services
 
 # Stop Nginx
 echo "===================================== Nginx ===================================="
@@ -92,14 +92,16 @@ done
 # Stop Elasticsearch
 echo "================================= Elasticsearch ================================"
 # Disable shard allocation
+echo "Disable shard allocation"
 curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
 {
   "transient": {
     "cluster.routing.allocation.enable": "none"
   }
 }
-'
+' >/dev/null 2>/dev/null
 
+# Flush Index and Stop Elasticsearch Services
 for ipnode in "${ipnodes[@]}"
 do
   ssh $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
