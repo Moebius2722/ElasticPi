@@ -9,8 +9,7 @@
 
 ####### COMMON #######
 
-# echo " HOST             ES LS KB NG CB NR MQ "
-# echo " 192.168.123.456
+echo " HOST             ES LS KB NG CB NR MQ "
 
 # Get IP Nodes
 ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort` )
@@ -64,5 +63,5 @@ do
   else
     smq=KO
   fi
-  echo "$ipnode $ses $sls $skb $sng $cb $nr $mq"
+  echo "$ipnode $ses $sls $skb $sng $scb $snr $smq"
 done
