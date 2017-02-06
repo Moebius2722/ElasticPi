@@ -33,14 +33,14 @@ done
 echo "Wait for start-up nodes"
 b_check=0
 int_cpt=0
-while [ $b_check -eq 0 -a $int_cpt -lt 120 ]; do
-  b_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4|grep -ci yellow`
+while [ $b_check -eq 1 -a $int_cpt -lt 120 ]; do
+  b_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4|grep -ci red`
   echo -n '.'
   sleep 5
   int_cpt=$[$int_cpt+1]
 done
 echo
-if [ $b_check -eq 0 -a $int_cpt -eq 120 ]; then
+if [ $b_check -eq 1 -a $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
 else
   # Reenable shard allocation
