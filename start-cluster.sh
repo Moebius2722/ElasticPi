@@ -143,7 +143,7 @@ do
 done
 
 # Start Keepalived
-echo "===================================== Keepalived ===================================="
+echo "================================== Keepalived =================================="
 for ipnode in "${ipnodes[@]}"
 do
   ssh $ipnode sudo systemctl enable keepalived.service >/dev/null 2>/dev/null
