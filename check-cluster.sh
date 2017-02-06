@@ -9,7 +9,7 @@
 
 ####### COMMON #######
 
-echo " HOST             ES LS KB NG CB NR MQ "
+echo " HOST             ES LS KB NG CB NR MQ KA"
 
 
 # Get IP Nodes
@@ -64,8 +64,14 @@ do
   else
     smq=KO
   fi
+  ssh $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    ska=ok
+  else
+    ska=KO
+  fi
   iipnode=${#ipnode}
   iend=$((15-iipnode))
   send=`printf "%${iend}s"`
-  echo " $ipnode$send  $ses $sls $skb $sng $scb $snr $smq"
+  echo " $ipnode$send  $ses $sls $skb $sng $scb $snr $smq $ska"
 done

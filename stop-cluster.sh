@@ -17,6 +17,18 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 
 # Check and Stop Cluster Services
 
+# Stop Keepalived
+echo "================================== Keepalived =================================="
+for ipnode in "${ipnodes[@]}"
+do
+  ssh $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    echo "$ipnode : Stop Keepalived"
+	ssh $ipnode sudo systemctl stop keepalived.service >/dev/null 2>/dev/null
+  fi
+  ssh $ipnode sudo systemctl disable keepalived.service >/dev/null 2>/dev/null
+done
+
 # Stop Nginx
 echo "===================================== Nginx ===================================="
 for ipnode in "${ipnodes[@]}"

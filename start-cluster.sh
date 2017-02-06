@@ -141,3 +141,15 @@ do
 	ssh $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
   fi
 done
+
+# Start Keepalived
+echo "===================================== Keepalived ===================================="
+for ipnode in "${ipnodes[@]}"
+do
+  ssh $ipnode sudo systemctl enable keepalived.service >/dev/null 2>/dev/null
+  ssh $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
+  if [[ ! $? = 0 ]] ; then
+    echo "$ipnode : Start Keepalived"
+	ssh $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
+  fi
+done

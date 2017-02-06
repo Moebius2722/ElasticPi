@@ -47,3 +47,8 @@ export PI_UPDATED=1
 ####### NODERED #######
 
 ./install-nodered.sh
+
+
+####### KEEPALIVED #######
+
+./install-keepalived.sh
