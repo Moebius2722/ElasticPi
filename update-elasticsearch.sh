@@ -30,6 +30,8 @@ curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: applicati
 }
 '
 
+sleep 10
+
 # Stop non-essential indexing and perform a synced flush
 curl -XPOST 'localhost:9200/_flush/synced?pretty'
 
