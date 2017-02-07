@@ -14,6 +14,6 @@ client:
 
 logging:
   loglevel: INFO
-  logfile: /var/log/curator.log
+  logfile: /var/log/curator/curator.log
   logformat: default
   blacklist: ['elasticsearch', 'urllib3']

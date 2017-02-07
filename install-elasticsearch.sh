@@ -80,13 +80,13 @@ echo '192.168.0.25' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_host
 
 # Create and configure Backup NFS mount point
 sudo mkdir /mnt/espibackup
-sudo chown elasticsearch:elasticsearch /mnt/espibackup
+sudo chown -R elasticsearch:elasticsearch /mnt/espibackup
 sudo systemctl enable rpcbind.service
 sudo systemctl start rpcbind.service
 echo '192.168.0.1:/volume1/espibackup /mnt/espibackup nfs rw         0       0' | sudo tee -a /etc/fstab
 sudo mount /mnt/espibackup
 sudo mkdir /mnt/espibackup/repo
-sudo chown elasticsearch:elasticsearch /mnt/espibackup/repo
+sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/repo
 sudo chmod -R 770 /mnt/espibackup
 sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
 
@@ -106,4 +106,7 @@ curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{
 # Install and Configure Curator for Elasticsearch
 sudo cp -f `dirname $0`/Curator/curator-config.yml /etc/elasticsearch/curator-config.yml
 sudo cp -f `dirname $0`/Curator/curator-actions.yml /etc/elasticsearch/curator-actions.yml
-sudo apt-get install python-pip -q -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   root    /usr/local/bin/curator --config /etc/elasticsearch/curator-config.yml /etc/elasticsearch/curator-actions.yml" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
+sudo mkdir /var/log/curator
+sudo chwon -R elasticsearch:elasticsearch /var/log/curator
+sudo chmod -R 770 /var/log/curator
+sudo apt-get install python-pip -q -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   elasticsearch    /usr/local/bin/curator --config /etc/elasticsearch/curator-config.yml /etc/elasticsearch/curator-actions.yml" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
