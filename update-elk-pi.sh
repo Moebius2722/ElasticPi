@@ -20,6 +20,12 @@ C_VERSION=`wget https://github.com/lmenezes/cerebro/releases/latest -qO- | grep 
 # Set Pi Updated Flag
 export PI_UPDATED=0
 
+
+####### STOP-NODE #######
+
+`dirname $0`/stop-node.sh
+
+
 ####### ELASTICSEARCH #######
 
 `dirname $0`/update-elasticsearch.sh
@@ -44,9 +50,16 @@ export PI_UPDATED=0
 
 `dirname $0`/update-nodered.sh
 
-# Full System Update
+
+####### FULL SYSTEM UPDATE #######
 if [[ ! "${PI_UPDATED}" = 1 ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1
 fi
+
+
+####### START-NODE #######
+
+`dirname $0`/start-node.sh
+
