@@ -30,18 +30,18 @@ if [[ ! $? = 0 ]] ; then
   ssh $ipnode sudo systemctl start elasticsearch.service >/dev/null 2>/dev/null
 fi
 
-# Wait for start-up nodes
-echo "Wait for start-up nodes"
-b_check=0
+# Wait for start-up node
+echo "Wait for start-up node"
+s_check=red
 int_cpt=0
-while [ $b_check -eq 1 -a $int_cpt -lt 120 ]; do
-  b_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4|grep -ci red`
+while [ $s_check != yellow ] && [ $s_check != green ] && [ $int_cpt -lt 120 ]; do
+  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
   echo -n '.'
   sleep 5
   int_cpt=$[$int_cpt+1]
 done
 echo
-if [ $b_check -eq 1 -a $int_cpt -eq 120 ]; then
+if [ $s_check != yellow ] && [ $s_check != green ] && [ $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
 else
   # Reenable shard allocation
@@ -56,17 +56,16 @@ else
 fi
 
 # Wait for the node to recover
-echo "Wait for the nodes to recover"
-b_check=0
+echo "Wait for the node to recover"
 int_cpt=0
-while [ $b_check -eq 0 -a $int_cpt -lt 180 ]; do
-  b_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4|grep -ci green`
+while [ $s_check != green ] && [ $int_cpt -lt 180 ]; do
+  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
   echo -n '.'
   sleep 10
   int_cpt=$[$int_cpt+1]
 done
 echo
-if [ $b_check -eq 0 -a $int_cpt -eq 180 ]; then
+if [ $s_check != green ] && [ $int_cpt -eq 180 ]; then
   echo "Time Out for the node to recover."
 fi
 
