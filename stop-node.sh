@@ -96,6 +96,8 @@ curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: applicati
 }
 ' >/dev/null 2>/dev/null
 
+sleep 10
+
 # Flush Index and Stop Elasticsearch Services
 ssh $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
 if [[ $? = 0 ]] ; then
