@@ -16,9 +16,10 @@ else
   ipnode=$1
 fi
 
-####### STOP-CLUSTER #######
 
-# Check and Stop Cluster Services
+####### STOP-NODE #######
+
+# Check and Stop Node Services
 
 # Stop Keepalived
 echo "================================== Keepalived =================================="

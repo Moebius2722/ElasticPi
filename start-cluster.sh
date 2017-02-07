@@ -25,7 +25,7 @@ do
   ssh $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Elasticsearch"
-	ssh $ipnode sudo systemctl start elasticsearch.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start elasticsearch.service >/dev/null 2>/dev/null
   fi
 done
 
@@ -77,7 +77,7 @@ do
   ssh $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Cerebro"
-	ssh $ipnode sudo systemctl start cerebro.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start cerebro.service >/dev/null 2>/dev/null
   fi
 done
 
@@ -89,7 +89,7 @@ do
   ssh $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Mosquitto"
-	ssh $ipnode sudo systemctl start mosquitto.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start mosquitto.service >/dev/null 2>/dev/null
   fi
 done
 
@@ -101,7 +101,7 @@ do
   ssh $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Node-RED"
-	ssh $ipnode sudo systemctl start nodered.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start nodered.service >/dev/null 2>/dev/null
   fi
 done
 
@@ -113,7 +113,7 @@ do
   ssh $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Logstash"
-	ssh $ipnode sudo systemctl start logstash.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start logstash.service >/dev/null 2>/dev/null
   fi
 done
 
@@ -125,9 +125,8 @@ do
   ssh $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Kibana"
-	ssh $ipnode sudo systemctl start kibana.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start kibana.service >/dev/null 2>/dev/null
   fi
-  
 done
 
 # Start Nginx
@@ -138,7 +137,7 @@ do
   ssh $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Nginx"
-	ssh $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
   fi
 done
 
@@ -150,6 +149,6 @@ do
   ssh $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
   if [[ ! $? = 0 ]] ; then
     echo "$ipnode : Start Keepalived"
-	ssh $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
   fi
 done

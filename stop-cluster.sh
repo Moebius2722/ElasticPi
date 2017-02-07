@@ -24,7 +24,7 @@ do
   ssh $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Keepalived"
-	ssh $ipnode sudo systemctl stop keepalived.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop keepalived.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable keepalived.service >/dev/null 2>/dev/null
 done
@@ -36,7 +36,7 @@ do
   ssh $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Nginx"
-	ssh $ipnode sudo systemctl stop nginx.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop nginx.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable nginx.service >/dev/null 2>/dev/null
 done
@@ -48,7 +48,7 @@ do
   ssh $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Kibana"
-	ssh $ipnode sudo systemctl stop kibana.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop kibana.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable kibana.service >/dev/null 2>/dev/null
 done
@@ -60,7 +60,7 @@ do
   ssh $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Logstash"
-	ssh $ipnode sudo systemctl stop logstash.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop logstash.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable logstash.service >/dev/null 2>/dev/null
 done
@@ -72,7 +72,7 @@ do
   ssh $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Node-RED"
-	ssh $ipnode sudo systemctl stop nodered.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop nodered.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable nodered.service >/dev/null 2>/dev/null
 done
@@ -84,7 +84,7 @@ do
   ssh $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Mosquitto"
-	ssh $ipnode sudo systemctl stop mosquitto.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop mosquitto.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable mosquitto.service >/dev/null 2>/dev/null
 done
@@ -96,7 +96,7 @@ do
   ssh $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Cerebro"
-	ssh $ipnode sudo systemctl stop cerebro.service >/dev/null 2>/dev/null
+    ssh $ipnode sudo systemctl stop cerebro.service >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable cerebro.service >/dev/null 2>/dev/null
 done
@@ -119,7 +119,7 @@ do
   ssh $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     echo "$ipnode : Stop Elasticsearch"
-	ssh $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty' ; sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
+    ssh $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty' ; sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
   fi
   ssh $ipnode sudo systemctl disable elasticsearch.service >/dev/null 2>/dev/null
 done
