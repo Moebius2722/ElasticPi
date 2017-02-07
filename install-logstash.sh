@@ -35,7 +35,7 @@ sudo sed -i 's/-Xms.*/-Xms200m/' /etc/logstash/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
 
 # Set Logstash Node Configuration
-sudo cp -f ./Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
+sudo cp -f `dirname $0`/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
 
 # Configure and Start Logstash as Daemon
 sudo /bin/systemctl daemon-reload

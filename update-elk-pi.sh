@@ -22,27 +22,27 @@ export PI_UPDATED=0
 
 ####### ELASTICSEARCH #######
 
-./update-elasticsearch.sh
+`dirname $0`/update-elasticsearch.sh
 
 
 ####### LOGSTASH #######
 
-./update-logstash.sh
+`dirname $0`/update-logstash.sh
 
 
 ####### KIBANA #######
 
-./update-kibana.sh
+`dirname $0`/update-kibana.sh
 
 
 ####### CEREBRO #######
 
-./update-cerebro.sh
+`dirname $0`/update-cerebro.sh
 
 
 ####### NODERED #######
 
-./update-nodered.sh
+`dirname $0`/update-nodered.sh
 
 # Full System Update
 if [[ ! "${PI_UPDATED}" = 1 ]]; then

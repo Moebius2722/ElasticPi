@@ -59,5 +59,5 @@ node-red-admin install node-red-contrib-elasticsearchcdb
 
 # Import Flows into Node-RED
 sudo /bin/systemctl stop nodered.service
-cp -f ./Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
+cp -f `dirname $0`/Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
 sudo /bin/systemctl start nodered.service

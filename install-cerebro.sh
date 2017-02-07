@@ -40,7 +40,7 @@ fi
 sudo chown -R cerebro:cerebro /usr/share/cerebro
 
 # Adding Autostart capability using SystemD
-sudo cp -f ./Cerebro/cerebro.service /etc/systemd/system/.
+sudo cp -f `dirname $0`/Cerebro/cerebro.service /etc/systemd/system/.
 sudo /bin/systemctl daemon-reload
 
 # Enable and start Cerebro daemon
