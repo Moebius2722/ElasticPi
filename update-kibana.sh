@@ -11,10 +11,11 @@
 
 # Set Version
 if [[ ${K_VERSION} = '' ]]; then
-  K_VERSION=5.2.0
+  K_VERSION=`wget https://www.elastic.co/downloads/kibana/ -qO- | grep -i "\-i386\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3`
 fi
 if [[ ${N_VERSION} = '' ]]; then
-  N_VERSION=6.9.0
+  K_MVERSION=`echo $K_VERSION | cut -d . -f 1-2`
+  N_VERSION=`wget https://raw.githubusercontent.com/elastic/kibana/$K_MVERSION/.node-version -qO-`
 fi
 
 # Check if already up to date
@@ -28,7 +29,7 @@ fi
 sudo /bin/systemctl stop kibana.service
 
 # Full System Update
-if [[ ! "${PI_UPDATED}" = "1" ]]; then
+if [[ ! "${PI_UPDATED}" = 1 ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1

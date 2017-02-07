@@ -11,11 +11,11 @@
 
 # Set Version
 if [[ ${C_VERSION} = '' ]]; then
-  C_VERSION=0.5.0
+  C_VERSION=C_VERSION=`wget https://github.com/lmenezes/cerebro/releases/latest -qO- | grep -i "\.tgz\"" | cut -d '"' -f 2 | cut -d / -f 7 | cut -d - -f 2 | cut -d . -f 1-3`
 fi
 
 # Full System Update
-if [[ ! "${PI_UPDATED}" = "1" ]]; then
+if [[ ! "${PI_UPDATED}" = 1 ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1

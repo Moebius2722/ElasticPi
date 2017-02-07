@@ -23,7 +23,7 @@ fi
 sudo /bin/systemctl stop nodered.service
 
 # Full System Update
-if [[ ! "${PI_UPDATED}" = "1" ]]; then
+if [[ ! "${PI_UPDATED}" = 1 ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1
@@ -32,9 +32,13 @@ fi
 
 ####### NODERED #######
 
+# Update NodeJS
+curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+sudo apt-get upgrade -q -y
+
 # Update Node-RED
 sudo npm cache clean
-sudo npm update -g npm@2.x
+#sudo npm install -g npm@2.x
 hash -r
 sudo npm update -g node-gyp
 sudo npm update -g --unsafe-perm node-red

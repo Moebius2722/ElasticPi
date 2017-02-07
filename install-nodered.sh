@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Full System Update
-if [[ ! "${PI_UPDATED}" = "1" ]]; then
+if [[ ! "${PI_UPDATED}" = 1 ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1
@@ -21,20 +21,20 @@ fi
 
 # Remove Old Node-RED
 node-red-stop
-sudo apt-get remove nodered -q -y
+sudo apt-get purge nodered -q -y
 
 # Remove Old NodeJS
-sudo apt-get remove nodejs nodejs-legacy -q -y
-sudo apt-get remove npm -q -y
+sudo apt-get purge nodejs nodejs-legacy -q -y
+sudo apt-get purge npm -q -y
 sudo apt-get autoremove -q -y
 
 # Install Lastest NodeJS and some additional dependencies
-curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 sudo apt-get install build-essential python-rpi.gpio nodejs -q -y
 
 # Install Lastest Node-RED
 sudo npm cache clean
-sudo npm install -g npm@2.x
+#sudo npm install -g npm@2.x
 hash -r
 sudo npm install -g node-gyp
 sudo npm install -g --unsafe-perm node-red

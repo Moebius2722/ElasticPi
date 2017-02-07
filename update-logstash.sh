@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
-  L_VERSION=5.2.0
+  L_VERSION=`wget https://www.elastic.co/downloads/logstash/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3`
 fi
 
 # Check if already up to date
@@ -25,7 +25,7 @@ fi
 sudo /bin/systemctl stop logstash.service
 
 # Full System Update
-if [[ ! "${PI_UPDATED}" = "1" ]]; then
+if [[ ! "${PI_UPDATED}" = 1 ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1
