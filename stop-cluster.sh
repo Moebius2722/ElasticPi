@@ -113,6 +113,8 @@ curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: applicati
 }
 ' >/dev/null 2>/dev/null
 
+sleep 10
+
 # Flush Index and Stop Elasticsearch Services
 for ipnode in "${ipnodes[@]}"
 do
