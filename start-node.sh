@@ -75,7 +75,7 @@ ssh $ipnode sudo systemctl enable cerebro.service >/dev/null 2>/dev/null
 ssh $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Cerebro"
-  ssh $ipnode sudo systemctl start cerebro.service >/dev/null 2>/dev/null
+  ssh $ipnode "sudo rm -f /usr/share/cerebro/RUNNING_PID ; sudo systemctl start cerebro.service" >/dev/null 2>/dev/null
 fi
 
 # Start Mosquitto
