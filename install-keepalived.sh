@@ -21,13 +21,13 @@ fi
 
 # Prevent loopback ARP response for Keepalived.
 
-echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/keepalived.conf
+echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/95-keepalived.conf
 sudo sysctl -w net.ipv4.ip_nonlocal_bind=1
-echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
 sudo sysctl -w net.ipv4.ip_forward=1
-echo net.ipv4.conf.lo.arp_ignore=1 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.arp_ignore=1 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
 sudo sysctl -w net.ipv4.conf.lo.arp_ignore=1
-echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/keepalived.conf
+echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
 sudo sysctl -w net.ipv4.conf.lo.arp_announce=2
 sudo sysctl -p
 
