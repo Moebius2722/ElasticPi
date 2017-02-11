@@ -23,11 +23,11 @@ fi
 
 # Start Elasticsearch
 echo "================================= Elasticsearch ================================"
-ssh $ipnode sudo systemctl enable elasticsearch.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable elasticsearch.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Elasticsearch"
-  ssh $ipnode sudo systemctl start elasticsearch.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start elasticsearch.service >/dev/null 2>/dev/null
 fi
 
 # Wait for start-up node
@@ -71,63 +71,63 @@ fi
 
 # Start Cerebro
 echo "==================================== Cerebro ==================================="
-ssh $ipnode sudo systemctl enable cerebro.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable cerebro.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Cerebro"
-  ssh $ipnode "sudo rm -f /usr/share/cerebro/RUNNING_PID ; sudo systemctl start cerebro.service" >/dev/null 2>/dev/null
+  ssh -t $ipnode "sudo rm -f /usr/share/cerebro/RUNNING_PID ; sudo systemctl start cerebro.service" >/dev/null 2>/dev/null
 fi
 
 # Start Mosquitto
 echo "=================================== Mosquitto =================================="
-ssh $ipnode sudo systemctl enable mosquitto.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable mosquitto.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Mosquitto"
-  ssh $ipnode sudo systemctl start mosquitto.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start mosquitto.service >/dev/null 2>/dev/null
 fi
 
 # Start Node-RED
 echo "=================================== Node-RED ==================================="
-ssh $ipnode sudo systemctl enable nodered.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable nodered.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Node-RED"
-  ssh $ipnode sudo systemctl start nodered.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start nodered.service >/dev/null 2>/dev/null
 fi
 
 # Start Logstash
 echo "=================================== Logstash ==================================="
-ssh $ipnode sudo systemctl enable logstash.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable logstash.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Logstash"
-  ssh $ipnode sudo systemctl start logstash.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start logstash.service >/dev/null 2>/dev/null
 fi
 
 # Start Kibana
 echo "==================================== Kibana ===================================="
-ssh $ipnode sudo systemctl enable kibana.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable kibana.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Kibana"
-  ssh $ipnode sudo systemctl start kibana.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start kibana.service >/dev/null 2>/dev/null
 fi
 
 # Start Nginx
 echo "===================================== Nginx ===================================="
-ssh $ipnode sudo systemctl enable nginx.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable nginx.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Nginx"
-  ssh $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
 fi
 
 # Start Keepalived
 echo "================================== Keepalived =================================="
-ssh $ipnode sudo systemctl enable keepalived.service >/dev/null 2>/dev/null
-ssh $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl enable keepalived.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Keepalived"
-  ssh $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
+  ssh -t $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
 fi

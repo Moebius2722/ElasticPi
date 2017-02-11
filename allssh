@@ -22,7 +22,7 @@ do
   sbegin=`printf "%${ibegin}s" | tr " " "="`
   send=`printf "%${iend}s" | tr " " "="`
   echo "$sbegin $ipnode $send"
-  ssh $ipnode $*
+  ssh -t $ipnode $*
 done
 
 iiphost=${#iphost}
@@ -31,4 +31,4 @@ iend=$((($ilength-$iiphost-2)/2))
 sbegin=`printf "%${ibegin}s" | tr " " "="`
 send=`printf "%${iend}s" | tr " " "="`
 echo "$sbegin $iphost $send"
-ssh $iphost $*
+ssh -t $iphost $*

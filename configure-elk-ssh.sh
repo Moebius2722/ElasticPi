@@ -28,7 +28,7 @@ sudo apt-get install sshpass -q -y >/dev/null
 ####### CONFIGURE ELK PI #######
 
 # Get IP Nodes
-ipnodes=`ssh $ipcluster sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort`
+ipnodes=`ssh -t $ipcluster sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort`
 
 # Nodes Initialisation
 for ipnode in ${ipnodes[@]}
@@ -43,7 +43,7 @@ do
   ssh-keyscan -H $ipnode >> ~/.ssh/known_hosts 2>/dev/null
   
   # Generate RSA Key for SSH Auto Connect
-  sshpass -p $clusterpwd ssh $ipnode 'sudo apt-get install sshpass -q -y >/dev/null ; rm -f ~/.ssh/authorized_keys ; rm -f ~/.ssh/id_rsa ; rm -f ~/.ssh/id_rsa.pub ; ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa >/dev/null 2>/dev/null'
+  sshpass -p $clusterpwd ssh -t $ipnode 'sudo apt-get install sshpass -q -y >/dev/null ; rm -f ~/.ssh/authorized_keys ; rm -f ~/.ssh/id_rsa ; rm -f ~/.ssh/id_rsa.pub ; ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa >/dev/null 2>/dev/null'
 done
 
 # Nodes Autorizations
@@ -54,6 +54,6 @@ do
   do
 	echo "=================== $ipnode => $subipnode ==================="
 	echo
-    sshpass -p $clusterpwd ssh $ipnode "ssh-keygen -R $subipnode >/dev/null 2>/dev/null ; ssh-keyscan -H $subipnode >> ~/.ssh/known_hosts 2>/dev/null ; sshpass -p $clusterpwd ssh-copy-id $subipnode >/dev/null 2>/dev/null"
+    sshpass -p $clusterpwd ssh -t $ipnode "ssh-keygen -R $subipnode >/dev/null 2>/dev/null ; ssh-keyscan -H $subipnode >> ~/.ssh/known_hosts 2>/dev/null ; sshpass -p $clusterpwd ssh-copy-id $subipnode >/dev/null 2>/dev/null"
   done
 done
