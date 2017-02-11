@@ -34,8 +34,14 @@ fi
 
 ####### CEREBRO #######
 
+# Backup Cerebro configuration
+sudo cp -f /usr/share/cerebro/conf/application.conf /tmp/cerebro-application.conf.bkp
+
 # Get and Update Cerebro
 wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro /usr/share/cerebro.ori && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && sudo chown -R cerebro:cerebro /usr/share/cerebro && sudo rm -rf /usr/share/cerebro.ori
+
+# Restore Cerebro configuration
+sudo cp -f /tmp/cerebro-application.conf.bkp /usr/share/cerebro/conf/application.conf
 
 # Configure and Start Cerebro as Daemon
 sudo /bin/systemctl daemon-reload

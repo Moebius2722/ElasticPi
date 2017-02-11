@@ -26,6 +26,7 @@ fi
 
 # Get and Install Cerebro
 wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro
+sudo cp -f `dirname $0`/Cerebro/application.conf /usr/share/cerebro/conf/.
 
 # Create Cerebro Group
 if ! getent group cerebro >/dev/null; then
