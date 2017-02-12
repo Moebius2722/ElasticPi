@@ -38,6 +38,7 @@ sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
 sudo cp -f `dirname $0`/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
 
 # Configure and Start Logstash as Daemon
+sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable logstash.service
 sudo /bin/systemctl start logstash.service
