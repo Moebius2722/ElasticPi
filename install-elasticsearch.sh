@@ -9,6 +9,9 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -i`
+
 # Set Version
 if [[ ${E_VERSION} = '' ]]; then
   E_VERSION=`wget https://www.elastic.co/downloads/elasticsearch/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3`
@@ -56,7 +59,14 @@ sudo sed -i '/#bootstrap.memory_lock: true/a bootstrap.memory_lock: true' /etc/e
 sudo sed -i '/#cluster\.name: .*/a cluster.name: espi' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#node\.name: .*/a node.name: ${HOSTNAME}' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#node.attr.rack: .*/a node.attr.rack: espi-rack-1' /etc/elasticsearch/elasticsearch.yml
-sudo sed -i '/#network\.host: .*/a network.host: 0.0.0.0' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i "/#network\.host: .*/a network.host: [127.0.0.1, $iphost]" /etc/elasticsearch/elasticsearch.yml
+sudo sed -i "/^network\.host: .*/a network.bind_host: [127.0.0.1, $iphost]" /etc/elasticsearch/elasticsearch.yml
+sudo sed -i "/^network\.bind_host: .*/a network.publish_host: $iphost" /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/^network\.publish_host: .*/a transport.tcp.port: 9300' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/^transport\.tcp\.port: .*/a transport.publish_port: 9300' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i "/^transport\.publish_port: .*/a transport.bind_host: $iphost" /etc/elasticsearch/elasticsearch.yml
+sudo sed -i "/^transport\.bind_host: .*/a transport.publish_host: $iphost" /etc/elasticsearch/elasticsearch.yml
+sudo sed -i "/^transport\.publish_host: .*/a transport.host: $iphost" /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#node\.max_local_storage_nodes: .*/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 
