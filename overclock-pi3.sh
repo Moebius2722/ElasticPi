@@ -2,7 +2,7 @@
 
 # Author : Moebius2722
 # Mail : moebius2722@laposte.net
-# Git : https://github.com/Moebius2722/ElkPi.git
+# Git : https://github.com/Moebius2722/ElasticPi.git
 
 # Hard Overcloking Raspberry Pi 3
 
