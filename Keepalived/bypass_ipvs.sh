@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # 
 # Gael Charriere <gael.charriere@gmail.com>
 # 10.11.2008
