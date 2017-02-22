@@ -1,3 +1,10 @@
+upstream stream_kibana {
+    server 192.168.0.21:5601 backup;
+    server 192.168.0.22:5601 backup;
+    server 192.168.0.23:5601 backup;
+    server 192.168.0.24:5601 backup;
+}
+
 server {
     listen 80;
 
@@ -11,10 +18,130 @@ server {
     auth_pam_set_pam_env on;
 
     location / {
-        proxy_pass http://localhost:5601;
+        proxy_pass http://stream_kibana;
         proxy_set_header  X-Real-IP  $remote_addr;
         proxy_set_header Host $http_host;
         proxy_set_header X-forwarded-for $proxy_add_x_forwarded_for;
         port_in_redirect off;
+    }
+}
+
+upstream stream_cerebro {
+    server 192.168.0.21:9000 backup;
+    server 192.168.0.22:9000 backup;
+    server 192.168.0.23:9000 backup;
+    server 192.168.0.24:9000 backup;
+}
+
+server {
+    listen 9001;
+
+    listen 9002 ssl;
+    server_name 0.0.0.0;
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    auth_pam "Restricted Zone";
+    auth_pam_service_name "nginx_restricted";
+    auth_pam_set_pam_env on;
+
+    location / {
+        proxy_pass http://stream_cerebro;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-forwarded-for $proxy_add_x_forwarded_for;
+        port_in_redirect off;
+    }
+}
+
+upstream stream_elasticsearch {
+    server 192.168.0.21:9200 backup;
+    server 192.168.0.22:9200 backup;
+    server 192.168.0.23:9200 backup;
+    server 192.168.0.24:9200 backup;
+}
+
+server {
+    listen 9201;
+
+    listen 9202 ssl;
+    server_name 0.0.0.0;
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    auth_pam "Restricted Zone";
+    auth_pam_service_name "nginx_restricted";
+    auth_pam_set_pam_env on;
+
+    location / {
+        proxy_pass http://stream_elasticsearch;
+		proxy_http_version 1.1;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-forwarded-for $proxy_add_x_forwarded_for;
+        port_in_redirect off;
+    }
+}
+
+server {
+    listen 1881;
+
+    listen 1882 ssl;
+    server_name 0.0.0.0;
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    auth_pam "Restricted Zone";
+    auth_pam_service_name "nginx_restricted";
+    auth_pam_set_pam_env on;
+
+    location / {
+        proxy_pass http://stream_nodered;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-forwarded-for $proxy_add_x_forwarded_for;
+        port_in_redirect off;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+
+stream {
+    upstream stream_syslog {
+        server 192.168.0.21:5000 backup;
+        server 192.168.0.22:5000 backup;
+        server 192.168.0.23:5000 backup;
+        server 192.168.0.24:5000 backup;
+    }
+
+    server {
+        listen 5010;
+        proxy_pass stream_syslog;
+    }
+	
+    upstream stream_squid {
+        server 192.168.0.21:5001 backup;
+        server 192.168.0.22:5001 backup;
+        server 192.168.0.23:5001 backup;
+        server 192.168.0.24:5001 backup;
+    }
+
+    server {
+        listen 5011;
+        proxy_pass stream_squid;
+    }
+	
+    upstream stream_mosquitto {
+        server 192.168.0.21:1883 backup;
+        server 192.168.0.22:1883 backup;
+        server 192.168.0.23:1883 backup;
+        server 192.168.0.24:1883 backup;
+    }
+
+    server {
+        listen 1884;
+        proxy_pass stream_mosquitto;
     }
 }
