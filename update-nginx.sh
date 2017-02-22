@@ -21,6 +21,9 @@ if [[ "${NGX_VERSION}" = "${NGX_CVERSION}" ]]; then
   exit 0
 fi
 
+# Stop Keepalived Daemon
+sudo /bin/systemctl stop keepalived.service
+
 # Stop Nginx Daemon
 sudo /bin/systemctl stop nginx.service
 
@@ -46,3 +49,6 @@ sudo make install
 
 # Start Nginx Daemon
 sudo /bin/systemctl start nginx.service
+
+# Start Keepalived Daemon
+sudo /bin/systemctl start keepalived.service
