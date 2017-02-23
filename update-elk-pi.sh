@@ -41,6 +41,11 @@ export PI_UPDATED=0
 `dirname $0`/update-kibana.sh
 
 
+####### NGINX #######
+
+`dirname $0`/update-nginx.sh
+
+
 ####### CEREBRO #######
 
 `dirname $0`/update-cerebro.sh
