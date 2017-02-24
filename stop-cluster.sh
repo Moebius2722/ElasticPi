@@ -101,6 +101,10 @@ do
   ssh -t $ipnode sudo systemctl disable cerebro.service >/dev/null 2>/dev/null
 done
 
+# Backup Elasticsearch before stop
+echo "============================= Backup Elasticsearch ============================="
+`dirname $0`/backup-elasticsearch.sh
+
 # Stop Elasticsearch
 echo "================================= Elasticsearch ================================"
 # Disable shard allocation
