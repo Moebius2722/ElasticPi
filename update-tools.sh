@@ -9,4 +9,4 @@
 
 ####### TOOLS #######
 
-allssh "rm -rf ~/ElasticPi ; git clone https://github.com/Moebius2722/ElasticPi.git ~/ElasticPi ; chown -R a+x ~/ElasticPi/*.sh"
+allssh "rm -rf ~/ElasticPi ; git clone https://github.com/Moebius2722/ElasticPi.git ~/ElasticPi ; chmod -R a+x ~/ElasticPi/*.sh"
