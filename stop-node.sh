@@ -50,7 +50,7 @@ if [[ $? = 0 ]] ; then
     }
   }
   '
-  "
+  " >/dev/null 2>/dev/null
   # Wait for node entering in maintenance mode
   echo "Wait for node entering in maintenance mode"
   nb_shards=1
