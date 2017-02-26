@@ -40,8 +40,6 @@ echo "================================= Elasticsearch ==========================
 # Flush Index and Stop Elasticsearch Services
 ssh -t $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
 if [[ $? = 0 ]] ; then
-  echo "$ipnode : Stop Elasticsearch"
-  
   # Exclude node of shard allocation
   ssh -t $ipnode "curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
   {
@@ -61,7 +59,8 @@ if [[ $? = 0 ]] ; then
     sleep 5
     int_cpt=$[$int_cpt+1]
   done
-  
+  echo
+  echo "$ipnode : Stop Elasticsearch"
   ssh -t $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty' ; sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
 fi
 ssh -t $ipnode sudo systemctl disable elasticsearch.service >/dev/null 2>/dev/null
