@@ -111,6 +111,15 @@ echo
 if [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
 else
+  # Purge shard allocation exclusion
+  echo "Purge shard allocation exclusion"
+  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+  {
+    "transient": {
+      "cluster.routing.allocation.exclude._ip" : null
+    }
+  }
+  ' >/dev/null 2>/dev/null
   # Reenable shard allocation
   echo "Reenable shard allocation"
   curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
