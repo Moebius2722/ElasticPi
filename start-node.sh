@@ -20,6 +20,8 @@ fi
 ####### START-NODE #######
 
 # Check and Start Node Services
+echo "================================== START-NODE =================================="
+date
 
 # Start Elasticsearch
 echo "================================= Elasticsearch ================================"
@@ -131,3 +133,6 @@ if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Keepalived"
   ssh -t $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
 fi
+
+date
+echo "================================== NODE-START =================================="

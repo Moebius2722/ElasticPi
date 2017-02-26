@@ -16,6 +16,8 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 ####### START-CLUSTER #######
 
 # Check and Start Cluster Services
+echo "================================= START-CLUSTER ================================"
+date
 
 # Start Nginx
 echo "===================================== Nginx ===================================="
@@ -152,3 +154,6 @@ echo
 if [ "$s_check" != "green" ] && [ $int_cpt -eq 180 ]; then
   echo "Time Out for the node to recover."
 fi
+
+date
+echo "================================= CLUSTER-START ================================"

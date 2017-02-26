@@ -16,6 +16,8 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 ####### STOP-CLUSTER #######
 
 # Check and Stop Cluster Services
+echo "================================= STOP-CLUSTER ================================="
+date
 
 # Stop Keepalived
 echo "================================== Keepalived =================================="
@@ -129,3 +131,6 @@ do
   fi
   ssh -t $ipnode sudo systemctl disable elasticsearch.service >/dev/null 2>/dev/null
 done
+
+date
+echo "================================= CLUSTER-STOP ================================="

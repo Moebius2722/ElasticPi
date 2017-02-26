@@ -20,6 +20,8 @@ fi
 ####### STOP-NODE #######
 
 # Check and Stop Node Services
+echo "================================== STOP-NODE ==================================="
+date
 
 # Stop Keepalived
 echo "================================== Keepalived =================================="
@@ -105,3 +107,6 @@ if [[ $? = 0 ]] ; then
   ssh -t $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty' ; sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
 fi
 ssh -t $ipnode sudo systemctl disable elasticsearch.service >/dev/null 2>/dev/null
+
+date
+echo "================================== NODE-STOP ==================================="
