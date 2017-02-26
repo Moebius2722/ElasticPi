@@ -115,6 +115,7 @@ do
   fi
 done
 
+# Waiting Elasticsearch Up
 echo "==================================== Waiting ==================================="
 # Wait for start-up nodes
 echo "Wait for start-up Elasticsearch nodes"

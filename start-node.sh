@@ -23,6 +23,24 @@ fi
 echo "================================== START-NODE =================================="
 date
 
+# Start Nginx
+echo "===================================== Nginx ===================================="
+ssh -t $ipnode sudo systemctl enable nginx.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
+if [[ ! $? = 0 ]] ; then
+  echo "$ipnode : Start Nginx"
+  ssh -t $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
+fi
+
+# Start Keepalived
+echo "================================== Keepalived =================================="
+ssh -t $ipnode sudo systemctl enable keepalived.service >/dev/null 2>/dev/null
+ssh -t $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
+if [[ ! $? = 0 ]] ; then
+  echo "$ipnode : Start Keepalived"
+  ssh -t $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
+fi
+
 # Start Elasticsearch
 echo "================================= Elasticsearch ================================"
 ssh -t $ipnode sudo systemctl enable elasticsearch.service >/dev/null 2>/dev/null
@@ -30,45 +48,6 @@ ssh -t $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/nul
 if [[ ! $? = 0 ]] ; then
   echo "$ipnode : Start Elasticsearch"
   ssh -t $ipnode sudo systemctl start elasticsearch.service >/dev/null 2>/dev/null
-fi
-
-# Wait for start-up node
-echo "Wait for start-up node"
-s_check=red
-int_cpt=0
-while [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -lt 120 ]; do
-  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
-  echo -n '.'
-  sleep 5
-  int_cpt=$[$int_cpt+1]
-done
-echo
-if [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -eq 120 ]; then
-  echo "Time Out for start-up nodes"
-else
-  # Reenable shard allocation
-  echo "Reenable shard allocation"
-  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
-  {
-    "transient": {
-      "cluster.routing.allocation.enable": "all"
-    }
-  }
-  ' >/dev/null 2>/dev/null
-fi
-
-# Wait for the node to recover
-echo "Wait for the node to recover"
-int_cpt=0
-while [ "$s_check" != "green" ] && [ $int_cpt -lt 180 ]; do
-  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
-  echo -n '.'
-  sleep 10
-  int_cpt=$[$int_cpt+1]
-done
-echo
-if [ "$s_check" != "green" ] && [ $int_cpt -eq 180 ]; then
-  echo "Time Out for the node to recover."
 fi
 
 # Start Cerebro
@@ -116,22 +95,45 @@ if [[ ! $? = 0 ]] ; then
   ssh -t $ipnode sudo systemctl start kibana.service >/dev/null 2>/dev/null
 fi
 
-# Start Nginx
-echo "===================================== Nginx ===================================="
-ssh -t $ipnode sudo systemctl enable nginx.service >/dev/null 2>/dev/null
-ssh -t $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
-if [[ ! $? = 0 ]] ; then
-  echo "$ipnode : Start Nginx"
-  ssh -t $ipnode sudo systemctl start nginx.service >/dev/null 2>/dev/null
+# Waiting Elasticsearch Up
+echo "==================================== Waiting ==================================="
+# Wait for start-up nodes
+echo "Wait for start-up Elasticsearch nodes"
+s_check=red
+int_cpt=0
+while [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -lt 120 ]; do
+  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
+  echo -n '.'
+  sleep 5
+  int_cpt=$[$int_cpt+1]
+done
+echo
+if [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -eq 120 ]; then
+  echo "Time Out for start-up nodes"
+else
+  # Reenable shard allocation
+  echo "Reenable shard allocation"
+  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+  {
+    "transient": {
+      "cluster.routing.allocation.enable": "all"
+    }
+  }
+  ' >/dev/null 2>/dev/null
 fi
 
-# Start Keepalived
-echo "================================== Keepalived =================================="
-ssh -t $ipnode sudo systemctl enable keepalived.service >/dev/null 2>/dev/null
-ssh -t $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
-if [[ ! $? = 0 ]] ; then
-  echo "$ipnode : Start Keepalived"
-  ssh -t $ipnode sudo systemctl start keepalived.service >/dev/null 2>/dev/null
+# Wait for the nodes to recover
+echo "Wait for the Elasticsearch nodes to recover"
+int_cpt=0
+while [ "$s_check" != "green" ] && [ $int_cpt -lt 180 ]; do
+  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
+  echo -n '.'
+  sleep 10
+  int_cpt=$[$int_cpt+1]
+done
+echo
+if [ "$s_check" != "green" ] && [ $int_cpt -eq 180 ]; then
+  echo "Time Out for the node to recover."
 fi
 
 date
