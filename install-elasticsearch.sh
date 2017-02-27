@@ -101,6 +101,7 @@ sudo chmod -R 770 /mnt/espibackup
 sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
 
 # Configure and Start Elasticsearch as Daemon
+sudo sed -i '/\[Service\]/a Restart=Always' /usr/lib/systemd/system/elasticsearch.service
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl start elasticsearch.service
