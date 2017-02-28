@@ -41,6 +41,7 @@ wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION
 git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
 
 # Configure and Start Logstash as Daemon
+sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable logstash.service
 sudo /bin/systemctl start logstash.service
