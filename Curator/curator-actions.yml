@@ -54,7 +54,7 @@ actions:
   3:
     action: close
     description: >-
-      Close indices older than 30 days (based on index name), for squid-
+      Close indices older than 7 days (based on index name), for squid-
       prefixed indices.
     options:
       ignore_empty_list: True
@@ -72,7 +72,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 30
+      unit_count: 7
       exclude:
   4:
     action: delete_indices
@@ -100,7 +100,7 @@ actions:
   5:
     action: close
     description: >-
-      Close indices older than 30 days (based on index name), for syslog-
+      Close indices older than 7 days (based on index name), for syslog-
       prefixed indices.
     options:
       ignore_empty_list: True
@@ -118,7 +118,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 30
+      unit_count: 7
       exclude:
   6:
     action: delete_indices
@@ -146,7 +146,7 @@ actions:
   7:
     action: close
     description: >-
-      Close indices older than 30 days (based on index name), for logstash-
+      Close indices older than 7 days (based on index name), for logstash-
       prefixed indices.
     options:
       ignore_empty_list: True
@@ -164,7 +164,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 30
+      unit_count: 7
       exclude:
   8:
     action: delete_indices
@@ -192,7 +192,7 @@ actions:
   9:
     action: close
     description: >-
-      Close indices older than 30 days (based on index name), for measure-
+      Close indices older than 7 days (based on index name), for measure-
       prefixed indices.
     options:
       ignore_empty_list: True
@@ -210,7 +210,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 30
+      unit_count: 7
       exclude:
   10:
     action: delete_indices
