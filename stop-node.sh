@@ -41,28 +41,27 @@ echo "================================= Elasticsearch ==========================
 ssh -t $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
 if [[ $? = 0 ]] ; then
   # Exclude node of shard allocation
-  #ssh -t $ipnode "curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
-  #{
-  #  \"transient\": {
-  #    \"cluster.routing.allocation.exclude._ip\" : \"$ipnode\"
-  #  }
-  #}
-  #'
-  #" >/dev/null 2>/dev/null
+  ssh -t $ipnode "curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+  {
+    \"transient\": {
+      \"cluster.routing.allocation.exclude._ip\" : \"$ipnode\"
+    }
+  }
+  '
+  " >/dev/null 2>/dev/null
   # Wait for node entering in maintenance mode
-  #echo "Wait for node entering in maintenance mode"
-  #nb_shards=1
-  #int_cpt=0
-  #while [ "$nb_shards" != "0" ] && [ $int_cpt -lt 120 ]; do
-  #  nb_shards=`curl -ss -XGET 'localhost:9200/_cat/shards'|grep -ic "$ipnode"`
-  #  echo -n '.'
-  #  sleep 5
-  #  int_cpt=$[$int_cpt+1]
-  #done
-  #echo
+  echo "Wait for node entering in maintenance mode"
+  nb_shards=1
+  int_cpt=0
+  while [ "$nb_shards" != "0" ] && [ $int_cpt -lt 120 ]; do
+    nb_shards=`curl -ss -XGET 'localhost:9200/_cat/shards'|grep -ic "$ipnode"`
+    echo -n '.'
+    sleep 5
+    int_cpt=$[$int_cpt+1]
+  done
+  echo
   echo "$ipnode : Stop Elasticsearch"
   ssh -t $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty' ; sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
-#  ssh -t $ipnode "sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
 fi
 ssh -t $ipnode sudo systemctl disable elasticsearch.service >/dev/null 2>/dev/null
 
