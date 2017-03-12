@@ -52,6 +52,22 @@ actions:
       value: .kibana
       exclude:
   3:
+    action: delete_snapshots
+    description:  >-
+      Delete snapshots from 'espibackup' older than 12 months
+    options:
+      repository: 'espibackup'
+      continue_if_exception: False
+      disable_action: False
+    filters:
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y.%m.%d'
+      unit: months
+      unit_count: 12
+      exclude:
+  4:
     action: close
     description: >-
       Close indices older than 7 days (based on index name), for squid-
@@ -74,7 +90,7 @@ actions:
       unit: days
       unit_count: 7
       exclude:
-  4:
+  5:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for squid-
@@ -97,7 +113,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
-  5:
+  6:
     action: close
     description: >-
       Close indices older than 7 days (based on index name), for syslog-
@@ -120,7 +136,7 @@ actions:
       unit: days
       unit_count: 7
       exclude:
-  6:
+  7:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for syslog-
@@ -143,7 +159,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
-  7:
+  8:
     action: close
     description: >-
       Close indices older than 7 days (based on index name), for logstash-
@@ -166,7 +182,7 @@ actions:
       unit: days
       unit_count: 7
       exclude:
-  8:
+  9:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for logstash-
@@ -189,7 +205,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
-  9:
+  10:
     action: close
     description: >-
       Close indices older than 7 days (based on index name), for measure-
@@ -212,7 +228,7 @@ actions:
       unit: days
       unit_count: 7
       exclude:
-  10:
+  11:
     action: delete_indices
     description: >-
       Delete indices older than 12 months (based on index name), for measure-
