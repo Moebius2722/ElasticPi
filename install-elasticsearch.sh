@@ -82,11 +82,11 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-file
 sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_provider: file' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 echo . | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-echo '192.168.0.21' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-echo '192.168.0.22' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-echo '192.168.0.23' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-echo '192.168.0.24' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-echo '192.168.0.25' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.121' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.122' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.123' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.124' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
+echo '192.168.0.125' | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
 # Create and configure Backup NFS mount point
 sudo mkdir /mnt/espibackup
