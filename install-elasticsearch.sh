@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Get IP Host
-iphost=`hostname -i`
+iphost=`hostname -I | cut -d ' ' -f 1`
 
 # Set Version
 if [[ ${E_VERSION} = '' ]]; then
@@ -41,7 +41,7 @@ sudo apt-get install oracle-java8-jdk -q -y
 
 # Get and Install Elasticsearch
 #--force-confold
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb
+wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
