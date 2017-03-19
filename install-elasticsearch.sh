@@ -118,6 +118,6 @@ curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{
 sudo cp -f `dirname $0`/Curator/curator-config.yml /etc/elasticsearch/curator-config.yml
 sudo cp -f `dirname $0`/Curator/curator-actions.yml /etc/elasticsearch/curator-actions.yml
 sudo mkdir /var/log/curator
-sudo chwon -R elasticsearch:elasticsearch /var/log/curator
+sudo chown -R elasticsearch:elasticsearch /var/log/curator
 sudo chmod -R 770 /var/log/curator
 sudo apt-get install python-pip -q -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   elasticsearch    /usr/local/bin/curator --config /etc/elasticsearch/curator-config.yml /etc/elasticsearch/curator-actions.yml" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
