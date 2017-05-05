@@ -39,7 +39,7 @@ curl -XPOST 'localhost:9200/_flush/synced?pretty'
 sudo /bin/systemctl stop elasticsearch.service
 
 # Full System Update
-if [[ ! "${PI_UPDATED}" = 1 ]]; then
+if [[ ! "${PI_UPDATED}" = "1" ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1
