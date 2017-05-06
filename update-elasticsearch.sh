@@ -49,7 +49,7 @@ fi
 ####### ELASTICSEARCH #######
 
 # Get and Update Elasticsearch
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg --force-confold --force-overwrite -i /tmp/elasticsearch-${E_VERSION}.deb
+wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg --force-confold --force-overwrite -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Get and Compile JNA library for Elasticsearch
 git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /usr/share/elasticsearch/jna-4.4.0.jar && rm -rf /tmp/jna
