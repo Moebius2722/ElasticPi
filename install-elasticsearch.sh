@@ -42,6 +42,7 @@ echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | sudo t
 echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list.d/webupd8team-java.list
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 sudo apt-get update
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 sudo apt-get install oracle-java8-installer -q -y
 
 
@@ -50,7 +51,7 @@ sudo apt-get install oracle-java8-installer -q -y
 wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Get and Compile JNA library for Elasticsearch
-git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /usr/share/elasticsearch/lib/jna-4.4.0.jar && rm -rf /tmp/jna
+sudo apt-get install ant texinfo -y && git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /usr/share/elasticsearch/lib/jna-4.4.0.jar && rm -rf /tmp/jna
 
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
