@@ -20,7 +20,11 @@ C_VERSION=`wget https://github.com/lmenezes/cerebro/releases/latest -qO- | grep 
 NR_VERSION=`npm info node-red version`
 
 # Set Pi Updated Flag
+echo "PI_UPDATED=${PI_UPDATED}"
+
 export PI_UPDATED=0
+
+echo "PI_UPDATED=${PI_UPDATED}"
 
 
 ####### STOP-NODE #######

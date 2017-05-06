@@ -18,7 +18,7 @@ N_VERSION=`wget https://raw.githubusercontent.com/elastic/kibana/$K_MVERSION/.no
 C_VERSION=`wget https://github.com/lmenezes/cerebro/releases/latest -qO- | grep -i "\.tgz\"" | cut -d '"' -f 2 | cut -d / -f 7 | cut -d - -f 2 | cut -d . -f 1-3`
 
 # Set Pi Updated Flag
-export PI_UPDATED=1
+export PI_UPDATED=0
 
 ####### ELASTICSEARCH #######
 

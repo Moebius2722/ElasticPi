@@ -29,11 +29,15 @@ fi
 sudo /bin/systemctl stop kibana.service
 
 # Full System Update
+echo "PI_UPDATED=${PI_UPDATED}"
+
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
   echo "Full System Update"
   sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
   export PI_UPDATED=1
 fi
+
+echo "PI_UPDATED=${PI_UPDATED}"
 
 
 ####### KIBANA #######
