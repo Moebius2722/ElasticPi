@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ ${K_VERSION} = '' ]]; then
-  K_VERSION=`wget https://www.elastic.co/downloads/kibana/ -qO- | grep -i "\-i386\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3`
+  K_VERSION=`wget https://www.elastic.co/downloads/kibana/ -qO- | grep -i "\-i386\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3 | head -n 1`
 fi
 if [[ ${N_VERSION} = '' ]]; then
   K_MVERSION=`echo $K_VERSION | cut -d . -f 1-2`
