@@ -28,7 +28,7 @@ sudo apt-get install sshpass -q -y >/dev/null
 ####### CONFIGURE ELK PI #######
 
 # Get IP Nodes
-ipnodes=`ssh -t $ipcluster sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort`
+ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort'`
 
 # Nodes Initialisation
 for ipnode in ${ipnodes[@]}
