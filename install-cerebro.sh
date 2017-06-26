@@ -9,6 +9,16 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -I | cut -d ' ' -f 1`
+
+# Generate virtual IP host
+viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
+
+# Set Elasticsearch User and Password
+e_user=pi
+e_password=LuffyNami3003
+
 # Set Version
 if [[ ${C_VERSION} = '' ]]; then
   C_VERSION=`wget https://github.com/lmenezes/cerebro/releases/latest -qO- | grep -i "\.tgz\"" | cut -d '"' -f 2 | cut -d / -f 7 | cut -d - -f 2 | cut -d . -f 1-3`
@@ -27,6 +37,9 @@ fi
 # Get and Install Cerebro
 wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && rm -f /tmp/cerebro-${C_VERSION}.tgz
 sudo cp -f `dirname $0`/Cerebro/application.conf /usr/share/cerebro/conf/.
+sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /usr/share/cerebro/conf/application.conf
+sudo sed -i "s/\[USER\]/$e_user/" /usr/share/cerebro/conf/application.conf
+sudo sed -i "s/\[PASSWORD\]/$e_password/" /usr/share/cerebro/conf/application.conf
 
 # Create Cerebro Group
 if ! getent group cerebro >/dev/null; then

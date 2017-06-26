@@ -9,6 +9,16 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -I | cut -d ' ' -f 1`
+
+# Generate virtual IP host
+viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
+
+# Set Elasticsearch User and Password
+e_user=pi
+e_password=LuffyNami3003
+
 # Set Version
 if [[ ${K_VERSION} = '' ]]; then
   K_VERSION=`wget https://www.elastic.co/downloads/kibana/ -qO- | grep -i "\-i386\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3 | head -n 1`
@@ -41,10 +51,12 @@ echo 'NODE_OPTIONS="--max-old-space-size=100"' | sudo tee -a /etc/default/kibana
 # Set Kibana Node Configuration
 sudo sed -i 's/.*server\.port:.*/server\.port: 5601/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*server\.host:.*/server\.host: "0.0.0.0"/' /etc/kibana/kibana.yml
-sudo sed -i 's/.*elasticsearch\.url:.*/elasticsearch\.url: "http:\/\/localhost:9200"/' /etc/kibana/kibana.yml
+sudo sed -i "s/.*elasticsearch\.url:.*/elasticsearch\.url: \"https:\/\/$viphost:9202\"/" /etc/kibana/kibana.yml
 sudo sed -i 's/.*elasticsearch\.preserveHost:.*/elasticsearch\.preserveHost: true/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*kibana\.index:.*/kibana\.index: "\.kibana"/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*kibana\.defaultAppId:.*/kibana\.defaultAppId: "dashboard"/' /etc/kibana/kibana.yml
+sudo sed -i "s/.*elasticsearch\.username:.*/elasticsearch\.username: \"$e_user\"/" /etc/kibana/kibana.yml
+sudo sed -i "s/.*elasticsearch\.password:.*/elasticsearch\.password: \"$e_password\"/" /etc/kibana/kibana.yml
 sudo sed -i 's/.*pid\.file:.*/pid\.file: \/var\/run\/kibana\/kibana\.pid/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*logging\.dest:.*/logging\.dest: \/var\/log\/kibana\/kibana\.log/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*logging\.verbose:.*/logging\.verbose: true/' /etc/kibana/kibana.yml

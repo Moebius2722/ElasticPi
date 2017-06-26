@@ -9,6 +9,16 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -I | cut -d ' ' -f 1`
+
+# Generate virtual IP host
+viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
+
+# Set Elasticsearch User and Password
+e_user=pi
+e_password=LuffyNami3003
+
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
   L_VERSION=`wget https://www.elastic.co/downloads/logstash/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3 | head -n 1`
@@ -36,6 +46,9 @@ sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
 
 # Set Logstash Node Configuration
 sudo cp -f `dirname $0`/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
+sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /etc/logstash/conf.d/00-default.conf
+sudo sed -i "s/\[USER\]/$e_user/" /etc/logstash/conf.d/00-default.conf
+sudo sed -i "s/\[PASSWORD\]/$e_password/" /etc/logstash/conf.d/00-default.conf
 
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
