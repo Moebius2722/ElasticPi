@@ -9,6 +9,15 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -I | cut -d ' ' -f 1`
+
+# Get last digit IP host
+idhost=${iphost:(-1):1}
+
+# Generate virtual IP host
+viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
+
 # Full System Update
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
   echo "Full System Update"
@@ -31,60 +40,40 @@ echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/95-keepalived.c
 sudo sysctl -w net.ipv4.conf.lo.arp_announce=2
 sudo sysctl -p
 
-#sudo apt-get install iptables-persistent -y
-
-#sudo iptables -P INPUT ACCEPT
-#sudo iptables -P FORWARD ACCEPT
-#sudo iptables -P OUTPUT ACCEPT
-#sudo iptables -t nat -F
-#sudo iptables -t mangle -F
-#sudo iptables -F
-#sudo iptables -X
-
-#sudo sh -c "iptables-save > /etc/iptables/rules.v4"
-#echo "iptables-restore < /etc/iptables/rules.v4" | sudo tee -a /etc/rc.local
-
-
 # Install Keepalived Load Balancer
 sudo apt-get install keepalived -q -y
 
-# Set Static IP Addresses
+# Configure Keepalived Load Balancer
+password='k@l!ve3'
+echo | sudo tee /etc/keepalived/keepalived.conf
+for i in {0..9}
+do
+  id=1$i
+  priority=1$((((9-$i)+$idhost)%10))0
+  vip=${iphost::-2}$((${iphost:(-2):1}-1))$i
+  if [[ $i -eq  $idhost ]]; then
+    state=MASTER
+  else
+    state=BACKUP
+  fi
+  
+  echo "vrrp_instance VI_$id {
+  state $state
+  interface eth0
+  virtual_router_id $id
+  priority $priority
+  advert_int 1
+  lvs_sync_daemon_interface eth0
+  authentication {
+    auth_type AH
+    auth_pass $password
+  }
+  virtual_ipaddress {
+        $vip/24
+  }
+}
+" | sudo tee -a /etc/keepalived/keepalived.conf
+done
 
-#/etc/network/interfaces
-
-# auto eth0
-# iface eth0 inet static
-# address 192.168.0.21
-# netmask 255.255.255.0
-# gateway 192.168.0.254
-
-# auto eth0:0
-# iface eth0:0 inet static
-# address 192.168.1.21
-# netmask 255.255.255.0
-
-# auto lo:0
-# iface lo:0 inet static
-# address 192.168.0.10
-# netmask 255.255.255.255
-
-# auto lo:1
-# iface lo:1 inet static
-# address 192.168.0.11
-# netmask 255.255.255.255
-
-# auto lo:2
-# iface lo:2 inet static
-# address 192.168.0.12
-# netmask 255.255.255.255
-
-# Disable DHCP Client and enable manual network configuation
-sudo systemctl disable dhcpcd
-sudo systemctl enable networking
-
-# Set DNS server with "resolvconf"
-echo name_servers=192.168.0.254 | sudo tee -a /etc/resolvconf.conf
-
-# Set DNS server with classic method and lock "resolv.conf" file
-echo "nameserver 192.168.0.254" | sudo tee /etc/resolv.conf
-sudo chattr +i /etc/resolv.conf
+# Restart Keepalived Load Balancer
+sudo systemctl restart keepalived.service
