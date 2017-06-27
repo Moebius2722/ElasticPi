@@ -57,6 +57,7 @@ sudo sed -i 's/.*kibana\.index:.*/kibana\.index: "\.kibana"/' /etc/kibana/kibana
 sudo sed -i 's/.*kibana\.defaultAppId:.*/kibana\.defaultAppId: "dashboard"/' /etc/kibana/kibana.yml
 sudo sed -i "s/.*elasticsearch\.username:.*/elasticsearch\.username: \"$e_user\"/" /etc/kibana/kibana.yml
 sudo sed -i "s/.*elasticsearch\.password:.*/elasticsearch\.password: \"$e_password\"/" /etc/kibana/kibana.yml
+sudo sed -i "s/.*elasticsearch\.ssl\.verificationMode:.*/elasticsearch\.ssl\.verificationMode: none/" /etc/kibana/kibana.yml
 sudo sed -i 's/.*pid\.file:.*/pid\.file: \/var\/run\/kibana\/kibana\.pid/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*logging\.dest:.*/logging\.dest: \/var\/log\/kibana\/kibana\.log/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*logging\.verbose:.*/logging\.verbose: true/' /etc/kibana/kibana.yml
