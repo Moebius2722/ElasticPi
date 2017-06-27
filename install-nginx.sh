@@ -71,6 +71,9 @@ sudo usermod -a -G shadow www-data
 sudo cp -f `dirname $0`/Nginx/nginx_restricted /etc/pam.d/nginx_restricted
 
 # Set Nginx Default Site redirect on local Kibana with PAM authentication
+echo "# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElasticPi.git" | sudo tee /etc/nginx/sites-available/default
 services=( "kibana 5601 80 443" "cerebro 9000 9001 9002" "nodered 1880 1881 1882" "elasticsearch 9200 9201 9202" )
 for svc in "${services[@]}"
 do
