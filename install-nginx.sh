@@ -9,6 +9,15 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -I | cut -d ' ' -f 1`
+
+# Get last digit IP host
+idhost=${iphost:(-1):1}
+
+# Get subnet IP host
+subiphost=${iphost::-1}
+
 # Set Version
 if [[ ${NGX_VERSION} = '' ]]; then
   NGX_VERSION=`wget http://nginx.org/en/download.html -qO- | sed 's/>/>\n/g' | grep -i 'tar.gz"' | sort -V -r | head -1 | cut -d '"' -f 2 | cut -d / -f 3 | cut -d - -f 2 | cut -d . -f 1-3`
@@ -62,11 +71,83 @@ sudo usermod -a -G shadow www-data
 sudo cp -f `dirname $0`/Nginx/nginx_restricted /etc/pam.d/nginx_restricted
 
 # Set Nginx Default Site redirect on local Kibana with PAM authentication
-sudo cp -f `dirname $0`/Nginx/default /etc/nginx/sites-available/default
+services=( "kibana 5601 80 443" "cerebro 9000 9001 9002" "nodered 1880 1881 1882" "elasticsearch 9200 9201 9202" )
+for svc in "${services[@]}"
+do
+set -- $svc
+servicename=$1
+remoteserviceport=$2
+localserviceport=$3
+localsslserviceport=$4
+echo "upstream stream_$servicename {" | sudo tee -a /etc/nginx/sites-available/default
+for i in {0..9}
+do
+if [[ "$i" -eq "$idhost" ]]; then
+echo "    server $subiphost$i:$remoteserviceport;" | sudo tee -a /etc/nginx/sites-available/default
+else
+echo "    server $subiphost$i:$remoteserviceport backup;" | sudo tee -a /etc/nginx/sites-available/default
+fi
+done
+echo "}
+
+server {
+    listen $localserviceport;
+
+    listen $localsslserviceport ssl;
+    server_name 0.0.0.0;
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    auth_pam \"Restricted Zone\";
+    auth_pam_service_name \"nginx_restricted\";
+    auth_pam_set_pam_env on;
+
+    location / {
+        proxy_pass http://stream_$servicename;
+        proxy_set_header  X-Real-IP  \$remote_addr;
+        proxy_set_header Host \$http_host;
+        proxy_set_header X-forwarded-for \$proxy_add_x_forwarded_for;
+        port_in_redirect off;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection \"upgrade\";
+    }
+}
+" | sudo tee -a /etc/nginx/sites-available/default
+done
+
+# Set Nginx Stream Load Balancing
+echo "stream {" | sudo tee -a /etc/nginx/nginx.conf
+services=( "syslog 5000 5010" "squid 5001 5011" "mosquitto 1883 1884" )
+for svc in "${services[@]}"
+do
+set -- $svc
+servicename=$1
+remoteserviceport=$2
+localserviceport=$3
+echo "    upstream stream_$servicename {" | sudo tee -a /etc/nginx/nginx.conf
+for i in {0..9}
+do
+if [[ "$i" -eq "$idhost" ]]; then
+echo "        server $subiphost$i:$remoteserviceport;" | sudo tee -a /etc/nginx/nginx.conf
+else
+echo "        server $subiphost$i:$remoteserviceport backup;" | sudo tee -a /etc/nginx/nginx.conf
+fi
+done
+echo "    }
+
+    server {
+        listen $localserviceport;
+        proxy_pass stream_$servicename;
+    }
+" | sudo tee -a /etc/nginx/nginx.conf
+done
+echo "}" | sudo tee -a /etc/nginx/nginx.conf
 
 # Restart Nginx Daemon for Update Configuration
 sudo /bin/systemctl restart nginx.service
 
 # Secured Kibana
-sudo sed -i 's/.*server\.host:.*/server\.host: "127.0.0.1"/' /etc/kibana/kibana.yml
-sudo /bin/systemctl restart kibana.service
+#sudo sed -i 's/.*server\.host:.*/server\.host: "127.0.0.1"/' /etc/kibana/kibana.yml
+#sudo /bin/systemctl restart kibana.service
