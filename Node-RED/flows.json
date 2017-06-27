@@ -25,11 +25,44 @@
         "label": "CPU_LOAD"
     },
     {
-        "id": "7e7cca39.be2334",
+        "id": "ec19bde1.0aae",
+        "type": "tab",
+        "label": "INDEX"
+    },
+    {
+        "id": "7cb87639.b79668",
         "type": "mqtt-broker",
         "z": "",
-        "broker": "192.168.0.21",
-        "port": "1883",
+        "broker": "[IP_ADDRESS]",
+        "port": "1884",
+        "tls": "",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "7aa11e1a.70c33",
+        "type": "remote-server",
+        "z": "",
+        "name": "[IP_ADDRESS]",
+        "host": "https://[USER]:[PASSWORD]@[IP_ADDRESS]:9202",
+        "timeout": "0",
+        "reqtimeout": "0"
+    },
+    {
+        "id": "e484a573.d734c8",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "[IP_ADDRESS]",
+        "port": "1884",
         "clientid": "",
         "usetls": false,
         "compatmode": true,
@@ -66,7 +99,7 @@
         "type": "debug",
         "z": "efacaa16.506768",
         "name": "Debug Hostname",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "true",
         "x": 907,
@@ -846,7 +879,7 @@
         "topic": "",
         "qos": "",
         "retain": "",
-        "broker": "7e7cca39.be2334",
+        "broker": "7cb87639.b79668",
         "x": 1083,
         "y": 53,
         "wires": []
@@ -909,6 +942,173 @@
             ],
             [],
             []
+        ]
+    },
+    {
+        "id": "79e4f6f5.fc0798",
+        "type": "mqtt in",
+        "z": "ec19bde1.0aae",
+        "name": "Get from MQTT",
+        "topic": "#",
+        "qos": "2",
+        "broker": "e484a573.d734c8",
+        "x": 338,
+        "y": 270,
+        "wires": [
+            [
+                "eabd6418.dbee18",
+                "c7de89ed.86d298"
+            ]
+        ]
+    },
+    {
+        "id": "eabd6418.dbee18",
+        "type": "debug",
+        "z": "ec19bde1.0aae",
+        "name": "Debuf Get from MQTT",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 710,
+        "y": 268,
+        "wires": []
+    },
+    {
+        "id": "f88a0f2a.c695f",
+        "type": "es-create",
+        "z": "ec19bde1.0aae",
+        "name": "ES Add Document",
+        "documentIndex": "",
+        "documentType": "",
+        "server": "7aa11e1a.70c33",
+        "x": 829,
+        "y": 657,
+        "wires": [
+            [
+                "50338796.9f9be8"
+            ]
+        ]
+    },
+    {
+        "id": "50338796.9f9be8",
+        "type": "debug",
+        "z": "ec19bde1.0aae",
+        "name": "Debug ES Add Document",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1108,
+        "y": 654,
+        "wires": []
+    },
+    {
+        "id": "c7de89ed.86d298",
+        "type": "json",
+        "z": "ec19bde1.0aae",
+        "name": "Convert JSON String to Objects",
+        "x": 477,
+        "y": 416,
+        "wires": [
+            [
+                "785acf4.bf2643"
+            ]
+        ]
+    },
+    {
+        "id": "5a265048.14d81",
+        "type": "debug",
+        "z": "ec19bde1.0aae",
+        "name": "Debug Convert JSON String to Objects",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 984,
+        "y": 528,
+        "wires": []
+    },
+    {
+        "id": "785acf4.bf2643",
+        "type": "change",
+        "z": "ec19bde1.0aae",
+        "name": "Format Document",
+        "rules": [
+            {
+                "t": "set",
+                "p": "documentType",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            },
+            {
+                "t": "change",
+                "p": "documentType",
+                "pt": "msg",
+                "from": "CPU Temp",
+                "fromt": "str",
+                "to": "temp",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "documentType",
+                "pt": "msg",
+                "from": "Memory",
+                "fromt": "str",
+                "to": "memory",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "documentType",
+                "pt": "msg",
+                "from": "CPU Load",
+                "fromt": "str",
+                "to": "stats",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "documentId",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "payload.timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 587,
+        "y": 543,
+        "wires": [
+            [
+                "5a265048.14d81",
+                "78e90692.a66d88"
+            ]
+        ]
+    },
+    {
+        "id": "78e90692.a66d88",
+        "type": "function",
+        "z": "ec19bde1.0aae",
+        "name": "Convert to Date",
+        "func": "msg.payload.date = new Date(msg.payload.timestamp);\nmsg.documentIndex = 'measure-' + msg.payload.date.toISOString().substring(0, 10).replace(/-/g, '.');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 485,
+        "y": 732,
+        "wires": [
+            [
+                "f88a0f2a.c695f"
+            ]
         ]
     }
 ]

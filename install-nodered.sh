@@ -9,6 +9,16 @@
 
 ####### COMMON #######
 
+# Get IP Host
+iphost=`hostname -I | cut -d ' ' -f 1`
+
+# Generate virtual IP host
+viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
+
+# Set Elasticsearch User and Password
+e_user=pi
+e_password=LuffyNami3003
+
 # Full System Update
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
   echo "Full System Update"
@@ -61,4 +71,7 @@ node-red-admin install node-red-contrib-elasticsearchcdb
 # Import Flows into Node-RED
 sudo /bin/systemctl stop nodered.service
 cp -f `dirname $0`/Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
+sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /home/pi/.node-red/flows_`hostname -f`.json
+sudo sed -i "s/\[USER\]/$e_user/" /home/pi/.node-red/flows_`hostname -f`.json
+sudo sed -i "s/\[PASSWORD\]/$e_password/" /home/pi/.node-red/flows_`hostname -f`.json
 sudo /bin/systemctl start nodered.service
