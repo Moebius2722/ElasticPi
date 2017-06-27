@@ -20,6 +20,16 @@ C_VERSION=`wget https://github.com/lmenezes/cerebro/releases/latest -qO- | grep 
 # Set Pi Updated Flag
 export PI_UPDATED=0
 
+####### KEEPALIVED #######
+
+`dirname $0`/install-keepalived.sh
+
+
+####### NGINX #######
+
+`dirname $0`/install-nginx.sh
+
+
 ####### ELASTICSEARCH #######
 
 `dirname $0`/install-elasticsearch.sh
@@ -35,11 +45,6 @@ export PI_UPDATED=0
 `dirname $0`/install-kibana.sh
 
 
-####### NGINX #######
-
-`dirname $0`/install-nginx.sh
-
-
 ####### CEREBRO #######
 
 `dirname $0`/install-cerebro.sh
@@ -48,8 +53,3 @@ export PI_UPDATED=0
 ####### NODERED #######
 
 `dirname $0`/install-nodered.sh
-
-
-####### KEEPALIVED #######
-
-`dirname $0`/install-keepalived.sh
