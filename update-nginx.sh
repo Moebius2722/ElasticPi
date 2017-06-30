@@ -46,10 +46,11 @@ git clone https://github.com/sto/ngx_http_auth_pam_module.git /tmp/ngx_http_auth
 
 # Install Nginx Reverse Proxy
 #sudo apt-get install nginx-extras -q -y
-wget -P/tmp http://nginx.org/download/nginx-${NGX_VERSION}.tar.gz && tar -xzvf /tmp/nginx-${NGX_VERSION}.tar.gz -C /tmp && cd /tmp/nginx-${NGX_VERSION}
+wget -P/tmp http://nginx.org/download/nginx-${NGX_VERSION}.tar.gz && tar -xzvf /tmp/nginx-${NGX_VERSION}.tar.gz -C /tmp && pushd /tmp/nginx-${NGX_VERSION}
 ./configure --prefix=/var/www --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --pid-path=/run/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --user=www-data --group=www-data --with-threads --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_slice_module --with-http_degradation_module --with-http_stub_status_module --with-http_perl_module --with-mail --with-mail_ssl_module --with-stream --with-stream_ssl_module --with-google_perftools_module --with-cpp_test_module --with-debug --add-module=/tmp/ngx_http_auth_pam_module
 make
 sudo make install
+popd
 rm -rf /tmp/ngx_http_auth_pam_module
 rm -rf /tmp/nginx-${NGX_VERSION}
 rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
