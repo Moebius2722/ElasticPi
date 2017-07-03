@@ -29,7 +29,6 @@ sudo apt-get install sshpass -q -y >/dev/null
 
 echo 'Cluster ===========================' $ipcluster '==========================='
 
-
 # Remove old cluster in SSH known_hosts
 ssh-keygen -R $ipcluster >/dev/null 2>/dev/null
   
@@ -37,14 +36,14 @@ ssh-keygen -R $ipcluster >/dev/null 2>/dev/null
 ssh-keyscan -H $ipcluster >> ~/.ssh/known_hosts 2>/dev/null
 
 # Get IP Nodes
-ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort'`
+#ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort'`
+ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | sort'`
 
 # Nodes Initialisation
 for ipnode in ${ipnodes[@]}
 do
 if ping -q -c 1 $ipnode 2>&1 >/dev/null ; then
 echo 'Node ===========================' $ipnode '==========================='
-echo
 # Remove old node in SSH known_hosts
 ssh-keygen -R $ipnode >/dev/null 2>/dev/null
 # Add new node in SSH known_hosts
@@ -63,7 +62,6 @@ for subipnode in ${ipnodes[@]}
 do
 if ping -q -c 1 $subipnode 2>&1 >/dev/null ; then
 echo 'Subnode ===================' $ipnode '=>' $subipnode '==================='
-echo
 sshpass -p $clusterpwd ssh -t $ipnode "ssh-keygen -R $subipnode >/dev/null 2>/dev/null ; ssh-keyscan -H $subipnode >> ~/.ssh/known_hosts 2>/dev/null ; sshpass -p $clusterpwd ssh-copy-id $subipnode >/dev/null 2>/dev/null"
 fi
 done
