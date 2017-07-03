@@ -33,27 +33,36 @@ ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/d
 # Nodes Initialisation
 for ipnode in ${ipnodes[@]}
 do
-  echo "=========================== $ipnode ==========================="
-  echo 
+  if ping -q -c 1 $ipnode 2>&1 >/dev/null ; then
   
-  # Remove old node in SSH known_hosts
-  ssh-keygen -R $ipnode >/dev/null 2>/dev/null
+    echo "=========================== $ipnode ==========================="
+    echo 
+
+    # Remove old node in SSH known_hosts
+    ssh-keygen -R $ipnode >/dev/null 2>/dev/null
   
-  # Add new node in SSH known_hosts
-  ssh-keyscan -H $ipnode >> ~/.ssh/known_hosts 2>/dev/null
+    # Add new node in SSH known_hosts
+    ssh-keyscan -H $ipnode >> ~/.ssh/known_hosts 2>/dev/null
   
-  # Generate RSA Key for SSH Auto Connect
-  sshpass -p $clusterpwd ssh -t $ipnode 'sudo apt-get install sshpass -q -y >/dev/null ; rm -f ~/.ssh/authorized_keys ; rm -f ~/.ssh/id_rsa ; rm -f ~/.ssh/id_rsa.pub ; ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa >/dev/null 2>/dev/null'
+    # Generate RSA Key for SSH Auto Connect
+    sshpass -p $clusterpwd ssh -t $ipnode 'sudo apt-get install sshpass -q -y >/dev/null ; rm -f ~/.ssh/authorized_keys ; rm -f ~/.ssh/id_rsa ; rm -f ~/.ssh/id_rsa.pub ; ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa >/dev/null 2>/dev/null'
+  
+  fi
 done
 
 # Nodes Autorizations
 for ipnode in ${ipnodes[@]}
 do
-  # Add SSH Auto Connect
-  for subipnode in ${ipnodes[@]}
-  do
-	echo "=================== $ipnode => $subipnode ==================="
-	echo
-    sshpass -p $clusterpwd ssh -t $ipnode "ssh-keygen -R $subipnode >/dev/null 2>/dev/null ; ssh-keyscan -H $subipnode >> ~/.ssh/known_hosts 2>/dev/null ; sshpass -p $clusterpwd ssh-copy-id $subipnode >/dev/null 2>/dev/null"
-  done
+  if ping -q -c 1 $ipnode 2>&1 >/dev/null ; then
+  
+    # Add SSH Auto Connect
+    for subipnode in ${ipnodes[@]}
+    do
+	  if ping -q -c 1 $subipnode 2>&1 >/dev/null ; then
+        echo "=================== $ipnode => $subipnode ==================="
+        echo
+        sshpass -p $clusterpwd ssh -t $ipnode "ssh-keygen -R $subipnode >/dev/null 2>/dev/null ; ssh-keyscan -H $subipnode >> ~/.ssh/known_hosts 2>/dev/null ; sshpass -p $clusterpwd ssh-copy-id $subipnode >/dev/null 2>/dev/null"
+      fi
+    done
+  fi
 done
