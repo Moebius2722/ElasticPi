@@ -97,12 +97,16 @@ sudo umount /mnt/target/sys
 sudo umount /mnt/target/proc
 
 # Change Root Partition
-sudo sed -i "s,root=/dev/mmcblk0p2,root=/dev/sda3," /mnt/target/boot/cmdline.txt
+sudo sed -i 's,root=[^[:blank:]]*,root=/dev/sda3,' /mnt/target/boot/cmdline.txt
+sudo sed -i 's,rootfstype=[^[:blank:]]*,rootfstype=f2fs,' /mnt/target/boot/cmdline.txt
 
 # Replace SD Card partitions with USB Drive Partitions in fstab
-sudo sed -i "s,/dev/mmcblk0p1,/dev/sda1          ," /mnt/target/etc/fstab
+#sudo sed -i "s,/dev/mmcblk0p1,/dev/sda1          ," /mnt/target/etc/fstab
+sudo sed -i "s,^[^[:blank:]][^[:blank:]]*[[:blank:]][[:blank:]]*\/boot,/dev/sda1            /boot," /mnt/target/etc/fstab
+sudo sed -i "s,^[^[:blank:]][^[:blank:]]*[[:blank:]][[:blank:]]*\/[[:blank:]][[:blank:]]*[[:alnum:]][[:alnum:]]*,/dev/sda3            /               f2fs," /mnt/target/etc/fstab
 echo -e '/dev/sda2            none            swap    defaults          0       0' | sudo tee -a /mnt/target/etc/fstab
 sudo sed -i "s,/dev/mmcblk0p2,/dev/sda3          ," /mnt/target/etc/fstab
+sudo sed -i 's,root=[^ ]*,root=/dev/sda3,' /mnt/target/etc/fstab
 echo -e '/dev/vg0/lvusrlocal  /usr/local      f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
 echo -e '/dev/vg0/lvtmp       /tmp            f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
 echo -e '/dev/vg0/lvvar       /var            f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
