@@ -36,8 +36,7 @@ ssh-keygen -R $ipcluster >/dev/null 2>/dev/null
 ssh-keyscan -H $ipcluster >> ~/.ssh/known_hosts 2>/dev/null
 
 # Get IP Nodes
-#ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort'`
-ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" | sort'`
+ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort | tr "\n" " "'`
 
 # Nodes Initialisation
 for ipnode in ${ipnodes[@]}
