@@ -10,7 +10,8 @@
 ####### INSTALL ON USB #######
 
 # Upgrade Firmware with Boot On USB Feature
-sudo apt-get update && sudo apt-get install rpi-update rsync -q -y && sudo BRANCH=next rpi-update
+#sudo apt-get update && sudo apt-get install rpi-update rsync -q -y && sudo BRANCH=next rpi-update
+sudo apt-get update && sudo apt-get install rpi-update rsync -q -y && sudo rpi-update
 
 # Active Boot On USB Feature
 echo program_usb_boot_mode=1 | sudo tee -a /boot/config.txt
@@ -30,7 +31,7 @@ mkpart primary 12250MiB 100% \
 set 4 lvm on
 
 sudo apt-get install lvm2 -q -y
-sudo pvcreate -f /dev/sda4
+sudo pvcreate -ffy /dev/sda4
 sudo vgcreate -y vg0 /dev/sda4
 sudo lvcreate -L 1G -n lvusrlocal vg0
 sudo lvcreate -L 1G -n lvtmp vg0
@@ -39,16 +40,19 @@ sudo lvcreate -L 1G -n lvhome vg0
 
 
 # Format USB Drive Partitions
-#sudo mkfs.vfat -n BOOT -F 32 /dev/sda1
-#sudo mkfs.ext4 -F /dev/sda2
-
+sudo apt-get install -y f2fs-tools
 sudo mkfs.vfat -n BOOT -F 32 /dev/sda1
 sudo mkswap -f -L SWAP /dev/sda2
-sudo mkfs.ext4 -F -L ROOT /dev/sda3
-sudo mkfs.ext4 -F -L USRLOCAL /dev/vg0/lvusrlocal
-sudo mkfs.ext4 -F -L TMP /dev/vg0/lvtmp
-sudo mkfs.ext4 -F -L VAR /dev/vg0/lvvar
-sudo mkfs.ext4 -F -L HOME /dev/vg0/lvhome
+sudo mkfs.f2fs -l ROOT /dev/sda3
+sudo mkfs.f2fs -l USRLOCAL /dev/vg0/lvusrlocal
+sudo mkfs.f2fs -l TMP /dev/vg0/lvtmp
+sudo mkfs.f2fs -l VAR /dev/vg0/lvvar
+sudo mkfs.f2fs -l HOME /dev/vg0/lvhome
+#sudo mkfs.ext4 -F -L ROOT /dev/sda3
+#sudo mkfs.ext4 -F -L USRLOCAL /dev/vg0/lvusrlocal
+#sudo mkfs.ext4 -F -L TMP /dev/vg0/lvtmp
+#sudo mkfs.ext4 -F -L VAR /dev/vg0/lvvar
+#sudo mkfs.ext4 -F -L HOME /dev/vg0/lvhome
 
 
 # Create Tree
@@ -80,7 +84,8 @@ sudo mount --bind /dev /mnt/target/dev
 sudo mount --bind /sys /mnt/target/sys
 sudo mount --bind /proc /mnt/target/proc
 sudo mount --bind /dev/pts /mnt/target/dev/pts
-echo "rm /etc/ssh/ssh_host* && dpkg-reconfigure openssh-server && apt-get -q -y remove dphys-swapfile && apt-get -q -y autoremove && rm -f /var/swap && apt-get update && apt-get upgrade -q -y && apt-get dist-upgrade -q -y && rm /boot/.firmware_revision && BRANCH=next rpi-update && exit" | sudo tee /mnt/target/chroot.sh
+#echo "rm /etc/ssh/ssh_host* && dpkg-reconfigure openssh-server && apt-get -q -y remove dphys-swapfile && apt-get -q -y autoremove && rm -f /var/swap && apt-get update && apt-get upgrade -q -y && apt-get dist-upgrade -q -y && rm /boot/.firmware_revision && BRANCH=next rpi-update && exit" | sudo tee /mnt/target/chroot.sh
+echo "rm /etc/ssh/ssh_host* && dpkg-reconfigure openssh-server && apt-get -q -y remove dphys-swapfile && apt-get -q -y autoremove && rm -f /var/swap && apt-get update && apt-get upgrade -q -y && apt-get dist-upgrade -q -y && rm /boot/.firmware_revision && rpi-update && exit" | sudo tee /mnt/target/chroot.sh
 sudo chmod a+x /mnt/target/chroot.sh
 
 # Upgrade USB Drive OS Installation and Firmware with Boot On USB Feature
@@ -98,11 +103,14 @@ sudo sed -i "s,root=/dev/mmcblk0p2,root=/dev/sda3," /mnt/target/boot/cmdline.txt
 sudo sed -i "s,/dev/mmcblk0p1,/dev/sda1          ," /mnt/target/etc/fstab
 echo -e '/dev/sda2            none            swap    defaults          0       0' | sudo tee -a /mnt/target/etc/fstab
 sudo sed -i "s,/dev/mmcblk0p2,/dev/sda3          ," /mnt/target/etc/fstab
-echo -e '/dev/vg0/lvusrlocal  /usr/local      ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
-echo -e '/dev/vg0/lvtmp       /tmp            ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
-echo -e '/dev/vg0/lvvar       /var            ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
-echo -e '/dev/vg0/lvhome      /home           ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
-
+echo -e '/dev/vg0/lvusrlocal  /usr/local      f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+echo -e '/dev/vg0/lvtmp       /tmp            f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+echo -e '/dev/vg0/lvvar       /var            f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+echo -e '/dev/vg0/lvhome      /home           f2fs    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+#echo -e '/dev/vg0/lvusrlocal  /usr/local      ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+#echo -e '/dev/vg0/lvtmp       /tmp            ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+#echo -e '/dev/vg0/lvvar       /var            ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
+#echo -e '/dev/vg0/lvhome      /home           ext4    defaults,noatime  0       1' | sudo tee -a /mnt/target/etc/fstab
 
 # Unmount Root and Boot Mount Point and PowerOff
 cd ~
