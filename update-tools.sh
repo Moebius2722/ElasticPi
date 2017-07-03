@@ -8,4 +8,4 @@
 
 
 ####### TOOLS #######
-allssh "rm -rf ~/ElasticPi ; git clone https://github.com/Moebius2722/ElasticPi.git ~/ElasticPi ; chmod -R a+x ~/ElasticPi/*.sh"
+allssh "rm -rf ~/ElasticPi ; git clone https://github.com/Moebius2722/ElasticPi.git ~/ElasticPi ; chmod -R a+x ~/ElasticPi/*.sh ; sudo cp ~/ElasticPi/allssh /usr/bin/allssh ; sudo chmod -R a+x /usr/bin/allssh"
