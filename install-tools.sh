@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElasticPi.git
+
+# Full Automated Update Script for ElasticPi Tools on Raspberry Pi 2 or 3
+
+
+####### TOOLS #######
+allssh "sudo rm -rf /opt/elasticpi ; sudo git clone https://github.com/Moebius2722/ElasticPi.git /opt/elasticpi ; sudo chmod -R a+x /opt/elasticpi/*.sh ; sudo cp /opt/elasticpi/allssh /usr/bin/allssh ; sudo chmod -R a+x /usr/bin/allssh"
+for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
+do
+echo "/sbin/$tool"
+echo "/opt/elasticpi/$tool.sh"
+sudo ln -s "/opt/elasticpi/$tool.sh" "/sbin/$tool"
+done
