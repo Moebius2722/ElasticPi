@@ -10,41 +10,41 @@
 ####### FULL SYSTEM UPDATE #######
 
 echo "================================= System Update ================================"
-allssh update-system
+update-system
 
 
 ####### ELASTICSEARCH #######
 
 echo "================================= Elasticsearch ================================"
-allssh update-elasticsearch
+update-elasticsearch
 
 
 ####### LOGSTASH #######
 
 echo "=================================== Logstash ==================================="
-allssh update-logstash
+update-logstash
 
 
 ####### KIBANA #######
 
 echo "==================================== Kibana ===================================="
-allssh update-kibana
+update-kibana
 
 
 ####### NGINX #######
 
 echo "===================================== Nginx ===================================="
-allssh update-nginx
+update-nginx
 
 
 ####### CEREBRO #######
 
 echo "==================================== Cerebro ==================================="
-allssh update-cerebro
+update-cerebro
 
 
 ####### NODERED #######
 
 echo "=================================== Node-RED ==================================="
-allssh update-nodered
+update-nodered
 
