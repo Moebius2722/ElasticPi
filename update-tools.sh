@@ -13,5 +13,5 @@ for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
 do
 echo "/sbin/$tool"
 echo "/opt/elasticpi/$tool.sh"
-sudo ln -s "/opt/elasticpi/$tool.sh" "/sbin/$tool"
+sudo ln -sf "/opt/elasticpi/$tool.sh" "/sbin/$tool"
 done
