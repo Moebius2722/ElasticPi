@@ -45,7 +45,13 @@ sudo apt-get install keepalived -q -y
 
 # Configure Keepalived Load Balancer
 password='k@l!ve3'
-echo | sudo tee /etc/keepalived/keepalived.conf
+echo "vrrp_script chk_nginx {
+  script       ""/opt/elasticpi/check-nginx.sh""
+  interval 2   # check every 2 seconds
+  fall 2       # require 2 failures for KO
+  rise 2       # require 2 successes for OK
+}
+" | sudo tee /etc/keepalived/keepalived.conf
 for i in {0..9}
 do
   id=1$i
@@ -70,6 +76,9 @@ do
   }
   virtual_ipaddress {
         $vip/24
+  }
+  track_script {
+    chk_nginx
   }
 }
 " | sudo tee -a /etc/keepalived/keepalived.conf
