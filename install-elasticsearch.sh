@@ -124,8 +124,8 @@ curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{
 }'
 
 # Install and Configure Curator for Elasticsearch
-sudo cp -f `dirname $0`/Curator/curator-config.yml /etc/elasticsearch/curator-config.yml
-sudo cp -f `dirname $0`/Curator/curator-actions.yml /etc/elasticsearch/curator-actions.yml
+sudo cp -f /opt/elasticpi/Curator/curator-config.yml /etc/elasticsearch/curator-config.yml
+sudo cp -f /opt/elasticpi/Curator/curator-actions.yml /etc/elasticsearch/curator-actions.yml
 sudo mkdir /var/log/curator
 sudo chown -R elasticsearch:elasticsearch /var/log/curator
 sudo chmod -R 770 /var/log/curator

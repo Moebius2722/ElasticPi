@@ -63,13 +63,13 @@ fi
 sudo usermod -a -G kibana-usr pi
 
 # Create Restricted Groups File for Nginx PAM authentication with "kibana-usr" default access group
-sudo cp -f `dirname $0`/Nginx/restricted_groups /etc/nginx/restricted_groups
+sudo cp -f /opt/elasticpi/Nginx/restricted_groups /etc/nginx/restricted_groups
 
 # Allow Nginx to read /etc/shadow file for PAM authentication
 sudo usermod -a -G shadow www-data
 
 # Set PAM Authentication for Nginx
-sudo cp -f `dirname $0`/Nginx/nginx_restricted /etc/pam.d/nginx_restricted
+sudo cp -f /opt/elasticpi/Nginx/nginx_restricted /etc/pam.d/nginx_restricted
 
 # Set Nginx Default Site redirect on local Kibana with PAM authentication
 echo "# Author : Moebius2722

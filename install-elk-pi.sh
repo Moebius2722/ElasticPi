@@ -22,34 +22,34 @@ export PI_UPDATED=0
 
 ####### KEEPALIVED #######
 
-`dirname $0`/install-keepalived.sh
+/opt/elasticpi/install-keepalived.sh
 
 
 ####### NGINX #######
 
-`dirname $0`/install-nginx.sh
+/opt/elasticpi/install-nginx.sh
 
 
 ####### ELASTICSEARCH #######
 
-`dirname $0`/install-elasticsearch.sh
+/opt/elasticpi/install-elasticsearch.sh
 
 
 ####### LOGSTASH #######
 
-`dirname $0`/install-logstash.sh
+/opt/elasticpi/install-logstash.sh
 
 
 ####### KIBANA #######
 
-`dirname $0`/install-kibana.sh
+/opt/elasticpi/install-kibana.sh
 
 
 ####### CEREBRO #######
 
-`dirname $0`/install-cerebro.sh
+/opt/elasticpi/install-cerebro.sh
 
 
 ####### NODERED #######
 
-`dirname $0`/install-nodered.sh
+/opt/elasticpi/install-nodered.sh

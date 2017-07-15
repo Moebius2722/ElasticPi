@@ -45,7 +45,7 @@ sudo sed -i 's/-Xms.*/-Xms200m/' /etc/logstash/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
 
 # Set Logstash Node Configuration
-sudo cp -f `dirname $0`/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
+sudo cp -f /opt/elasticpi/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
 sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /etc/logstash/conf.d/00-default.conf
 sudo sed -i "s/\[USER\]/$e_user/" /etc/logstash/conf.d/00-default.conf
 sudo sed -i "s/\[PASSWORD\]/$e_password/" /etc/logstash/conf.d/00-default.conf

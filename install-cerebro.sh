@@ -36,7 +36,7 @@ fi
 
 # Get and Install Cerebro
 wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && rm -f /tmp/cerebro-${C_VERSION}.tgz
-sudo cp -f `dirname $0`/Cerebro/application.conf /usr/share/cerebro/conf/.
+sudo cp -f /opt/elasticpi/Cerebro/application.conf /usr/share/cerebro/conf/.
 sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /usr/share/cerebro/conf/application.conf
 sudo sed -i "s/\[USER\]/$e_user/" /usr/share/cerebro/conf/application.conf
 sudo sed -i "s/\[PASSWORD\]/$e_password/" /usr/share/cerebro/conf/application.conf
@@ -54,7 +54,7 @@ fi
 sudo chown -R cerebro:cerebro /usr/share/cerebro
 
 # Adding Autostart capability using SystemD
-sudo cp -f `dirname $0`/Cerebro/cerebro.service /etc/systemd/system/.
+sudo cp -f /opt/elasticpi/Cerebro/cerebro.service /etc/systemd/system/.
 sudo /bin/systemctl daemon-reload
 
 # Enable and start Cerebro daemon
