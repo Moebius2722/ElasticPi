@@ -8,4 +8,10 @@
 
 
 ####### TOOLS #######
-allssh "rm -rf ~/ElasticPi ; git clone https://github.com/Moebius2722/ElasticPi.git ~/ElasticPi ; chmod -R a+x ~/ElasticPi/*.sh ; sudo cp ~/ElasticPi/allssh /usr/bin/allssh ; sudo chmod -R a+x /usr/bin/allssh"
+sudo rm -rf /opt/elasticpi ; sudo git clone https://github.com/Moebius2722/ElasticPi.git /opt/elasticpi ; sudo chmod -R a+x /opt/elasticpi/*.sh
+for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
+do
+echo "/sbin/$tool"
+echo "/opt/elasticpi/$tool.sh"
+sudo ln -s "/opt/elasticpi/$tool.sh" "/sbin/$tool"
+done
