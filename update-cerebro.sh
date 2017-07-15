@@ -20,6 +20,7 @@ if [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
   echo "Cerebro is already up to date to ${C_CVERSION} version"
   exit 0
 fi
+echo "Update Cerebro ${C_CVERSION} to ${C_VERSION}"
 
 # Stop Cerebro Daemon
 sudo /bin/systemctl stop cerebro.service

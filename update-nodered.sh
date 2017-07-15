@@ -18,6 +18,7 @@ if [[ "${NR_VERSION}" = "${NR_CVERSION}" ]]; then
   echo "Node-RED is already up to date to ${NR_CVERSION} version"
   exit 0
 fi
+echo "Update Node-RED ${NR_CVERSION} to ${NR_VERSION}"
 
 # Stop Node-RED Daemon
 sudo /bin/systemctl stop nodered.service

@@ -20,6 +20,7 @@ if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
   echo "Elasticsearch is already up to date to ${E_CVERSION} version"
   exit 0
 fi
+echo "Update Elasticsearch ${E_CVERSION} to ${E_VERSION}"
 
 # Disable shard allocation
 curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'

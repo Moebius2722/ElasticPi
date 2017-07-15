@@ -24,6 +24,7 @@ if [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
   echo "Kibana is already up to date to ${K_CVERSION} version"
   exit 0
 fi
+echo "Update Kibana ${K_CVERSION} to ${K_VERSION}"
 
 # Stop Kibana Daemon
 sudo /bin/systemctl stop kibana.service

@@ -20,6 +20,7 @@ if [[ "${NGX_VERSION}" = "${NGX_CVERSION}" ]]; then
   echo "Nginx is already up to date to ${NGX_CVERSION} version"
   exit 0
 fi
+echo "Update Nginx ${NGX_CVERSION} to ${NGX_VERSION}"
 
 # Stop Keepalived Daemon
 sudo /bin/systemctl stop keepalived.service

@@ -20,6 +20,7 @@ if [[ "${L_VERSION}" = "${L_CVERSION}" ]]; then
   echo "Logstash is already up to date to ${L_CVERSION} version"
   exit 0
 fi
+echo "Update Logstash ${L_CVERSION} to ${L_VERSION}"
 
 # Stop Logstash Daemon
 sudo /bin/systemctl stop logstash.service
