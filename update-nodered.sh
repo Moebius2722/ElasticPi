@@ -32,10 +32,13 @@ sudo apt-get upgrade -q -y
 
 # Update Node-RED
 sudo npm cache clean
-#sudo npm install -g npm@2.x
+#sudo npm install -g npm@3.x
 hash -r
-sudo npm update -g node-gyp
-sudo npm update -g --unsafe-perm node-red
+sudo npm install -g node-gyp
+sudo npm install -g --unsafe-perm node-red
+cd ~/.node-red
+npm update
+npm rebuild
 
 # Configure and Start Node-RED as Daemon
 sudo /bin/systemctl daemon-reload
