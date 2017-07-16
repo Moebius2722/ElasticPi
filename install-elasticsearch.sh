@@ -112,8 +112,7 @@ sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasti
 # Configure and Start Elasticsearch as Daemon
 sudo sed -i '/\[Service\]/a Restart=Always' /usr/lib/systemd/system/elasticsearch.service
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable elasticsearch.service
-sudo /bin/systemctl start elasticsearch.service
+start-elasticsearch
 
 # Create Snapshot Repository for Backup NFS mount point
 curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{

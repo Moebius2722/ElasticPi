@@ -23,7 +23,7 @@ fi
 echo "Update Logstash ${L_CVERSION} to ${L_VERSION}"
 
 # Stop Logstash Daemon
-sudo /bin/systemctl stop logstash.service
+stop-logstash
 
 
 ####### LOGSTASH #######
@@ -37,5 +37,4 @@ git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xm
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable logstash.service
-sudo /bin/systemctl start logstash.service
+start-logstash

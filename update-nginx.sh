@@ -23,10 +23,10 @@ fi
 echo "Update Nginx ${NGX_CVERSION} to ${NGX_VERSION}"
 
 # Stop Keepalived Daemon
-sudo /bin/systemctl stop keepalived.service
+stop-keepalived
 
 # Stop Nginx Daemon
-sudo /bin/systemctl stop nginx.service
+stop-nginx
 
 
 ####### NGINX #######
@@ -46,7 +46,7 @@ rm -rf /tmp/nginx-${NGX_VERSION}
 rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
 
 # Start Nginx Daemon
-sudo /bin/systemctl start nginx.service
+start-nginx
 
 # Start Keepalived Daemon
-sudo /bin/systemctl start keepalived.service
+start-keepalived

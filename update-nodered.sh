@@ -21,7 +21,7 @@ fi
 echo "Update Node-RED ${NR_CVERSION} to ${NR_VERSION}"
 
 # Stop Node-RED Daemon
-sudo /bin/systemctl stop nodered.service
+stop-nodered
 
 
 ####### NODERED #######
@@ -42,5 +42,4 @@ npm rebuild
 
 # Configure and Start Node-RED as Daemon
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable nodered.service
-sudo /bin/systemctl start nodered.service
+start-nodered

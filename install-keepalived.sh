@@ -85,4 +85,4 @@ do
 done
 
 # Restart Keepalived Load Balancer
-sudo systemctl restart keepalived.service
+restart-keepalived

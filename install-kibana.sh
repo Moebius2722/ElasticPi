@@ -72,5 +72,4 @@ sudo sed -i '/ExecStartPre=.*/a PIDFile=\/var\/run\/kibana\/kibana\.pid' /etc/sy
 
 # Configure and Start Kibana as Daemon
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable kibana.service
-sudo /bin/systemctl start kibana.service
+start-kibana

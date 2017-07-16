@@ -27,7 +27,7 @@ fi
 echo "Update Kibana ${K_CVERSION} to ${K_VERSION}"
 
 # Stop Kibana Daemon
-sudo /bin/systemctl stop kibana.service
+stop-kibana
 
 
 ####### KIBANA #######
@@ -40,5 +40,4 @@ wget -P/tmp https://nodejs.org/download/release/v${N_VERSION}/node-v${N_VERSION}
 
 # Configure and Start Kibana as Daemon
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable kibana.service
-sudo /bin/systemctl start kibana.service
+start-kibana

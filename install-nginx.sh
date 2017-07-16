@@ -151,8 +151,8 @@ done
 echo "}" | sudo tee -a /etc/nginx/nginx.conf
 
 # Restart Nginx Daemon for Update Configuration
-sudo /bin/systemctl restart nginx.service
+restart-nginx
 
 # Secured Kibana
 #sudo sed -i 's/.*server\.host:.*/server\.host: "127.0.0.1"/' /etc/kibana/kibana.yml
-#sudo /bin/systemctl restart kibana.service
+#restart-kibana

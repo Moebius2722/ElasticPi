@@ -13,5 +13,13 @@ for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
 do
 echo "/usr/bin/$tool => /opt/elasticpi/$tool.sh"
 sudo ln -sf "/opt/elasticpi/$tool.sh" "/usr/bin/$tool"
-sudo rm -f "/sbin/$tool"
+done
+for svc in elasticsearch logstash kibana nginx cerebro nodered mosquitto keepalived
+do
+echo "/usr/bin/start-$svc => /usr/bin/start-service"
+sudo ln -sf "/usr/bin/start-service" "/usr/bin/start-$svc"
+echo "/usr/bin/stop-$svc => /usr/bin/stop-service"
+sudo ln -sf "/usr/bin/stop-service" "/usr/bin/stop-$svc"
+echo "/usr/bin/restart-$svc => /usr/bin/restart-service"
+sudo ln -sf "/usr/bin/restart-service" "/usr/bin/restart-$svc"
 done

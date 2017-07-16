@@ -22,7 +22,7 @@ curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: applicati
 curl -XPOST 'localhost:9200/_flush/synced?pretty'
 
 # Stop Elasticsearch Daemon
-sudo /bin/systemctl stop elasticsearch.service
+stop-elasticsearch
 
 
 

@@ -37,7 +37,7 @@ sleep 10
 curl -XPOST 'localhost:9200/_flush/synced?pretty'
 
 # Stop Elasticsearch Daemon
-sudo /bin/systemctl stop elasticsearch.service
+stop-elasticsearch
 
 
 ####### ELASTICSEARCH #######
@@ -54,8 +54,7 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-file
 
 # Configure and Start Elasticsearch as Daemon
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable elasticsearch.service
-sudo /bin/systemctl start elasticsearch.service
+start-elasticsearch
 
 # Install and Configure Curator for Elasticsearch
 sudo pip install --upgrade PySocks && sudo pip install --upgrade elasticsearch-curator

@@ -59,8 +59,7 @@ sudo chmod +x /usr/bin/node-red-st*
 sudo /bin/systemctl daemon-reload
 
 # Enable and start Node-RED daemon
-sudo /bin/systemctl enable nodered.service
-sudo /bin/systemctl start nodered.service
+start-nodered
 
 # Install Node-RED-Admin Tool
 sudo npm install -g node-red-admin
@@ -69,17 +68,16 @@ sudo npm install -g node-red-admin
 node-red-admin install node-red-contrib-elasticsearchcdb
 
 # Import Flows into Node-RED
-sudo /bin/systemctl stop nodered.service
+stop-nodered
 cp -f /opt/elasticpi/Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
 sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /home/pi/.node-red/flows_`hostname -f`.json
 sudo sed -i "s/\[USER\]/$e_user/" /home/pi/.node-red/flows_`hostname -f`.json
 sudo sed -i "s/\[PASSWORD\]/$e_password/" /home/pi/.node-red/flows_`hostname -f`.json
-sudo /bin/systemctl start nodered.service
+start-nodered
 
 # Install Mosquitto MQTT Server
 sudo apt-get install mosquitto -q -y
 
 # Enable and start Mosquitto daemon
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable mosquitto.service
-sudo /bin/systemctl start mosquitto.service
+start-mosquitto

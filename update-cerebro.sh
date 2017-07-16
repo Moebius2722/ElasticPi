@@ -23,7 +23,7 @@ fi
 echo "Update Cerebro ${C_CVERSION} to ${C_VERSION}"
 
 # Stop Cerebro Daemon
-sudo /bin/systemctl stop cerebro.service
+stop-cerebro
 
 
 ####### CEREBRO #######
@@ -39,5 +39,4 @@ sudo cp -f /tmp/cerebro-application.conf.bkp /usr/share/cerebro/conf/application
 
 # Configure and Start Cerebro as Daemon
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable cerebro.service
-sudo /bin/systemctl start cerebro.service
+start-cerebro

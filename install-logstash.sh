@@ -53,5 +53,4 @@ sudo sed -i "s/\[PASSWORD\]/$e_password/" /etc/logstash/conf.d/00-default.conf
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable logstash.service
-sudo /bin/systemctl start logstash.service
+start-logstash

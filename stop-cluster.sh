@@ -19,93 +19,21 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 echo "================================= STOP-CLUSTER ================================="
 date
 
-# Stop Keepalived
-echo "================================== Keepalived =================================="
+# Stop Services
+for svc in keepalived nginx kibana logstash nodered mosquitto cerebro     
+do
+echo "================================= $svc ================================"
 for ipnode in "${ipnodes[@]}"
 do
-  ssh -t $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Keepalived"
-    ssh -t $ipnode sudo systemctl stop keepalived.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable keepalived.service >/dev/null 2>/dev/null
+echo "$ipnode : Stop $svc"
+ssh -t $ipnode stop-$svc >/dev/null 2>/dev/null
+done
 done
 
-# Stop Nginx
-echo "===================================== Nginx ===================================="
-for ipnode in "${ipnodes[@]}"
-do
-  ssh -t $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Nginx"
-    ssh -t $ipnode sudo systemctl stop nginx.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable nginx.service >/dev/null 2>/dev/null
-done
-
-# Stop Kibana
-echo "==================================== Kibana ===================================="
-for ipnode in "${ipnodes[@]}"
-do
-  ssh -t $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Kibana"
-    ssh -t $ipnode sudo systemctl stop kibana.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable kibana.service >/dev/null 2>/dev/null
-done
-
-# Stop Logstash
-echo "=================================== Logstash ==================================="
-for ipnode in "${ipnodes[@]}"
-do
-  ssh -t $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Logstash"
-    ssh -t $ipnode sudo systemctl stop logstash.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable logstash.service >/dev/null 2>/dev/null
-done
-
-# Stop Node-RED
-echo "=================================== Node-RED ==================================="
-for ipnode in "${ipnodes[@]}"
-do
-  ssh -t $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Node-RED"
-    ssh -t $ipnode sudo systemctl stop nodered.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable nodered.service >/dev/null 2>/dev/null
-done
-
-# Stop Mosquitto
-echo "=================================== Mosquitto =================================="
-for ipnode in "${ipnodes[@]}"
-do
-  ssh -t $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Mosquitto"
-    ssh -t $ipnode sudo systemctl stop mosquitto.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable mosquitto.service >/dev/null 2>/dev/null
-done
-
-# Stop Cerebro
-echo "==================================== Cerebro ==================================="
-for ipnode in "${ipnodes[@]}"
-do
-  ssh -t $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Cerebro"
-    ssh -t $ipnode sudo systemctl stop cerebro.service >/dev/null 2>/dev/null
-  fi
-  ssh -t $ipnode sudo systemctl disable cerebro.service >/dev/null 2>/dev/null
-done
 
 # Backup Elasticsearch before stop
 echo "============================= Backup Elasticsearch ============================="
-`dirname $0`/backup-elasticsearch.sh
+backup-elasticsearch
 
 # Stop Elasticsearch
 echo "================================= Elasticsearch ================================"
@@ -126,10 +54,10 @@ for ipnode in "${ipnodes[@]}"
 do
   ssh -t $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
-    echo "$ipnode : Stop Elasticsearch"
-    ssh -t $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty' ; sudo systemctl stop elasticsearch.service" >/dev/null 2>/dev/null
+    echo "$ipnode : Stop elasticsearch"
+    ssh -t $ipnode "curl -XPOST 'localhost:9200/_flush/synced?pretty'" >/dev/null 2>/dev/null
   fi
-  ssh -t $ipnode sudo systemctl disable elasticsearch.service >/dev/null 2>/dev/null
+  ssh -t $ipnode stop-elasticsearch >/dev/null 2>/dev/null
 done
 
 date

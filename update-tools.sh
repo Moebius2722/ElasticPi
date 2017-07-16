@@ -20,4 +20,6 @@ echo "/usr/bin/start-$svc => /usr/bin/start-service"
 sudo ln -sf "/usr/bin/start-service" "/usr/bin/start-$svc"
 echo "/usr/bin/stop-$svc => /usr/bin/stop-service"
 sudo ln -sf "/usr/bin/stop-service" "/usr/bin/stop-$svc"
+echo "/usr/bin/restart-$svc => /usr/bin/restart-service"
+sudo ln -sf "/usr/bin/restart-service" "/usr/bin/restart-$svc"
 done

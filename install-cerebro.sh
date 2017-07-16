@@ -58,5 +58,4 @@ sudo cp -f /opt/elasticpi/Cerebro/cerebro.service /etc/systemd/system/.
 sudo /bin/systemctl daemon-reload
 
 # Enable and start Cerebro daemon
-sudo /bin/systemctl enable cerebro.service
-sudo /bin/systemctl start cerebro.service
+start-cerebro
