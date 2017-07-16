@@ -14,3 +14,7 @@ do
 echo "/usr/bin/$tool => /opt/elasticpi/$tool.sh"
 sudo ln -sf "/opt/elasticpi/$tool.sh" "/usr/bin/$tool"
 done
+for svc in elasticsearch logstash kibana nginx cerebro nodered mosquitto keepalived
+do
+sudo ln -sf "/usr/bin/start-service" "/usr/bin/start-$svc"
+done
