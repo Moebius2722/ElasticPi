@@ -18,4 +18,6 @@ for svc in elasticsearch logstash kibana nginx cerebro nodered mosquitto keepali
 do
 echo "/usr/bin/start-$svc => /usr/bin/start-service"
 sudo ln -sf "/usr/bin/start-service" "/usr/bin/start-$svc"
+echo "/usr/bin/stop-$svc => /usr/bin/stop-service"
+sudo ln -sf "/usr/bin/stop-service" "/usr/bin/stop-$svc"
 done
