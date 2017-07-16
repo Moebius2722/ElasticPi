@@ -16,5 +16,6 @@ sudo ln -sf "/opt/elasticpi/$tool.sh" "/usr/bin/$tool"
 done
 for svc in elasticsearch logstash kibana nginx cerebro nodered mosquitto keepalived
 do
+echo "/usr/bin/start-$svc => /usr/bin/start-service"
 sudo ln -sf "/usr/bin/start-service" "/usr/bin/start-$svc"
 done
