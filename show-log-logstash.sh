@@ -9,4 +9,4 @@
 
 ####### show-log-logstash #######
 
-sudo tail -f -n 60 /var/log/logstash/logstash-plain.log
+sudo journalctl -f -n 60 -u logstash
