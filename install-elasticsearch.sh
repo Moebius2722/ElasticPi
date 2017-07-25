@@ -110,7 +110,7 @@ sudo chmod -R 770 /mnt/espibackup
 sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
 
 # Configure and Start Elasticsearch as Daemon
-sudo sed -i '/\[Service\]/a Restart=Always' /usr/lib/systemd/system/elasticsearch.service
+sudo sed -i '/\[Service\]/a Restart=always' /usr/lib/systemd/system/elasticsearch.service
 sudo /bin/systemctl daemon-reload
 start-elasticsearch
 
@@ -128,4 +128,4 @@ sudo cp -f /opt/elasticpi/Curator/curator-actions.yml /etc/elasticsearch/curator
 sudo mkdir /var/log/curator
 sudo chown -R elasticsearch:elasticsearch /var/log/curator
 sudo chmod -R 770 /var/log/curator
-sudo apt-get install python-pip -q -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "20 0    * * *   elasticsearch    /usr/local/bin/curator --config /etc/elasticsearch/curator-config.yml /etc/elasticsearch/curator-actions.yml" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
+sudo apt-get install python-pip -q -y && sudo pip install PySocks && sudo pip install elasticsearch-curator && echo -e "0 1    * * *   elasticsearch    /usr/local/bin/curator --config /etc/elasticsearch/curator-config.yml /etc/elasticsearch/curator-actions.yml" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
