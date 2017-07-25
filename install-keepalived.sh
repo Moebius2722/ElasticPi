@@ -46,7 +46,7 @@ sudo apt-get install keepalived -q -y
 # Configure Keepalived Load Balancer
 password='k@l!ve3'
 echo "vrrp_script chk_nginx {
-  script       ""/opt/elasticpi/check-nginx.sh""
+  script       ""/usr/bin/check-nginx""
   interval 2   # check every 2 seconds
   fall 2       # require 2 failures for KO
   rise 2       # require 2 successes for OK
