@@ -22,49 +22,49 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 
 for ipnode in "${ipnodes[@]}"
 do
-  ssh -t $ipnode sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-elasticsearch
   if [[ $? = 0 ]] ; then
     ses=ok
   else
     ses=KO
   fi
-  ssh -t $ipnode sudo systemctl status logstash.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-logstash
   if [[ $? = 0 ]] ; then
     sls=ok
   else
     sls=KO
   fi
-  ssh -t $ipnode sudo systemctl status kibana.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-kibana
   if [[ $? = 0 ]] ; then
     skb=ok
   else
     skb=KO
   fi
-  ssh -t $ipnode sudo systemctl status nginx.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-nginx
   if [[ $? = 0 ]] ; then
     sng=ok
   else
     sng=KO
   fi
-  ssh -t $ipnode sudo systemctl status cerebro.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-cerebro
   if [[ $? = 0 ]] ; then
     scb=ok
   else
     scb=KO
   fi
-  ssh -t $ipnode sudo systemctl status nodered.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-nodered
   if [[ $? = 0 ]] ; then
     snr=ok
   else
     snr=KO
   fi
-  ssh -t $ipnode sudo systemctl status mosquitto.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-mosquitto
   if [[ $? = 0 ]] ; then
     smq=ok
   else
     smq=KO
   fi
-  ssh -t $ipnode sudo systemctl status keepalived.service >/dev/null 2>/dev/null
+  ssh -t $ipnode check-keepalived
   if [[ $? = 0 ]] ; then
     ska=ok
   else
