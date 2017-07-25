@@ -150,6 +150,10 @@ echo "    }
 done
 echo "}" | sudo tee -a /etc/nginx/nginx.conf
 
+# Configure Nginx Daemon
+sudo sed -i '/\[Service\]/a Restart=always' /lib/systemd/system/nginx.service
+sudo /bin/systemctl daemon-reload
+
 # Restart Nginx Daemon for Update Configuration
 restart-nginx
 
