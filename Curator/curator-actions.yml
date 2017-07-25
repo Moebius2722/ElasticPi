@@ -57,6 +57,7 @@ actions:
       Delete snapshots from 'espibackup' older than 12 months
     options:
       repository: 'espibackup'
+      ignore_empty_list: True
       continue_if_exception: False
       disable_action: False
     filters:
