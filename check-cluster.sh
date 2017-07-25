@@ -22,49 +22,49 @@ ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -
 
 for ipnode in "${ipnodes[@]}"
 do
-  ssh -t $ipnode check-elasticsearch
+  ssh -t $ipnode check-elasticsearch >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     ses=ok
   else
     ses=KO
   fi
-  ssh -t $ipnode check-logstash
+  ssh -t $ipnode check-logstash >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     sls=ok
   else
     sls=KO
   fi
-  ssh -t $ipnode check-kibana
+  ssh -t $ipnode check-kibana >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     skb=ok
   else
     skb=KO
   fi
-  ssh -t $ipnode check-nginx
+  ssh -t $ipnode check-nginx >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     sng=ok
   else
     sng=KO
   fi
-  ssh -t $ipnode check-cerebro
+  ssh -t $ipnode check-cerebro >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     scb=ok
   else
     scb=KO
   fi
-  ssh -t $ipnode check-nodered
+  ssh -t $ipnode check-nodered >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     snr=ok
   else
     snr=KO
   fi
-  ssh -t $ipnode check-mosquitto
+  ssh -t $ipnode check-mosquitto >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     smq=ok
   else
     smq=KO
   fi
-  ssh -t $ipnode check-keepalived
+  ssh -t $ipnode check-keepalived >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     ska=ok
   else
