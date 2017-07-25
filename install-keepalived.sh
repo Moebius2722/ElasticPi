@@ -49,7 +49,7 @@ echo "vrrp_script chk_nginx {
   script       ""/usr/bin/check-nginx""
   interval 2   # check every 2 seconds
   fall 2       # require 2 failures for KO
-  rise 2       # require 2 successes for OK
+  rise 150     # require 150 successes for OK
 }
 " | sudo tee /etc/keepalived/keepalived.conf
 for i in {0..9}
@@ -79,8 +79,11 @@ do
   }
   track_script {
     chk_nginx
-  }
-}
+  }" | sudo tee -a /etc/keepalived/keepalived.conf
+  if [[ $i -ne  $idhost ]]; then
+    echo "  preempt_delay 300" | sudo tee -a /etc/keepalived/keepalived.conf
+  fi
+echo "}
 " | sudo tee -a /etc/keepalived/keepalived.conf
 done
 
