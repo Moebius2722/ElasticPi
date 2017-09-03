@@ -8,7 +8,7 @@
 
 
 ####### TOOLS #######
-cd /opt/elasticpi ; sudo git pull ; sudo chmod -R a+x /opt/elasticpi/*.sh
+sudo rm -rf /opt/elasticpi ; sudo git clone  ; sudo chmod -R a+x /opt/elasticpi/*.sh
 for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
 do
 echo "/usr/bin/$tool => /opt/elasticpi/$tool.sh"
