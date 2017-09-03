@@ -114,3 +114,32 @@ server {
         port_in_redirect off;
     }
 }
+
+upstream stream_elastichq {
+    server 192.168.0.21:9200 backup;
+    server 192.168.0.22:9200 backup;
+    server 192.168.0.23:9200 backup;
+    server 192.168.0.24:9200 backup;
+}
+
+server {
+    listen 8080;
+
+    listen 8443 ssl;
+    server_name 0.0.0.0;
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    auth_pam "Restricted Zone";
+    auth_pam_service_name "nginx_restricted";
+    auth_pam_set_pam_env on;
+
+    location /_plugin/hq/ {
+        alias /.../elasticsearch-HQ/_site/;
+        expires 300s;
+    }
+
+    location ^~ / {
+        proxy_pass http://stream_elastichq;
+    }
+}
