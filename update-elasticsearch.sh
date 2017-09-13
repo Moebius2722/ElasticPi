@@ -46,7 +46,8 @@ stop-elasticsearch
 wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg --force-confold --force-overwrite -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Get and Compile JNA library for Elasticsearch
-sudo apt-get install ant texinfo -y && git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /usr/share/elasticsearch/lib/jna-4.4.0.jar && rm -rf /tmp/jna
+JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
+sudo apt-get install ant texinfo -y && git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar $JNA_JAR && rm -rf /tmp/jna
 
 # Update Discovery-File plugin
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin remove discovery-file

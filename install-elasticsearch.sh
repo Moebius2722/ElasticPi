@@ -51,7 +51,8 @@ sudo apt-get install oracle-java8-installer -q -y --allow-unauthenticated
 wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Get and Compile JNA library for Elasticsearch
-sudo apt-get install ant texinfo -y && git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /usr/share/elasticsearch/lib/jna-4.4.0.jar && rm -rf /tmp/jna
+JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
+sudo apt-get install ant texinfo -y && git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar $JNA_JAR && rm -rf /tmp/jna
 
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
