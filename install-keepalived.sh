@@ -44,7 +44,6 @@ sudo sysctl -p
 sudo apt-get install libipset3 keepalived -q -y
 
 # Configure Keepalived Load Balancer
-password='k@l!ve3'
 echo "vrrp_script chk_nginx {
   script       ""/usr/bin/check-nginx""
   interval 2   # check every 2 seconds
@@ -70,10 +69,6 @@ do
   priority $priority
   advert_int 1
   lvs_sync_daemon_interface eth0
-  authentication {
-    auth_type AH
-    auth_pass $password
-  }
   virtual_ipaddress {
         $vip/24
   }
