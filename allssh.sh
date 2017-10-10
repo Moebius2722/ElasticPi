@@ -13,7 +13,7 @@ echo "Executing $*"
 ilength=80
 iphost=`hostname -i`
 
-ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | grep -v $iphost | sort` )
+ipnodes=( `sudo cat /opt/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | grep -v $iphost | sort` )
 for ipnode in "${ipnodes[@]}"
 do
   iipnode=${#ipnode}
