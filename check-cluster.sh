@@ -13,7 +13,7 @@ echo " HOST             ES LS KB NG CB NR MQ KA"
 
 
 # Get IP Nodes
-ipnodes=( `sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort` )
+ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort` )
 
 
 ####### CHECK-CLUSTER #######
