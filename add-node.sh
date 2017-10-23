@@ -49,8 +49,14 @@ sshpass -p $nodepwd scp ~/.ssh/known_hosts  192.168.0.23:~/.ssh/known_hosts
 
 # Add Node to Cluster
 allssh "echo $ipnewnode | sudo tee -a /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null"
+namenewnode=`ssh 192.168.0.23 hostname -s`
+fqdnnewnode=`ssh 192.168.0.23 hostname`
+allssh "echo -e $ipnewnode\\\t$namenewnode $fqdnnewnode | sudo tee -a /etc/hosts >/dev/null 2>/dev/null"
 scp /etc/elasticpi/nodes.lst $ipnewnode:/tmp/nodes.lst >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo mkdir /etc/elasticpi && sudo cp /tmp/nodes.lst /etc/elasticpi/nodes.lst && rm /tmp/nodes.lst >/dev/null 2>/dev/null"
+scp /etc/hosts $ipnewnode:/tmp/hosts >/dev/null 2>/dev/null
+ssh $ipnewnode "sudo cp /tmp/hosts /etc/hosts && rm /tmp/hosts >/dev/null 2>/dev/null"
+
 
 # Install Cluster Tools on New Node
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
