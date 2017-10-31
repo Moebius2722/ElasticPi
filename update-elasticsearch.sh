@@ -47,7 +47,8 @@ wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$
 
 # Get and Compile JNA library for Elasticsearch
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
-sudo apt-get install ant texinfo -y && git clone https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar $JNA_JAR && rm -rf /tmp/jna
+JNA_VERSION=`echo $JNA_JAR | cut -d / -f 6 | cut -d - -f 2`
+sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar $JNA_JAR && rm -rf /tmp/jna
 
 # Update Discovery-File plugin
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin remove discovery-file
