@@ -44,11 +44,11 @@ sudo sysctl -p
 sudo apt-get install libipset3 keepalived -q -y
 
 # Configure Keepalived Load Balancer
-echo "vrrp_script chk_nginx {
-  script       ""/usr/bin/check-nginx""
+echo "vrrp_script chk_nlb {
+  script       ""/usr/bin/check-nlb""
   interval 2   # check every 2 seconds
   fall 2       # require 2 failures for KO
-  rise 150     # require 150 successes for OK
+  rise 2       # require 2 successes for OK
 }
 " | sudo tee /etc/keepalived/keepalived.conf
 for i in {0..9}
@@ -73,12 +73,9 @@ do
         $vip/24
   }
   track_script {
-    chk_nginx
-  }" | sudo tee -a /etc/keepalived/keepalived.conf
-  if [[ $i -ne  $idhost ]]; then
-    echo "  preempt_delay 300" | sudo tee -a /etc/keepalived/keepalived.conf
-  fi
-echo "}
+    chk_nlb
+  }
+}
 " | sudo tee -a /etc/keepalived/keepalived.conf
 done
 
