@@ -57,7 +57,6 @@ ssh $ipnewnode "sudo mkdir /etc/elasticpi && sudo cp /tmp/nodes.lst /etc/elastic
 scp /etc/hosts $ipnewnode:/tmp/hosts >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo cp /tmp/hosts /etc/hosts && rm /tmp/hosts >/dev/null 2>/dev/null"
 
-
 # Install Cluster Tools on New Node
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
-ssh $ipnewnode "/bin/bash /tmp/install-tools.sh >/dev/null 2>/dev/null"
+ssh $ipnewnode "/bin/bash /tmp/install-tools.sh ; rm /tmp/install-tools.sh >/dev/null 2>/dev/null"
