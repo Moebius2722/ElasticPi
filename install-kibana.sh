@@ -9,6 +9,21 @@
 
 ####### COMMON #######
 
+# Check Parameters
+if [[ ! $# = 3 ]] ; then
+  echo "Usage : $0 Elasticsearch_IP Elasticsearch_User Elasticsearch_Password"
+  exit 1
+fi
+
+# Get Elasticsearch IP
+e_ip=$1
+
+# Get Elasticsearch User
+e_user=$2
+
+# Get Elasticsearch Password
+e_password=$3
+
 # Check if cluster is created
 if [ ! -f /etc/elasticpi/nodes.lst ]; then
   echo "Create cluster before install Kibana"
@@ -20,16 +35,6 @@ if get-kibana-version >/dev/null 2>/dev/null; then
   echo "Kibana is already installed" >&2
   exit 1
 fi
-
-# Get IP Host
-iphost=`hostname -I | cut -d ' ' -f 1`
-
-# Generate virtual IP host
-viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
-
-# Set Elasticsearch User and Password
-e_user=pi
-e_password=LuffyNami3003
 
 # Set Version
 if [[ ${K_VERSION} = '' ]]; then
@@ -63,7 +68,7 @@ echo 'NODE_OPTIONS="--max-old-space-size=100"' | sudo tee -a /etc/default/kibana
 # Set Kibana Node Configuration
 sudo sed -i 's/.*server\.port:.*/server\.port: 5601/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*server\.host:.*/server\.host: "0.0.0.0"/' /etc/kibana/kibana.yml
-sudo sed -i "s/.*elasticsearch\.url:.*/elasticsearch\.url: \"https:\/\/$viphost:9202\"/" /etc/kibana/kibana.yml
+sudo sed -i "s/.*elasticsearch\.url:.*/elasticsearch\.url: \"https:\/\/$e_ip:9202\"/" /etc/kibana/kibana.yml
 sudo sed -i 's/.*elasticsearch\.preserveHost:.*/elasticsearch\.preserveHost: true/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*kibana\.index:.*/kibana\.index: "\.kibana"/' /etc/kibana/kibana.yml
 sudo sed -i 's/.*kibana\.defaultAppId:.*/kibana\.defaultAppId: "dashboard"/' /etc/kibana/kibana.yml

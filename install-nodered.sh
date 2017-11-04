@@ -9,6 +9,21 @@
 
 ####### COMMON #######
 
+# Check Parameters
+if [[ ! $# = 3 ]] ; then
+  echo "Usage : $0 Elasticsearch_IP Elasticsearch_User Elasticsearch_Password"
+  exit 1
+fi
+
+# Get Elasticsearch IP
+e_ip=$1
+
+# Get Elasticsearch User
+e_user=$2
+
+# Get Elasticsearch Password
+e_password=$3
+
 # Check if cluster is created
 if [ ! -f /etc/elasticpi/nodes.lst ]; then
   echo "Create cluster before install Node-RED"
@@ -20,16 +35,6 @@ if get-nodered-version >/dev/null 2>/dev/null; then
   echo "Node-RED is already installed" >&2
   exit 1
 fi
-
-# Get IP Host
-iphost=`hostname -I | cut -d ' ' -f 1`
-
-# Generate virtual IP host
-viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
-
-# Set Elasticsearch User and Password
-e_user=pi
-e_password=LuffyNami3003
 
 # Full System Update
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
@@ -83,7 +88,7 @@ node-red-admin install node-red-contrib-elasticsearchcdb
 # Import Flows into Node-RED
 stop-nodered
 cp -f /opt/elasticpi/Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
-sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /home/pi/.node-red/flows_`hostname -f`.json
+sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /home/pi/.node-red/flows_`hostname -f`.json
 sudo sed -i "s/\[USER\]/$e_user/" /home/pi/.node-red/flows_`hostname -f`.json
 sudo sed -i "s/\[PASSWORD\]/$e_password/" /home/pi/.node-red/flows_`hostname -f`.json
 start-nodered
