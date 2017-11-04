@@ -10,28 +10,25 @@
 ####### COMMON #######
 
 # Check Parameters
-if [[ ! $# = 2 ]] ; then
-  echo "Usage : $0 Elasticsearch_User Elasticsearch_Password"
+if [[ ! $# = 3 ]] ; then
+  echo "Usage : $0 Elasticsearch_IP Elasticsearch_User Elasticsearch_Password"
   exit 1
 fi
 
+# Get Elasticsearch IP
+e_ip=$1
+
 # Get Elasticsearch User
-e_user=$1
+e_user=$2
 
 # Get Elasticsearch Password
-e_password=$2
+e_password=$3
 
 # Check if cluster is created
 if [ ! -f /etc/elasticpi/nodes.lst ]; then
   echo "Create cluster before install Logstash"
   exit 1
 fi
-
-# Get IP Host
-iphost=`hostname -I | cut -d ' ' -f 1`
-
-# Generate virtual IP host
-viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
 
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
@@ -60,7 +57,7 @@ sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
 
 # Set Logstash Node Configuration
 sudo cp -f /opt/elasticpi/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
-sudo sed -i "s/\[IP_ADDRESS\]/$viphost/" /etc/logstash/conf.d/00-default.conf
+sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /etc/logstash/conf.d/00-default.conf
 sudo sed -i "s/\[USER\]/$e_user/" /etc/logstash/conf.d/00-default.conf
 sudo sed -i "s/\[PASSWORD\]/$e_password/" /etc/logstash/conf.d/00-default.conf
 
