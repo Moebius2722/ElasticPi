@@ -18,6 +18,11 @@ fi
 # Get IP Node
 ipnewnode=$1
 
+if grep -c $ipnewnode /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null; then
+    echo "Node $ipnewnode is already member of cluster."
+	exit 1
+fi
+
 # Get Node Password
 nodepwd=$2
 
