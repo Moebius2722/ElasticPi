@@ -7,7 +7,20 @@
 # Full Automated Update Script for ElasticPi Tools on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if Tools is installed
+
+if [ ! -d /opt/elasticpi ]; then
+  echo "Tools are not installed" >&2
+  exit 1
+fi
+
+
 ####### TOOLS #######
+
+# Install Tools
+
 sudo rm -rf /opt/elasticpi ; sudo git clone https://github.com/Moebius2722/ElasticPi.git /opt/elasticpi ; sudo chmod -R a+x /opt/elasticpi/*.sh
 for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
 do
