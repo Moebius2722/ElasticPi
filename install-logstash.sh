@@ -11,7 +11,7 @@
 
 # Check Parameters
 if [[ ! $# = 2 ]] ; then
-  echo "Usage : $0 ""Elasticsearch User"" ""Elasticsearch Password"""
+  echo "Usage : $0 Elasticsearch_User Elasticsearch_Password"
   exit 1
 fi
 
