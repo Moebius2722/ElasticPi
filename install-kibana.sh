@@ -37,6 +37,7 @@ if get-kibana-version >/dev/null 2>/dev/null; then
 fi
 
 # Set Version
+K_VERSION=`get-kibana-maxversion`
 if [[ ${K_VERSION} = '' ]]; then
   K_VERSION=`get-kibana-lastversion`
 fi

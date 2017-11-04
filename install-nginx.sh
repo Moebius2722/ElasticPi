@@ -31,6 +31,7 @@ idhost=${iphost:(-1):1}
 subiphost=${iphost::-1}
 
 # Set Version
+NGX_VERSION=`get-nginx-maxversion`
 if [[ ${NGX_VERSION} = '' ]]; then
   NGX_VERSION=`get-nginx-lastversion`
 fi

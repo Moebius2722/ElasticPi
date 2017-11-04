@@ -37,6 +37,7 @@ if get-cerebro-version >/dev/null 2>/dev/null; then
 fi
 
 # Set Version
+C_VERSION=`get-cerebro-maxversion`
 if [[ ${C_VERSION} = '' ]]; then
   C_VERSION=`get-cerebro-lastversion`
 fi

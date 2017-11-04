@@ -25,6 +25,7 @@ fi
 iphost=`hostname -I | cut -d ' ' -f 1`
 
 # Set Version
+E_VERSION=`get-elasticsearch-maxversion`
 if [[ ${E_VERSION} = '' ]]; then
   E_VERSION=`get-elasticsearch-lastversion`
 fi
