@@ -9,6 +9,12 @@
 
 ####### COMMON #######
 
+# Check if cluster is created
+if [ ! -f /etc/elasticpi/nodes.lst ]; then
+  echo "Create cluster before install Cerebro"
+  exit 1
+fi
+
 # Get IP Host
 iphost=`hostname -I | cut -d ' ' -f 1`
 

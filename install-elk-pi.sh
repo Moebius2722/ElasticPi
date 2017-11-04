@@ -9,6 +9,12 @@
 
 ####### COMMON #######
 
+# Check if cluster is created
+if [ ! -f /etc/elasticpi/nodes.lst ]; then
+  echo "Create cluster before install Elastic Stack"
+  exit 1
+fi
+
 # Set Version ELK
 E_VERSION=`wget https://www.elastic.co/downloads/elasticsearch/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3`
 L_VERSION=`wget https://www.elastic.co/downloads/logstash/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3`
