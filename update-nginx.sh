@@ -15,7 +15,7 @@ if [[ ${NGX_VERSION} = '' ]]; then
 fi
 
 # Check if already up to date
-NGX_CVERSION=`/usr/sbin/nginx -v 2>&1 | cut -d / -f 2`
+NGX_CVERSION=`get-nginx-version`
 if [[ "${NGX_VERSION}" = "${NGX_CVERSION}" ]]; then
   echo "Nginx is already up to date to ${NGX_CVERSION} version"
   exit 0

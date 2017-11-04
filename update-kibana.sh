@@ -19,7 +19,7 @@ if [[ ${N_VERSION} = '' ]]; then
 fi
 
 # Check if already up to date
-K_CVERSION=`dpkg-query -W -f='${Version}\n' kibana`
+K_CVERSION=`get-kibana-version`
 if [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
   echo "Kibana is already up to date to ${K_CVERSION} version"
   exit 0
