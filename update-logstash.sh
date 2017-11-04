@@ -16,7 +16,7 @@ fi
 
 # Check if already up to date
 L_CVERSION=`get-logstash-version`
-if ! $? ; then
+if [ $? -ne 0 ] ; then
   exit 1
 fi
 if [[ "${L_VERSION}" = "${L_CVERSION}" ]]; then
