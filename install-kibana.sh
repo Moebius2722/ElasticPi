@@ -15,6 +15,12 @@ if [ ! -f /etc/elasticpi/nodes.lst ]; then
   exit 1
 fi
 
+# Check if already installed
+if get-kibana-version >/dev/null 2>/dev/null; then
+  echo "Kibana is already installed" >&2
+  exit 1
+fi
+
 # Get IP Host
 iphost=`hostname -I | cut -d ' ' -f 1`
 

@@ -30,6 +30,12 @@ if [ ! -f /etc/elasticpi/nodes.lst ]; then
   exit 1
 fi
 
+# Check if already installed
+if get-logstash-version >/dev/null 2>/dev/null; then
+  echo "Logstash is already installed" >&2
+  exit 1
+fi
+
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
   L_VERSION=`wget https://www.elastic.co/downloads/logstash/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3 | head -n 1`
