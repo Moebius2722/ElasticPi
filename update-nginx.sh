@@ -11,7 +11,7 @@
 
 # Set Version
 if [[ ${NGX_VERSION} = '' ]]; then
-  NGX_VERSION=`wget http://nginx.org/en/download.html -qO- | sed 's/>/>\n/g' | grep -i 'tar.gz"' | sort -V -r | head -1 | cut -d '"' -f 2 | cut -d / -f 3 | cut -d - -f 2 | cut -d . -f 1-3`
+  NGX_VERSION=`get-nginx-lastversion`
 fi
 
 # Check if already up to date
