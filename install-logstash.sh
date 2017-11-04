@@ -9,6 +9,18 @@
 
 ####### COMMON #######
 
+# Check Parameters
+if [[ ! $# = 2 ]] ; then
+  echo "Usage : $0 ""Elasticsearch User"" ""Elasticsearch Password"""
+  exit 1
+fi
+
+# Get Elasticsearch User
+e_user=$1
+
+# Get Elasticsearch Password
+e_password=$2
+
 # Check if cluster is created
 if [ ! -f /etc/elasticpi/nodes.lst ]; then
   echo "Create cluster before install Logstash"
@@ -20,10 +32,6 @@ iphost=`hostname -I | cut -d ' ' -f 1`
 
 # Generate virtual IP host
 viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
-
-# Set Elasticsearch User and Password
-e_user=pi
-e_password=LuffyNami3003
 
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
