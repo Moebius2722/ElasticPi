@@ -43,10 +43,25 @@ fi
 # Install Tools
 # If you get script via GitHub, git tool is already installed ;)
 # Htop is a good tool for monitoring cpu and memory usage by ELK Stack
-sudo apt-get install curl jq git -q -y
+sudo apt-get install curl jq git dirmngr -q -y
 
 
 ####### ELASTICSEARCH #######
+
+
+
+
+
+su -
+echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list
+echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+apt-get update
+apt-get install oracle-java8-installer
+exit
+
+
+
 
 # Install Elasticsearch Prerequisites
 #sudo apt-get install oracle-java8-jdk -q -y
