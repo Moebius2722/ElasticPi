@@ -10,7 +10,11 @@
 ####### COMMON #######
 
 # Set Version
-NR_VERSION=`npm info node-red version`
+NR_VERSION=`npm info node-red version 2>/dev/null`
+if [ $? -ne 0 ] ; then
+  echo "NPM is not installed" >&2
+  exit 1
+fi
 
 # Check if already up to date
 NR_CVERSION=`get-nodered-version`
