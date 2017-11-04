@@ -38,7 +38,7 @@ fi
 
 # Set Version
 if [[ ${L_VERSION} = '' ]]; then
-  L_VERSION=`wget https://www.elastic.co/downloads/logstash/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 6 | cut -d - -f 2 | cut -d . -f 1-3 | head -n 1`
+  L_VERSION=`get-logstash-lastversion`
 fi
 
 # Full System Update
