@@ -16,6 +16,9 @@ fi
 
 # Check if already up to date
 C_CVERSION=`get-cerebro-version`
+if [ $? -ne 0 ] ; then
+  exit 1
+fi
 if [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
   echo "Cerebro is already up to date to ${C_CVERSION} version"
   exit 0

@@ -20,6 +20,9 @@ fi
 
 # Check if already up to date
 K_CVERSION=`get-kibana-version`
+if [ $? -ne 0 ] ; then
+  exit 1
+fi
 if [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
   echo "Kibana is already up to date to ${K_CVERSION} version"
   exit 0

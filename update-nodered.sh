@@ -14,6 +14,9 @@ NR_VERSION=`npm info node-red version`
 
 # Check if already up to date
 NR_CVERSION=`get-nodered-version`
+if [ $? -ne 0 ] ; then
+  exit 1
+fi
 if [[ "${NR_VERSION}" = "${NR_CVERSION}" ]]; then
   echo "Node-RED is already up to date to ${NR_CVERSION} version"
   exit 0

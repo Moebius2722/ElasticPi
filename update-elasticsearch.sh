@@ -16,6 +16,9 @@ fi
 
 # Check if already up to date
 E_CVERSION=`get-elasticsearch-version`
+if [ $? -ne 0 ] ; then
+  exit 1
+fi
 if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
   echo "Elasticsearch is already up to date to ${E_CVERSION} version"
   exit 0
