@@ -99,11 +99,7 @@ echo 'bootstrap.system_call_filter: false' | sudo tee -a /etc/elasticsearch/elas
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-file
 sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_provider: file' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
-echo  | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-for i in {0..9}
-do
-   echo "192.168.0.2$i" | sudo tee -a /etc/elasticsearch/discovery-file/unicast_hosts.txt
-done
+sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
 # Create and configure Backup NFS mount point
 sudo mkdir /mnt/espibackup
