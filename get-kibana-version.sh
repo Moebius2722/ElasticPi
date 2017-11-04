@@ -7,6 +7,18 @@
 # Get Kibana installed version
 
 
+####### COMMON #######
+
+# Check if Kibana is installed
+
+if ! dpkg-query -W -f='${Version}\n' kibana >/dev/null 2>/dev/null; then
+  echo "Kibana is not installed" >&2
+  exit 1
+fi
+
+
 ####### GET-KIBANA-VERSION #######
+
+# Get Kibana installed version
 
 dpkg-query -W -f='${Version}\n' kibana

@@ -7,6 +7,18 @@
 # Get Logstash installed version
 
 
+####### COMMON #######
+
+# Check if Logstash is installed
+
+if ! dpkg-query -W -f='${Version}\n' logstash >/dev/null 2>/dev/null; then
+  echo "Logstash is not installed" >&2
+  exit 1
+fi
+
+
 ####### GET-LOGSTASH-VERSION #######
+
+# Get Logstash installed version
 
 dpkg-query -W -f='${Version}\n' logstash | cut -d : -f2 | cut -d - -f1
