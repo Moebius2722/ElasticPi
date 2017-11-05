@@ -35,7 +35,7 @@ stop-cerebro
 sudo cp -f /usr/share/cerebro/conf/application.conf /tmp/cerebro-application.conf.bkp
 
 # Get and Update Cerebro
-wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro /usr/share/cerebro.ori && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && sudo chown -R cerebro:cerebro /usr/share/cerebro && sudo rm -rf /usr/share/cerebro.ori && rm -f /tmp/cerebro-${C_VERSION}.tgz
+rm -f /tmp/cerebro-${C_VERSION}.tgz ; wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro /usr/share/cerebro.ori && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && sudo chown -R cerebro:cerebro /usr/share/cerebro && sudo rm -rf /usr/share/cerebro.ori && rm -f /tmp/cerebro-${C_VERSION}.tgz
 
 # Restore Cerebro configuration
 sudo cp -f /tmp/cerebro-application.conf.bkp /usr/share/cerebro/conf/application.conf

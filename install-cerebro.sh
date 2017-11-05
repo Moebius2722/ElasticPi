@@ -53,7 +53,7 @@ fi
 ####### CEREBRO #######
 
 # Get and Install Cerebro
-wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && rm -f /tmp/cerebro-${C_VERSION}.tgz
+rm -f /tmp/cerebro-${C_VERSION}.tgz ; wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && rm -f /tmp/cerebro-${C_VERSION}.tgz
 sudo cp -f /opt/elasticpi/Cerebro/application.conf /usr/share/cerebro/conf/.
 sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /usr/share/cerebro/conf/application.conf
 sudo sed -i "s/\[USER\]/$e_user/" /usr/share/cerebro/conf/application.conf

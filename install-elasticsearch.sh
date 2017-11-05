@@ -76,7 +76,7 @@ sudo apt-get install oracle-java8-installer -q -y --allow-unauthenticated
 
 # Get and Install Elasticsearch
 #--force-confold
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
+rm -f /tmp/elasticsearch-${E_VERSION}.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Get and Compile JNA library for Elasticsearch
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`

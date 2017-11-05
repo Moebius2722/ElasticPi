@@ -46,7 +46,7 @@ stop-elasticsearch
 ####### ELASTICSEARCH #######
 
 # Get and Update Elasticsearch
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg --force-confold --force-overwrite -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
+rm -f /tmp/elasticsearch-${E_VERSION}.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg --force-confold --force-overwrite -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
 
 # Get and Compile JNA library for Elasticsearch
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
