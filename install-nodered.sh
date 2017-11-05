@@ -87,10 +87,10 @@ node-red-admin install node-red-contrib-elasticsearchcdb
 
 # Import Flows into Node-RED
 stop-nodered
-cp -f /opt/elasticpi/Node-RED/flows.json /home/pi/.node-red/flows_`hostname -f`.json
-sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /home/pi/.node-red/flows_`hostname -f`.json
-sudo sed -i "s/\[USER\]/$e_user/" /home/pi/.node-red/flows_`hostname -f`.json
-sudo sed -i "s/\[PASSWORD\]/$e_password/" /home/pi/.node-red/flows_`hostname -f`.json
+cp -f /opt/elasticpi/Node-RED/flows.json /home/pi/.node-red/flows_`hostname`.json
+sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /home/pi/.node-red/flows_`hostname`.json
+sudo sed -i "s/\[USER\]/$e_user/" /home/pi/.node-red/flows_`hostname`.json
+sudo sed -i "s/\[PASSWORD\]/$e_password/" /home/pi/.node-red/flows_`hostname`.json
 start-nodered
 
 # Install Mosquitto MQTT Server
