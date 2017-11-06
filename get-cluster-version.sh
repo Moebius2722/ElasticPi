@@ -104,5 +104,86 @@ do
   fi
   printf $vka
   printf "\n"
-  
 done
+printf " Last Version"
+ilen=${#ipnode}
+iend=$((17-12))
+printf "%${iend}s"
+ves=`get-elasticsearch-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  ses=ok
+else
+  ves="N/A"
+fi
+printf $ves
+ilen=${#ves}
+iend=$((9-ilen))
+printf "%${iend}s"
+vls=`get-logstash-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  sls=ok
+else
+  vls="N/A"
+fi
+printf $vls
+ilen=${#vls}
+iend=$((9-ilen))
+printf "%${iend}s"
+vkb=`get-kibana-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  skb=ok
+else
+  vkb="N/A"
+fi
+printf $vkb
+ilen=${#vkb}
+iend=$((9-ilen))
+printf "%${iend}s"
+vng=`get-nginx-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  sng=ok
+else
+  vng="N/A"
+fi
+printf $vng
+ilen=${#vng}
+iend=$((9-ilen))
+printf "%${iend}s"
+vcb=`get-cerebro-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  scb=ok
+else
+  vcb="N/A"
+fi
+printf $vcb
+ilen=${#vcb}
+iend=$((9-ilen))
+printf "%${iend}s"
+vnr=`get-nodered-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  snr=ok
+else
+  vnr="N/A"
+fi
+printf $vnr
+ilen=${#vnr}
+iend=$((9-ilen))
+printf "%${iend}s"
+vmq=`get-mosquitto-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  smq=ok
+else
+  vmq="N/A"
+fi
+printf $vmq
+ilen=${#vmq}
+iend=$((9-ilen))
+printf "%${iend}s"
+vka=`get-keepalived-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  ska=ok
+else
+  vka="N/A"
+fi
+printf $vka
+printf "\n"
