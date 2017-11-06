@@ -9,7 +9,7 @@
 
 ####### COMMON #######
 
-echo " HOST             ES LS KB NG CB NR MQ KA"
+echo " HOST             ES       LS       KB       NG       CB       NR       MQ       KA"
 
 
 # Get IP Nodes
