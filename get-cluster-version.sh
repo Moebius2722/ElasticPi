@@ -26,7 +26,7 @@ do
   ilen=${#ipnode}
   iend=$((17-ilen))
   printf "%${iend}s"
-  ves=`ssh -t $ipnode get-elasticsearch-version 2>/dev/null`
+  ves=`ssh $ipnode get-elasticsearch-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     ses=ok
   else
@@ -36,7 +36,7 @@ do
   ilen=${#ves}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vls=`ssh -t $ipnode get-logstash-version 2>/dev/null`
+  vls=`ssh $ipnode get-logstash-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     sls=ok
   else
@@ -46,7 +46,7 @@ do
   ilen=${#vls}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vkb=`ssh -t $ipnode get-kibana-version 2>/dev/null`
+  vkb=`ssh $ipnode get-kibana-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     skb=ok
   else
@@ -56,7 +56,7 @@ do
   ilen=${#vkb}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vng=`ssh -t $ipnode get-nginx-version 2>/dev/null`
+  vng=`ssh $ipnode get-nginx-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     sng=ok
   else
@@ -66,7 +66,7 @@ do
   ilen=${#vng}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vcb=`ssh -t $ipnode get-cerebro-version 2>/dev/null`
+  vcb=`ssh $ipnode get-cerebro-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     scb=ok
   else
@@ -76,7 +76,7 @@ do
   ilen=${#vcb}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vnr=`ssh -t $ipnode get-nodered-version 2>/dev/null`
+  vnr=`ssh $ipnode get-nodered-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     snr=ok
   else
@@ -86,7 +86,7 @@ do
   ilen=${#vnr}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vmq=`ssh -t $ipnode get-mosquitto-version 2>/dev/null`
+  vmq=`ssh $ipnode get-mosquitto-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     smq=ok
   else
@@ -96,7 +96,7 @@ do
   ilen=${#vmq}
   iend=$((9-ilen))
   printf "%${iend}s"
-  vka=`ssh -t $ipnode get-keepalived-version 2>/dev/null`
+  vka=`ssh $ipnode get-keepalived-version 2>/dev/null`
   if [[ $? = 0 ]] ; then
     ska=ok
   else
