@@ -10,19 +10,16 @@
 ####### COMMON #######
 
 # Check if cluster is created
-if [ ! -f /etc/elasticpi/nodes.lst ]; then
+if [ ! -f /etc/elasticpi/vip.lst ]; then
   echo "Create cluster before install Keepalived"
   exit 1
 fi
 
-# Get IP Host
-iphost=`hostname -I | cut -d ' ' -f 1`
-
-# Get last digit IP host
-idhost=${iphost:(-1):1}
-
-# Generate virtual IP host
-viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
+# Check if already installed
+if get-keepalived-version >/dev/null 2>/dev/null; then
+  echo "Keepalived is already installed" >&2
+  exit 1
+fi
 
 # Full System Update
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
@@ -35,7 +32,6 @@ fi
 ####### KEEPALIVED #######
 
 # Prevent loopback ARP response for Keepalived.
-
 echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/95-keepalived.conf
 sudo sysctl -w net.ipv4.ip_nonlocal_bind=1
 echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
@@ -50,40 +46,4 @@ sudo sysctl -p
 sudo apt-get install libipset3 keepalived -q -y
 
 # Configure Keepalived Load Balancer
-echo "vrrp_script chk_nlb {
-  script       ""/usr/bin/check-nlb""
-  interval 2   # check every 2 seconds
-  fall 2       # require 2 failures for KO
-  rise 2       # require 2 successes for OK
-}
-" | sudo tee /etc/keepalived/keepalived.conf
-for i in {0..9}
-do
-  id=1$i
-  priority=1$((((9-$i)+$idhost)%10))0
-  vip=${iphost::-2}$((${iphost:(-2):1}-1))$i
-  if [[ $i -eq  $idhost ]]; then
-    state=MASTER
-  else
-    state=BACKUP
-  fi
-  
-  echo "vrrp_instance VI_$id {
-  state $state
-  interface eth0
-  virtual_router_id $id
-  priority $priority
-  advert_int 1
-  lvs_sync_daemon_interface eth0
-  virtual_ipaddress {
-        $vip/24
-  }
-  track_script {
-    chk_nlb
-  }
-}
-" | sudo tee -a /etc/keepalived/keepalived.conf
-done
-
-# Restart Keepalived Load Balancer
-restart-keepalived
+configure-keepalived
