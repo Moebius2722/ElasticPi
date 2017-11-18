@@ -9,8 +9,12 @@
 
 ####### GET-NODE-ID #######
 
-# Get Host IP
-iphost=`hostname -i`
+# Set IP Node
+if [[ $# -eq 1 ]] ; then
+  iphost=$1
+else
+  iphost=`hostname -i`
+fi
 
 # Get IP Nodes
 ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$'` )
