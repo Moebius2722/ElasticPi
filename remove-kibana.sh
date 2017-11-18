@@ -17,5 +17,6 @@ sudo dpkg --purge kibana
 
 # Purge Kibana configuration
 sudo rm -rf /etc/kibana
+sudo rm -rf /usr/share/kibana
 sudo rm -rf /var/lib/kibana
 sudo rm -rf /var/log/kibana
