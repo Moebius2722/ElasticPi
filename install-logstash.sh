@@ -37,9 +37,11 @@ if get-logstash-version >/dev/null 2>/dev/null; then
 fi
 
 # Set Version
-L_VERSION=`get-logstash-maxversion`
 if [[ ${L_VERSION} = '' ]]; then
-  L_VERSION=`get-logstash-lastversion`
+  L_VERSION=`get-logstash-maxversion`
+  if [[ ${L_VERSION} = '' ]]; then
+    L_VERSION=`get-logstash-lastversion`
+  fi
 fi
 
 # Full System Update
