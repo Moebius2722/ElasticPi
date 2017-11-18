@@ -54,11 +54,14 @@ fi
 
 ####### LOGSTASH #######
 
+# Get and Compile JFFI library for Install Logstash
+sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /lib/libjffi-1.2.so && rm -rf /tmp/jffi
+
 # Get and Install Logstash
 rm -f /tmp/logstash-${L_VERSION}.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION}.deb && sudo dpkg -i /tmp/logstash-${L_VERSION}.deb && rm -f /tmp/logstash-${L_VERSION}.deb
 
-# Get and Compile JFFI library for Logstash
-sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && rm -rf /tmp/jffi
+# Get and Compile JFFI library for Launch Logstash
+sudo cp -f /lib/libjffi-1.2.so /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so && sudo chown logstash:logstash /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-1.2.so
 
 # Set Logstash Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/logstash/jvm.options
