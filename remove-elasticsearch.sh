@@ -7,7 +7,7 @@
 # Full Automated Uninstallation Script for Elasticsearch on Raspberry Pi 2 or 3
 
 
-####### COMMON #######
+####### ELASTICSEARCH #######
 
 # Remove Curator Job
 sudo sed -i '/curator/d' /etc/crontab
