@@ -11,7 +11,7 @@
 
 # Check if cluster is created
 if [ ! -f /etc/elasticpi/nodes.lst ]; then
-  echo "Create cluster before install Keepalived"
+  echo "Create cluster before install Nginx"
   exit 1
 fi
 
@@ -57,7 +57,7 @@ echo "upstream stream_$servicename {" | sudo tee -a /etc/nginx/sites-available/d
 ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$'` )
 for ipnode in "${ipnodes[@]}"
 do
-if [[ "$ipnode" -eq "$iphost" ]]; then
+if [[ "$ipnode" == "$iphost" ]]; then
 echo "    server $ipnode:$remoteserviceport;" | sudo tee -a /etc/nginx/sites-available/default
 else
 echo "    server $ipnode:$remoteserviceport backup;" | sudo tee -a /etc/nginx/sites-available/default
@@ -106,7 +106,7 @@ echo "    upstream stream_$servicename {" | sudo tee -a /etc/nginx/nginx.conf
 ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$'` )
 for ipnode in "${ipnodes[@]}"
 do
-if [[ "$ipnode" -eq "$iphost" ]]; then
+if [[ "$ipnode" == "$iphost" ]]; then
 echo "        server $ipnode:$remoteserviceport;" | sudo tee -a /etc/nginx/nginx.conf
 else
 echo "        server $ipnode:$remoteserviceport backup;" | sudo tee -a /etc/nginx/nginx.conf
