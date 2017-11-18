@@ -17,4 +17,6 @@ sudo dpkg --purge logstash
 
 # Purge Logstash configuration
 sudo rm -rf /etc/logstash
+sudo rm -rf /usr/share/logstash
 sudo rm -rf /var/lib/logstash
+sudo rm -rf /var/log/logstash
