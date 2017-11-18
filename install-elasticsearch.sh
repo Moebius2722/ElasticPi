@@ -134,7 +134,7 @@ sudo mount /mnt/espibackup
 sudo mkdir /mnt/espibackup/repo
 sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/repo
 sudo chmod -R 770 /mnt/espibackup
-sudo sed -i '/#path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i '/path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
 
 # Configure and Start Elasticsearch as Daemon
 sudo sed -i '/\[Service\]/a Restart=always' /usr/lib/systemd/system/elasticsearch.service
