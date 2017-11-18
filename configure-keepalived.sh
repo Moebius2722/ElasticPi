@@ -17,7 +17,8 @@ fi
 
 # Get IP Host
 iphost=`hostname -i`
-
+idhost=`get-node-id`
+nodescount=`get-nodes-count`
 
 ####### KEEPALIVED #######
 
@@ -36,8 +37,11 @@ id=0
 for viphip in "${vips[@]}"
 do
   id=$[$id+1]
+  
   vip=`echo $viphip | cut -d ';' -f 1`
   hip=`echo $viphip | cut -d ';' -f 2`
+  idnode=`get-node-id $hip`
+  priority=1$(((($nodescount-1-$idnode)+$idhost)%$nodescount))0
   if [[ "$iphost" ==  "$hip" ]]; then
     state=MASTER
   else
