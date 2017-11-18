@@ -25,6 +25,7 @@ sudo dpkg --purge elasticsearch
 
 # Purge Elasticsearch configuration
 sudo rm -rf /etc/elasticsearch
+sudo rm -rf /var/lib/elasticsearch
 
 # Remove Elasticsearch Backup NFS mount point
 sudo sed -i '/espibackup/d' /etc/fstab
