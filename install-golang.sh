@@ -9,10 +9,17 @@
 
 ####### COMMON #######
 
+# Check if already installed
+if get-golang-version >/dev/null 2>/dev/null; then
+  echo "Golang is already installed" >&2
+  exit 1
+fi
+
 # Set Version
 if [[ ${GO_VERSION} = '' ]]; then
   GO_VERSION=`get-golang-lastversion`
 fi
+
 
 ####### GOLANG #######
 
