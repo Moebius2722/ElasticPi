@@ -56,11 +56,11 @@ fi
 
 ####### KIBANA #######
 
-# Get and Install Kibana with i386 package (Just NodeJS is i386 in package)
+# Get and Install Kibana with amd64 package (Just NodeJS is amd64 in package)
 #--force-confold
 rm -f /tmp/kibana-${K_VERSION}-amd64.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-${K_VERSION}-amd64.deb && sudo dpkg --force-architecture -i /tmp/kibana-${K_VERSION}-amd64.deb && rm -f /tmp/kibana-${K_VERSION}-amd64.deb
 
-# Get and Replace NodeJS i386 by ARMv7l in Kibana
+# Get and Replace NodeJS amd64 by ARMv7l in Kibana
 rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz ; wget -P/tmp https://nodejs.org/download/release/v${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz && sudo tar -xf /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz -C /usr/share/kibana && sudo mv /usr/share/kibana/node /usr/share/kibana/node.ori && sudo mv /usr/share/kibana/node-v${N_VERSION}-linux-armv7l /usr/share/kibana/node && sudo chown -R root:root /usr/share/kibana/node && sudo rm -rf /usr/share/kibana/node.ori && rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz
 
 # Set Kibana Memory Configuration (Max 100mb of memory)
