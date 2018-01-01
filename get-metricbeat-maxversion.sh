@@ -26,7 +26,7 @@ ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[
 MB_VERSION=""
 for ipnode in ${ipnodes[@]}
 do
-  L_NVERSION=`ssh $ipnode get-metricbeat-version 2>/dev/null`
+  MB_NVERSION=`ssh $ipnode get-metricbeat-version 2>/dev/null`
   if [[ "$MB_NVERSION" > "$MB_VERSION" ]]; then
     MB_VERSION=$MB_NVERSION
   fi
