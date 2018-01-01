@@ -23,14 +23,14 @@ ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[
 
 # Get Golang max installed version
 
-L_VERSION=""
+GO_VERSION=""
 for ipnode in ${ipnodes[@]}
 do
-  L_NVERSION=`ssh $ipnode get-golang-version 2>/dev/null`
-  if [[ "$L_NVERSION" > "$L_VERSION" ]]; then
-    L_VERSION=$L_NVERSION
+  GO_NVERSION=`ssh $ipnode get-golang-version 2>/dev/null`
+  if [[ "$GO_NVERSION" > "$GO_VERSION" ]]; then
+    GO_VERSION=$GO_NVERSION
   fi
 done
 
-echo $L_VERSION
+echo $GO_VERSION
 exit 0

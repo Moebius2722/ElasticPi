@@ -23,14 +23,14 @@ ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[
 
 # Get Elasticsearch max installed version
 
-L_VERSION=""
+ES_VERSION=""
 for ipnode in ${ipnodes[@]}
 do
-  L_NVERSION=`ssh $ipnode get-elasticsearch-version 2>/dev/null`
-  if [[ "$L_NVERSION" > "$L_VERSION" ]]; then
-    L_VERSION=$L_NVERSION
+  ES_NVERSION=`ssh $ipnode get-elasticsearch-version 2>/dev/null`
+  if [[ "$ES_NVERSION" > "$ES_VERSION" ]]; then
+    ES_VERSION=$ES_NVERSION
   fi
 done
 
-echo $L_VERSION
+echo $ES_VERSION
 exit 0

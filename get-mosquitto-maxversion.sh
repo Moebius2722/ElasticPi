@@ -23,14 +23,14 @@ ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[
 
 # Get Mosquitto max installed version
 
-L_VERSION=""
+MQ_VERSION=""
 for ipnode in ${ipnodes[@]}
 do
-  L_NVERSION=`ssh $ipnode get-mosquitto-version 2>/dev/null`
-  if [[ "$L_NVERSION" > "$L_VERSION" ]]; then
-    L_VERSION=$L_NVERSION
+  MQ_NVERSION=`ssh $ipnode get-mosquitto-version 2>/dev/null`
+  if [[ "$MQ_NVERSION" > "$MQ_VERSION" ]]; then
+    MQ_VERSION=$MQ_NVERSION
   fi
 done
 
-echo $L_VERSION
+echo $MQ_VERSION
 exit 0

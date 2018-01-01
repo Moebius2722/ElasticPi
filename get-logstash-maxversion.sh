@@ -23,14 +23,14 @@ ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[
 
 # Get Logstash max installed version
 
-L_VERSION=""
+LS_VERSION=""
 for ipnode in ${ipnodes[@]}
 do
-  L_NVERSION=`ssh $ipnode get-logstash-version 2>/dev/null`
-  if [[ "$L_NVERSION" > "$L_VERSION" ]]; then
-    L_VERSION=$L_NVERSION
+  LS_NVERSION=`ssh $ipnode get-logstash-version 2>/dev/null`
+  if [[ "$LS_NVERSION" > "$LS_VERSION" ]]; then
+    LS_VERSION=$LS_NVERSION
   fi
 done
 
-echo $L_VERSION
+echo $LS_VERSION
 exit 0

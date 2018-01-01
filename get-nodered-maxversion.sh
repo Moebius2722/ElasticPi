@@ -23,14 +23,14 @@ ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[
 
 # Get Node-RED max installed version
 
-L_VERSION=""
+NR_VERSION=""
 for ipnode in ${ipnodes[@]}
 do
-  L_NVERSION=`ssh $ipnode get-nodered-version 2>/dev/null`
-  if [[ "$L_NVERSION" > "$L_VERSION" ]]; then
-    L_VERSION=$L_NVERSION
+  NR_NVERSION=`ssh $ipnode get-nodered-version 2>/dev/null`
+  if [[ "$NR_NVERSION" > "$NR_VERSION" ]]; then
+    NR_VERSION=$NR_NVERSION
   fi
 done
 
-echo $L_VERSION
+echo $NR_VERSION
 exit 0
