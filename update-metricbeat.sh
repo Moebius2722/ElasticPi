@@ -41,6 +41,7 @@ export GOX_OSARCH='!netbsd/386 !linux/amd64 !windows/386 !linux/386 !windows/amd
 make clean
 make crosscompile
 sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
+cd
 rm -rf ${GOPATH}/src/github.com/elastic
 
 # Configure and Start Metricbeat as Daemon
