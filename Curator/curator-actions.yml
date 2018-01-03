@@ -298,7 +298,7 @@ actions:
       unit: months
       unit_count: 12
       exclude:
- 14:
+  14:
     action: close
     description: >-
       Close indices older than 7 days (based on index name), for metricbeat-
