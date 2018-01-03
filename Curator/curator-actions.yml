@@ -34,7 +34,7 @@ actions:
     action: snapshot
     description: >-
       Snapshot selected indices to 'repository' with the snapshot name or name
-      pattern in 'name'.  Use all other options as assigned
+      pattern in '.kibana'.  Use all other options as assigned
     options:
       repository: 'espibackup'
       name: 'kibana-%Y-%m-%d-%H-%M'
