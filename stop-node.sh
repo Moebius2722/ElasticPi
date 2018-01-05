@@ -13,28 +13,37 @@
 echo "================================== STOP-NODE ==================================="
 date
 
-# Flush Elasticsearch Indices
-ssh -t $1 sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
-if [[ $? = 0 ]] ; then
-  echo "Flush Elasticsearch Indices"
-  if [[ $# = 0 ]] ; then
+if [[ $# = 0 ]] ; then
+  # Flush Elasticsearch Indices
+  sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    echo "Flush Elasticsearch Indices"
     curl -XPOST 'localhost:9200/_flush/synced?pretty'
-  else
+  fi
+  
+  # Stop Services
+  for svc in elasticsearch logstash kibana nodered mosquitto cerebro keepalived nginx         
+  do
+    echo "================================= $svc ================================"
+    echo "Stop $svc"
+    stop-$svc
+  done
+else
+  # Flush Elasticsearch Indices
+  ssh -t $1 sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    echo "Flush Elasticsearch Indices"
     ssh -t $1 "curl -XPOST 'localhost:9200/_flush/synced?pretty'"
   fi
-fi
-
-# Stop Services
-for svc in elasticsearch logstash kibana nodered mosquitto cerebro keepalived nginx         
-do
-echo "================================= $svc ================================"
-echo "$1 : Stop $svc"
-  if [[ $? = 0 ]] ; then
-    stop-$svc
-  else
+  
+  # Stop Services
+  for svc in elasticsearch logstash kibana nodered mosquitto cerebro keepalived nginx         
+  do
+    echo "================================= $svc ================================"
+    echo "$1 : Stop $svc"
     ssh -t $1 stop-$svc
-  fi
-done
+  done
+fi
 
 date
 echo "================================== NODE-STOP ==================================="
