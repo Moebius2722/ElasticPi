@@ -7,30 +7,39 @@
 # Full Automated Start Node Services Script for Elasticsearch on Raspberry Pi 2 or 3
 
 
-####### COMMON #######
-
-# Get IP Node
-if [[ $# = 0 ]] ; then
-  ipnode=`hostname -i`
-else
-  ipnode=$1
-fi
-
-
 ####### START-NODE #######
 
 # Check and Start Node Services
-echo "================================== START-NODE =================================="
+echo "================================== START-NODE ==================================="
 date
 
-# Start Services
-#for svc in nginx keepalived mosquitto elasticsearch cerebro kibana nodered logstash
-for svc in nginx keepalived elasticsearch cerebro kibana logstash metricbeat
-do
-echo "================================= $svc ================================"
-echo "$ipnode : Start $svc"
-ssh -t $ipnode start-$svc >/dev/null 2>/dev/null
-done
+if [[ $# = 0 ]] ; then
+  # Flush Elasticsearch Indices
+  sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    echo "Flush Elasticsearch Indices"
+    curl -XPOST 'localhost:9200/_flush/synced?pretty'
+  fi
+  
+  # Start Services
+  #for svc in nginx keepalived mosquitto elasticsearch cerebro kibana nodered logstash
+  for svc in nginx keepalived elasticsearch cerebro kibana logstash metricbeat
+  do
+    echo "================================= $svc ================================"
+    echo "Start $svc"
+    start-$svc
+  done
+else
+  
+  # Start Services
+  #for svc in nginx keepalived mosquitto elasticsearch cerebro kibana nodered logstash
+  for svc in nginx keepalived elasticsearch cerebro kibana logstash metricbeat
+  do
+    echo "================================= $svc ================================"
+    echo "$1 : Start $svc"
+    ssh -t $1 start-$svc
+  done
+fi
 
 # Waiting Elasticsearch Up
 echo "==================================== Waiting ==================================="
@@ -64,4 +73,5 @@ if [ "$s_check" != "green" ] && [ $int_cpt -eq 180 ]; then
 fi
 
 date
-echo "================================== NODE-START =================================="
+echo "================================== NODE-START ==================================="
+#	>/dev/null 2>/dev/null
