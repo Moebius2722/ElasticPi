@@ -7,16 +7,6 @@
 # Full Automated Update System Node with Reboot on Raspberry Pi 2 or 3
 
 
-####### COMMON #######
-
-# Get IP Node
-if [[ $# = 0 ]] ; then
-  ipnode=`hostname -i`
-else
-  ipnode=$1
-fi
-
-
 ####### AUTO-UPDATE #######
 
 # Auto Update System
