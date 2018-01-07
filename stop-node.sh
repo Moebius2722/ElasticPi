@@ -22,7 +22,8 @@ if [[ $# = 0 ]] ; then
   fi
   
   # Stop Services
-  for svc in elasticsearch logstash kibana nodered mosquitto cerebro keepalived nginx         
+  #for svc in logstash nodered kibana cerebro elasticsearch mosquitto keepalived nginx
+  for svc in metricbeat logstash kibana cerebro elasticsearch keepalived nginx
   do
     echo "================================= $svc ================================"
     echo "Stop $svc"
@@ -37,7 +38,8 @@ else
   fi
   
   # Stop Services
-  for svc in elasticsearch logstash kibana nodered mosquitto cerebro keepalived nginx         
+  #for svc in logstash nodered kibana cerebro elasticsearch mosquitto keepalived nginx
+  for svc in metricbeat logstash kibana cerebro elasticsearch keepalived nginx
   do
     echo "================================= $svc ================================"
     echo "$1 : Stop $svc"

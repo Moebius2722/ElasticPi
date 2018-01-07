@@ -24,7 +24,8 @@ echo "================================== START-NODE ============================
 date
 
 # Start Services
-for svc in nginx keepalived elasticsearch cerebro mosquitto nodered logstash kibana
+#for svc in nginx keepalived mosquitto elasticsearch cerebro kibana nodered logstash
+for svc in nginx keepalived elasticsearch cerebro kibana logstash metricbeat
 do
 echo "================================= $svc ================================"
 echo "$ipnode : Start $svc"
@@ -46,25 +47,6 @@ done
 echo
 if [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
-else
-  # Purge shard allocation exclusion
-  echo "Purge shard allocation exclusion"
-  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
-  {
-    "transient": {
-      "cluster.routing.allocation.exclude._ip" : null
-    }
-  }
-  ' >/dev/null 2>/dev/null
-  # Reenable shard allocation
-  echo "Reenable shard allocation"
-  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
-  {
-    "transient": {
-      "cluster.routing.allocation.enable": "all"
-    }
-  }
-  ' >/dev/null 2>/dev/null
 fi
 
 # Wait for the nodes to recover
