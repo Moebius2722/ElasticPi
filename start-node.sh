@@ -10,17 +10,10 @@
 ####### START-NODE #######
 
 # Check and Start Node Services
-echo "================================== START-NODE ==================================="
+echo "================================== START-NODE =================================="
 date
 
 if [[ $# = 0 ]] ; then
-  # Flush Elasticsearch Indices
-  sudo systemctl status elasticsearch.service >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
-    echo "Flush Elasticsearch Indices"
-    curl -XPOST 'localhost:9200/_flush/synced?pretty'
-  fi
-  
   # Start Services
   #for svc in nginx keepalived mosquitto elasticsearch cerebro kibana nodered logstash
   for svc in nginx keepalived elasticsearch cerebro kibana logstash metricbeat
@@ -73,5 +66,5 @@ if [ "$s_check" != "green" ] && [ $int_cpt -eq 180 ]; then
 fi
 
 date
-echo "================================== NODE-START ==================================="
+echo "================================== NODE-START =================================="
 #	>/dev/null 2>/dev/null
