@@ -26,15 +26,15 @@ fi
 echo "Update Elasticsearch ${E_CVERSION} to ${E_VERSION}"
 
 # Disable shard allocation
-curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
-{
-  "transient": {
-    "cluster.routing.allocation.enable": "none"
-  }
-}
-'
-
-sleep 10
+#curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+#{
+#  "transient": {
+#    "cluster.routing.allocation.enable": "none"
+#  }
+#}
+#'
+#
+#sleep 10
 
 # Stop non-essential indexing and perform a synced flush
 curl -XPOST 'localhost:9200/_flush/synced?pretty'
