@@ -9,7 +9,7 @@
 
 ####### COMMON #######
 
-echo " HOST             ES LS KB NG CB NR MQ KA"
+echo " HOST             ES LS KB MB NG CB NR MQ KA"
 
 
 # Get IP Nodes
@@ -47,6 +47,13 @@ do
     skb=KO
   fi
   printf "$skb "
+  ssh -t $ipnode check-metricbeat >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    smb=ok
+  else
+    smb=KO
+  fi
+  printf "$smb "
   ssh -t $ipnode check-nginx >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     sng=ok
