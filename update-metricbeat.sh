@@ -44,12 +44,12 @@ rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
 wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb.sha512
 if [ -f "/mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb" ]; then
   pushd /mnt/espibackup/build/metricbeat/${MB_VERSION}
-  sha512sum -c metricbeat-${MB_VERSION}-amd64.deb.sha512
+  sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
     wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb
     pushd /tmp
-    sha512sum -c metricbeat-${MB_VERSION}-amd64.deb.sha512
+    sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
     if [ $? -ne 0 ] ; then
       exit 1
     fi
@@ -62,7 +62,7 @@ else
   rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
   wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb
   pushd /tmp
-  sha512sum -c metricbeat-${MB_VERSION}-amd64.deb.sha512
+  sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
 	exit 1
