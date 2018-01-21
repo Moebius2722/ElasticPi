@@ -102,6 +102,7 @@ if [ ! -d "/mnt/espibackup/build/jna/${JNA_VERSION}" ]; then
   sudo chmod o=rx /mnt/espibackup
 fi
 
+# Get and Check JNA Library Source
 if [ -f /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512 ] && [ -f /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar ]; then
   pushd /mnt/espibackup/build/jna/${JNA_VERSION}
   sha512sum -c /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512
