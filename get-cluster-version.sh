@@ -9,7 +9,7 @@
 
 ####### COMMON #######
 
-echo " HOST             ES       LS       KB       NG       CB       NR       MQ       KA"
+echo " HOST             ES       LS       KB       MB       NG       CB       NR       MQ       KA"
 
 
 # Get IP Nodes
@@ -54,6 +54,16 @@ do
   fi
   printf $vkb
   ilen=${#vkb}
+  iend=$((9-ilen))
+  printf "%${iend}s"
+  vmb=`ssh $ipnode get-metricbeat-version 2>/dev/null`
+  if [[ $? = 0 ]] ; then
+    vmb="$vmb"
+  else
+    vmb="N/A"
+  fi
+  printf $vmb
+  ilen=${#vmb}
   iend=$((9-ilen))
   printf "%${iend}s"
   vng=`ssh $ipnode get-nginx-version 2>/dev/null`
@@ -136,6 +146,16 @@ else
 fi
 printf $vkb
 ilen=${#vkb}
+iend=$((9-ilen))
+printf "%${iend}s"
+vmb=`get-metricbeat-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  vmb="$vmb"
+else
+  vmb="N/A"
+fi
+printf $vmb
+ilen=${#vmb}
 iend=$((9-ilen))
 printf "%${iend}s"
 vng=`get-nginx-lastversion 2>/dev/null`
