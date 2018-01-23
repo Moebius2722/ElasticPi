@@ -20,7 +20,8 @@ echo "================================= START-CLUSTER ==========================
 date
 
 # Start Services
-for svc in nginx keepalived elasticsearch cerebro mosquitto nodered logstash kibana
+#for svc in nginx keepalived elasticsearch cerebro mosquitto nodered logstash kibana
+for svc in nginx keepalived elasticsearch cerebro metricbeat logstash kibana
 do
 echo "================================= $svc ================================"
 for ipnode in "${ipnodes[@]}"

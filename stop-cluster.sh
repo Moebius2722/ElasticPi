@@ -20,7 +20,8 @@ echo "================================= STOP-CLUSTER ===========================
 date
 
 # Stop Services
-for svc in keepalived nginx kibana logstash nodered mosquitto cerebro     
+#for svc in keepalived nginx kibana logstash nodered mosquitto cerebro
+for svc in keepalived nginx kibana logstash metricbeat cerebro
 do
 echo "================================= $svc ================================"
 for ipnode in "${ipnodes[@]}"
