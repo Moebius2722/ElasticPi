@@ -13,6 +13,7 @@ if [ -d $SQUIDLIB_BLACKLISTS ]; then
 			if [ -e "$SQUIDLIB_BLACKLISTS/$folderName/urls" ]; then
 				echo "      urllist blacklists/$folderName/urls"
 			fi
+			echo "      log ${folderName}accesses"
 			echo "}"
 		fi
 	done
