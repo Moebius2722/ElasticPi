@@ -92,7 +92,7 @@ sudo dpkg --force-confold --force-overwrite -i /mnt/espibackup/build/elasticsear
 
 # Get JNA Version
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
-JNA_VERSION=`echo $JNA_JAR | cut -d / -f 6 | cut -d - -f 2`
+JNA_VERSION=`echo ${JNA_JAR::-4} | cut -d / -f 6 | cut -d - -f 2`
 
 #Create JNA Build Folder
 if [ ! -d "/mnt/espibackup/build/jna/${JNA_VERSION}" ]; then
