@@ -11,7 +11,7 @@
 
 # Check Parameters
 if [[ ! $# = 2 ]] ; then
-  echo "Usage : $0 IpNewNode NodePassword"
+  echo "Usage : $0 IpNewNode VIpNewNode NodePassword"
   exit 1
 fi
 
@@ -23,8 +23,11 @@ if grep -c $ipnewnode /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null; then
 	exit 1
 fi
 
+# Get VIP Node
+vipnewnode=$2
+
 # Get Node Password
-nodepwd=$2
+nodepwd=$3
 
 # Install sshpass utility for ssh connection without password prompt
 allssh "sudo apt-get install sshpass -q -y >/dev/null"
@@ -47,20 +50,25 @@ allssh "ssh-keyscan -H $ipnewnode >> ~/.ssh/known_hosts 2>/dev/null"
 #ssh $ipnewnode "ssh-keygen -R $ipnewnode >/dev/null 2>/dev/null"
 #ssh $ipnewnode "ssh-keyscan -H $ipnewnode >> ~/.ssh/known_hosts 2>/dev/null"
 #ssh $ipnewnode "sshpass -p $nodepwd ssh-copy-id -f $ipnewnode >/dev/null 2>/dev/null"
-sshpass -p $nodepwd scp ~/.ssh/id_rsa 192.168.0.23:~/.ssh/id_rsa
-sshpass -p $nodepwd scp ~/.ssh/id_rsa.pub 192.168.0.23:~/.ssh/id_rsa.pub
-sshpass -p $nodepwd scp ~/.ssh/authorized_keys  192.168.0.23:~/.ssh/authorized_keys
-sshpass -p $nodepwd scp ~/.ssh/known_hosts  192.168.0.23:~/.ssh/known_hosts
+sshpass -p $nodepwd ssh $ipnewnode sudo apt-get install openssh-client -y
+sshpass -p $nodepwd ssh $ipnewnode mkdir ~/.ssh
+sshpass -p $nodepwd scp ~/.ssh/id_rsa $ipnewnode:~/.ssh/id_rsa
+sshpass -p $nodepwd scp ~/.ssh/id_rsa.pub $ipnewnode:~/.ssh/id_rsa.pub
+sshpass -p $nodepwd scp ~/.ssh/authorized_keys $ipnewnode:~/.ssh/authorized_keys
+sshpass -p $nodepwd scp ~/.ssh/known_hosts $ipnewnode:~/.ssh/known_hosts
 
 # Add Node to Cluster
-allssh "echo $ipnewnode | sudo tee -a /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null"
-namenewnode=`ssh 192.168.0.23 hostname -s`
-fqdnnewnode=`ssh 192.168.0.23 hostname`
-allssh "echo -e $ipnewnode\\\t$namenewnode $fqdnnewnode | sudo tee -a /etc/hosts >/dev/null 2>/dev/null"
-scp /etc/elasticpi/nodes.lst $ipnewnode:/tmp/nodes.lst >/dev/null 2>/dev/null
-ssh $ipnewnode "sudo mkdir /etc/elasticpi && sudo cp /tmp/nodes.lst /etc/elasticpi/nodes.lst && rm /tmp/nodes.lst >/dev/null 2>/dev/null"
+namenewnode=`ssh $ipnewnode hostname -s`
+fqdnnewnode=`ssh $ipnewnode hostname`
+allssh "echo -e $ipnewnode\\\t$fqdnnewnode $namenewnode | sudo tee -a /etc/hosts >/dev/null 2>/dev/null"
 scp /etc/hosts $ipnewnode:/tmp/hosts >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo cp /tmp/hosts /etc/hosts && rm /tmp/hosts >/dev/null 2>/dev/null"
+allssh "echo $vipnewnode $ipnewnode | sudo tee -a /etc/elasticpi/vip.lst >/dev/null 2>/dev/null"
+scp /etc/elasticpi/vip.lst $ipnewnode:/tmp/vip.lst >/dev/null 2>/dev/null
+ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/vip.lst /etc/elasticpi/vip.lst && rm -f /tmp/vip.lst >/dev/null 2>/dev/null"
+allssh "echo $ipnewnode | sudo tee -a /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null"
+scp /etc/elasticpi/nodes.lst $ipnewnode:/tmp/nodes.lst >/dev/null 2>/dev/null
+ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/nodes.lst /etc/elasticpi/nodes.lst && rm -f /tmp/nodes.lst >/dev/null 2>/dev/null"
 
 # Install Cluster Tools on New Node
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
