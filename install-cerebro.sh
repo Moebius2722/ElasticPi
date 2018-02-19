@@ -52,6 +52,9 @@ fi
 
 ####### CEREBRO #######
 
+# Install Cerebro Prerequisites
+install-oracle-java
+
 # Get and Install Cerebro
 rm -f /tmp/cerebro-${C_VERSION}.tgz ; wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && rm -f /tmp/cerebro-${C_VERSION}.tgz
 sudo cp -f /opt/elasticpi/Cerebro/application.conf /usr/share/cerebro/conf/.

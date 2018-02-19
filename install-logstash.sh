@@ -54,6 +54,9 @@ fi
 
 ####### LOGSTASH #######
 
+# Install Logstash Prerequisites
+install-oracle-java
+
 # Get and Compile JFFI library for Install Logstash
 sudo apt-get install ant texinfo -y && git clone https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-1.2.so /lib/libjffi-1.2.so && rm -rf /tmp/jffi
 
