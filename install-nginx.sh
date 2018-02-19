@@ -34,6 +34,8 @@ if [[ ! "${PI_UPDATED}" = "1" ]]; then
   export PI_UPDATED=1
 fi
 
+# Get and Install GCC and MAKE
+sudo apt-get install gcc g++ make -y
 
 ####### NGINX #######
 
