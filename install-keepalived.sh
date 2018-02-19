@@ -43,7 +43,7 @@ sudo sysctl -w net.ipv4.conf.lo.arp_announce=2
 sudo sysctl -p
 
 # Install Keepalived Load Balancer
-sudo apt-get install libipset3 keepalived -q -y
+sudo apt-get install libipset3 netcat keepalived -q -y
 
 # Configure Keepalived Load Balancer
 configure-keepalived
