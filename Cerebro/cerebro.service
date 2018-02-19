@@ -14,7 +14,7 @@ PIDFile=/var/run/cerebro/cerebro.pid
 User=cerebro
 Group=cerebro
 WorkingDirectory=/usr/share/cerebro
-ExecStart=/usr/share/cerebro/bin/cerebro -J-Xms100m -J-Xmx100m
+ExecStart=/usr/share/cerebro/bin/cerebro -J-Xms100m -J-Xmx100m -J-server
 # Auto restart on crash
 Restart=always
 # Tag things in the log
