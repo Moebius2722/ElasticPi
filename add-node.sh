@@ -68,7 +68,14 @@ scp /etc/elasticpi/vip.lst $ipnewnode:/tmp/vip.lst >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/vip.lst /etc/elasticpi/vip.lst && rm -f /tmp/vip.lst >/dev/null 2>/dev/null"
 allssh "echo $ipnewnode | sudo tee -a /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null"
 scp /etc/elasticpi/nodes.lst $ipnewnode:/tmp/nodes.lst >/dev/null 2>/dev/null
-ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/nodes.lst /etc/elasticpi/nodes.lst && rm -f /tmp/nodes.lst >/dev/null 2>/dev/null"
+ssh $ipnewnode "sudo cp -f /tmp/nodes.lst /etc/elasticpi/nodes.lst && rm -f /tmp/nodes.lst >/dev/null 2>/dev/null"
+
+# Add SSL Certificate # >/dev/null 2>/dev/null
+sudo cp -rf /etc/elasticpi/ssl /tmp/. >/dev/null 2>/dev/null
+sudo chmod a+r /tmp/ssl/*.key >/dev/null 2>/dev/null
+scp -r /tmp/ssl $ipnewnode:/tmp/. >/dev/null 2>/dev/null
+sudo rm -rf /tmp/ssl >/dev/null 2>/dev/null
+ssh $ipnewnode "sudo chmod u=rw,g=-,o=- /tmp/ssl/*.key && sudo cp -rf /tmp/ssl /etc/elasticpi/. ; sudo rm -rf /tmp/ssl >/dev/null 2>/dev/null"
 
 # Install Cluster Tools on New Node
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
