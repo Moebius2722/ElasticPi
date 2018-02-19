@@ -64,6 +64,7 @@ sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/elasticsearch/jvm.options
+echo "-server" | sudo tee -a /etc/elasticsearch/jvm.options
 sudo sed -i '/#MAX_LOCKED_MEMORY=unlimited/a MAX_LOCKED_MEMORY=unlimited' /etc/default/elasticsearch
 #sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
 sudo sed -i '/\[Service\]/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
@@ -105,6 +106,7 @@ sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_ho
 # Create and configure Backup NFS mount point
 sudo mkdir /mnt/espibackup
 sudo chown -R elasticsearch:elasticsearch /mnt/espibackup
+sudo apt-get install nfs-common -q -y
 sudo systemctl enable rpcbind.service
 sudo systemctl start rpcbind.service
 echo '192.168.0.1:/volume1/espibackup /mnt/espibackup nfs rw         0       0' | sudo tee -a /etc/fstab
