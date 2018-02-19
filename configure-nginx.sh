@@ -42,6 +42,7 @@ sudo usermod -a -G shadow www-data
 sudo cp -f /opt/elasticpi/Nginx/nginx_restricted /etc/pam.d/nginx_restricted
 
 # Set Nginx Default Site redirect on local Kibana with PAM authentication
+sudo cp -f /opt/elasticpi/Nginx/nginx.conf /etc/nginx/nginx.conf
 echo "# Author : Moebius2722
 # Mail : moebius2722@laposte.net
 # Git : https://github.com/Moebius2722/ElasticPi.git" | sudo tee /etc/nginx/sites-available/default
