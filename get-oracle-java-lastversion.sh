@@ -18,4 +18,4 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 
 # Get Oracle Java last version
 
 sudo apt-get update >/dev/null 2>/dev/null
-sudo apt-cache madison oracle-java8-installer | cut -d '|' -f 2 | tr -d ' '
+sudo apt-cache madison oracle-java8-installer | grep -i Packages | cut -d '|' -f 2 | tr -d ' '
