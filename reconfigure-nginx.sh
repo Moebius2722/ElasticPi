@@ -35,7 +35,7 @@ sudo cp -f /opt/elasticpi/Nginx/nginx.conf /etc/nginx/nginx.conf
 echo "# Author : Moebius2722
 # Mail : moebius2722@laposte.net
 # Git : https://github.com/Moebius2722/ElasticPi.git" | sudo tee /etc/nginx/sites-available/default
-services=( "kibana 5601 80 443" "cerebro 9000 9001 9002" "nodered 1880 1881 1882" "elasticsearch 9200 9201 9202" )
+services=( "kibana 5601 80 443" "cerebro 9000 9001 9002" "nodered 1880 1881 1882" "elasticsearch 9200 9201 9202" "proxy 3128 3129 3130" )
 for svc in "${services[@]}"
 do
 set -- $svc
@@ -85,7 +85,7 @@ done
 # Set Nginx Stream Load Balancing
 sudo sed -i 's/worker_processes.*/worker_processes 1;/' /etc/nginx/nginx.conf
 echo "stream {" | sudo tee -a /etc/nginx/nginx.conf
-services=( "syslog 5000 5010" "squid 5001 5011" "mosquitto 1883 1884" "proxy 3128 3129" )
+services=( "syslog 5000 5010" "squid 5001 5011" "mosquitto 1883 1884" "proxy 3128 3131" )
 for svc in "${services[@]}"
 do
 set -- $svc
