@@ -80,3 +80,15 @@ ssh $ipnewnode "sudo chmod u=rw,g=-,o=- /tmp/ssl/*.key && sudo cp -rf /tmp/ssl /
 # Install Cluster Tools on New Node
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
 ssh $ipnewnode "/bin/bash /tmp/install-tools.sh ; rm /tmp/install-tools.sh >/dev/null 2>/dev/null"
+
+# Install Keepalived
+ssh $ipnewnode install-keepalived
+
+# Install Nginx
+ssh $ipnewnode install-nginx
+
+# Reconfigure Keepalived
+allssh reconfigure-keepalived
+
+# Reconfigure Nginx
+allssh reconfigure-nginx
