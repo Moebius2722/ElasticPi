@@ -21,17 +21,8 @@ viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
 
 ####### KEEPALIVED #######
 
-# Prevent loopback ARP response for Keepalived.
-
-echo net.ipv4.ip_nonlocal_bind=1 | sudo tee /etc/sysctl.d/95-keepalived.conf
-sudo sysctl -w net.ipv4.ip_nonlocal_bind=1
-echo net.ipv4.ip_forward=1 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
-sudo sysctl -w net.ipv4.ip_forward=1
-echo net.ipv4.conf.lo.arp_ignore=1 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
-sudo sysctl -w net.ipv4.conf.lo.arp_ignore=1
-echo net.ipv4.conf.lo.arp_announce=2 | sudo tee -a /etc/sysctl.d/95-keepalived.conf
-sudo sysctl -w net.ipv4.conf.lo.arp_announce=2
-sudo sysctl -p
+# Stop Keepalived Load Balancer Daemon
+stop-keepalived
 
 # Configure Keepalived Load Balancer
 password='k@l!ve3'
@@ -77,5 +68,5 @@ echo "}
 " | sudo tee -a /etc/keepalived/keepalived.conf
 done
 
-# Restart Keepalived Load Balancer
-restart-keepalived
+# Start Keepalived Load Balancer Daemon
+start-keepalived
