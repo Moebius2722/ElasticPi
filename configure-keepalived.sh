@@ -15,6 +15,12 @@ if [ ! -f /etc/elasticpi/vip.lst ]; then
   exit 1
 fi
 
+# Check if installed
+if ! get-keepalived-version >/dev/null 2>/dev/null; then
+  echo "Keepalived isn't installed" >&2
+  exit 1
+fi
+
 # Get IP Host
 iphost=`hostname -i`
 idhost=`get-node-id`

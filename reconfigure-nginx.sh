@@ -15,6 +15,12 @@ if [ ! -f /etc/elasticpi/nodes.lst ]; then
   exit 1
 fi
 
+# Check if installed
+if ! get-nginx-version >/dev/null 2>/dev/null; then
+  echo "Nginx isn't installed" >&2
+  exit 1
+fi
+
 # Get IP Host
 iphost=`hostname -i`
 
