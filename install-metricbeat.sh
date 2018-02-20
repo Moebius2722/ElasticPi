@@ -46,6 +46,9 @@ fi
 # Get and Install Metricbeat with amd64 package
 rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb && sudo dpkg --force-architecture -i /tmp/metricbeat-${MB_VERSION}-amd64.deb && rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
 
+# Install Golang
+install-golang
+
 # Compile Metricbeat for arm
 rm -rf ${GOPATH}/src/github.com/elastic ; mkdir -p ${GOPATH}/src/github.com/elastic && git clone -b v${MB_VERSION} https://github.com/elastic/beats.git ${GOPATH}/src/github.com/elastic/beats
 pushd ${GOPATH}/src/github.com/elastic/beats/metricbeat
@@ -60,7 +63,7 @@ rm -rf ${GOPATH}/src/github.com/elastic
 
 # Configure Metricbeat for Kibana
 sudo sed -i 's/  index.number_of_shards: 1/  index.number_of_shards: 5/' /etc/metricbeat/metricbeat.yml
-sudo sed -i '/  index.number_of_shards: 5/a\  index.auto_expand_replicas: 0-all' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/  index.number_of_shards: 5/a\  index.auto_expand_replicas: 0-3' /etc/metricbeat/metricbeat.yml
 sudo sed -i "/  #host: \"localhost:5601\"/a\  host: \"https:\/\/${e_ip}:443\"" /etc/metricbeat/metricbeat.yml
 sudo sed -i "/  host: \"https:\/\/${e_ip}:443\"/a\  username: \"${e_user}\"" /etc/metricbeat/metricbeat.yml
 sudo sed -i "/  username: \"${e_user}\"/a\  password: \"${e_password}\"" /etc/metricbeat/metricbeat.yml
