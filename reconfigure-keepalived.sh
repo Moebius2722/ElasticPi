@@ -4,20 +4,27 @@
 # Mail : moebius2722@laposte.net
 # Git : https://github.com/Moebius2722/ElasticPi.git
 
-# Full Automated Installation Script for Keepalived on Raspberry Pi 2 or 3
+# Full Automated Configure Script for Keepalived on Raspberry Pi 2 or 3
 
 
 ####### COMMON #######
 
+# Check if cluster is created
+if [ ! -f /etc/elasticpi/vip.lst ]; then
+  echo "Create cluster before install Keepalived"
+  exit 1
+fi
+
+# Check if installed
+if ! get-keepalived-version >/dev/null 2>/dev/null; then
+  echo "Keepalived isn't installed" >&2
+  exit 1
+fi
+
 # Get IP Host
-iphost=`hostname -I | cut -d ' ' -f 1`
-
-# Get last digit IP host
-idhost=${iphost:(-1):1}
-
-# Generate virtual IP host
-viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
-
+iphost=`hostname -i`
+idhost=`get-node-id`
+nodescount=`get-nodes-count`
 
 ####### KEEPALIVED #######
 
@@ -25,25 +32,31 @@ viphost=${iphost::-2}$((${iphost:(-2):1}-1))${iphost:(-1):1}
 stop-keepalived
 
 # Configure Keepalived Load Balancer
-password='k@l!ve3'
-echo "vrrp_script chk_nginx {
-  script       ""/usr/bin/check-nginx""
+echo "vrrp_script chk_nlb {
+  script       ""/usr/bin/check-nlb""
   interval 2   # check every 2 seconds
   fall 2       # require 2 failures for KO
-  rise 150     # require 150 successes for OK
+  rise 2       # require 2 successes for OK
 }
 " | sudo tee /etc/keepalived/keepalived.conf
-for i in {0..9}
+
+vips=( `sudo cat /etc/elasticpi/vip.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]* [0-9]*\.[0-9]*\.[0-9]*\.[0-9].*$' | tr ' ' ';'` )
+id=0
+
+for viphip in "${vips[@]}"
 do
-  id=1$i
-  priority=1$((((9-$i)+$idhost)%10))0
-  vip=${iphost::-2}$((${iphost:(-2):1}-1))$i
-  if [[ $i -eq  $idhost ]]; then
+  id=$[$id+1]
+  
+  vip=`echo $viphip | cut -d ';' -f 1`
+  hip=`echo $viphip | cut -d ';' -f 2`
+  idnode=`get-node-id $hip`
+  priority=1$(((($nodescount-1-$idnode)+$idhost)%$nodescount))0
+  if [[ "$iphost" ==  "$hip" ]]; then
     state=MASTER
   else
     state=BACKUP
   fi
-  
+
   echo "vrrp_instance VI_$id {
   state $state
   interface eth0
@@ -51,20 +64,13 @@ do
   priority $priority
   advert_int 1
   lvs_sync_daemon_interface eth0
-  authentication {
-    auth_type AH
-    auth_pass $password
-  }
   virtual_ipaddress {
         $vip/24
   }
   track_script {
-    chk_nginx
-  }" | sudo tee -a /etc/keepalived/keepalived.conf
-  if [[ $i -ne  $idhost ]]; then
-    echo "  preempt_delay 300" | sudo tee -a /etc/keepalived/keepalived.conf
-  fi
-echo "}
+    chk_nlb
+  }
+}
 " | sudo tee -a /etc/keepalived/keepalived.conf
 done
 
