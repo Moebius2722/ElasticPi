@@ -78,6 +78,7 @@ sudo rm -rf /tmp/ssl >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo chmod u=rw,g=-,o=- /tmp/ssl/*.key && sudo cp -rf /tmp/ssl /etc/elasticpi/. ; sudo rm -rf /tmp/ssl >/dev/null 2>/dev/null"
 
 # Install Cluster Tools on New Node
+ssh $ipnewnode "update-tools >/dev/null 2>/dev/null"
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
 ssh $ipnewnode "/bin/bash /tmp/install-tools.sh ; rm /tmp/install-tools.sh >/dev/null 2>/dev/null"
 
