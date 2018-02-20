@@ -9,6 +9,12 @@
 
 ####### COMMON #######
 
+# Check if already installed
+if get-oracle-java-version >/dev/null 2>/dev/null; then
+  echo "Oracle Java is already installed" >&2
+  exit 1
+fi
+
 # Full System Update
 if [[ ! "${PI_UPDATED}" = "1" ]]; then
   echo "Full System Update"
