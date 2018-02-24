@@ -43,21 +43,87 @@ fi
 
 ####### METRICBEAT #######
 
-# Get and Install Metricbeat with amd64 package
-rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb && sudo dpkg --force-architecture -i /tmp/metricbeat-${MB_VERSION}-amd64.deb && rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+#Create Metricbeat Build Folder
+if [ ! -d "/mnt/espibackup/build/metricbeat/${MB_VERSION}" ]; then
+  sudo mkdir -p /mnt/espibackup/build/metricbeat/${MB_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/espibackup/build
+  sudo chmod o=rx /mnt/espibackup
+fi
+
+# Get and Check Metricbeat Debian Package
+rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb.sha512
+if [ -f "/mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb" ]; then
+  pushd /mnt/espibackup/build/metricbeat/${MB_VERSION}
+  sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+  if [ $? -ne 0 ] ; then
+    rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+    wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb
+    pushd /tmp
+    sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+    if [ $? -ne 0 ] ; then
+      exit 1
+    fi
+	popd
+	sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
+	rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+  fi
+  popd
+else
+  rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+  wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb
+  pushd /tmp
+  sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+  if [ $? -ne 0 ] ; then
+    popd
+	exit 1
+  fi
+  popd
+  sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
+  rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+fi
+rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+
+# Install Metricbeat with amd64 package
+sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
 
 # Install Golang
 install-golang
 
-# Compile Metricbeat for arm
-rm -rf ${GOPATH}/src/github.com/elastic ; mkdir -p ${GOPATH}/src/github.com/elastic && git clone -b v${MB_VERSION} https://github.com/elastic/beats.git ${GOPATH}/src/github.com/elastic/beats
-pushd ${GOPATH}/src/github.com/elastic/beats/metricbeat
-export GOX_OSARCH='!netbsd/386 !linux/amd64 !windows/386 !linux/386 !windows/amd64 !netbsd/arm !linux/ppc64le !solaris/amd64 !netbsd/amd64 !linux/ppc64 !freebsd/arm !darwin/amd64 !darwin/386 !openbsd/amd64 !freebsd/386 !openbsd/386 !freebsd/amd64'
-make clean
-make crosscompile
-popd
-sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
-rm -rf ${GOPATH}/src/github.com/elastic
+# Get and Check Metricbeat Source
+if [ -f /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm ]; then
+  pushd /mnt/espibackup/build/metricbeat/${MB_VERSION}
+  sha512sum -c /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
+  if [ $? -ne 0 ] ; then
+    # Get and Compile Metricbeat Binary for ARM
+    rm -rf ${GOPATH}/src/github.com/elastic ; mkdir -p ${GOPATH}/src/github.com/elastic && git clone -b v${MB_VERSION} https://github.com/elastic/beats.git ${GOPATH}/src/github.com/elastic/beats
+    pushd ${GOPATH}/src/github.com/elastic/beats/metricbeat
+    export GOX_OSARCH='!netbsd/386 !linux/amd64 !windows/386 !linux/386 !windows/amd64 !netbsd/arm !linux/ppc64le !solaris/amd64 !netbsd/amd64 !linux/ppc64 !freebsd/arm !darwin/amd64 !darwin/386 !openbsd/amd64 !freebsd/386 !openbsd/386 !freebsd/amd64'
+    make clean
+    make crosscompile
+    sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm
+    popd
+    rm -rf ${GOPATH}/src/github.com/elastic
+    sudo sha512sum /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm | sudo tee /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
+  fi
+  popd
+else
+  # Get and Compile Metricbeat Binary for ARM
+  rm -rf ${GOPATH}/src/github.com/elastic ; mkdir -p ${GOPATH}/src/github.com/elastic && git clone -b v${MB_VERSION} https://github.com/elastic/beats.git ${GOPATH}/src/github.com/elastic/beats
+  pushd ${GOPATH}/src/github.com/elastic/beats/metricbeat
+  export GOX_OSARCH='!netbsd/386 !linux/amd64 !windows/386 !linux/386 !windows/amd64 !netbsd/arm !linux/ppc64le !solaris/amd64 !netbsd/amd64 !linux/ppc64 !freebsd/arm !darwin/amd64 !darwin/386 !openbsd/amd64 !freebsd/386 !openbsd/386 !freebsd/amd64'
+  make clean
+  make crosscompile
+  sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm
+  popd
+  rm -rf ${GOPATH}/src/github.com/elastic
+  sudo sha512sum /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm | sudo tee /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
+fi
+
+# Replace Metricbeat Binary
+sudo cp -f /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
+
 
 # Configure Metricbeat
 

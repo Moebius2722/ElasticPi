@@ -76,7 +76,6 @@ rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
 # Update Metricbeat with amd64 package
 sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
 
-
 # Get and Check Metricbeat Source
 if [ -f /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/espibackup/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm ]; then
   pushd /mnt/espibackup/build/metricbeat/${MB_VERSION}
