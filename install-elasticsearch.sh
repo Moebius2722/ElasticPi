@@ -64,7 +64,10 @@ sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/elasticsearch/jvm.options
-sudo sed -i 's/^-server.*/#-server/' /etc/elasticsearch/jvm.options
+sudo sed -i 's/^#.*-server.*/-server/' /etc/elasticsearch/jvm.options
+sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo | sudo tee -a /etc/elasticsearch/jvm.options
+sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "# force the server VM" | sudo tee -a /etc/elasticsearch/jvm.options
+sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "-server" | sudo tee -a /etc/elasticsearch/jvm.options
 sudo sed -i 's/-Xss.*/-Xss320k/' /etc/elasticsearch/jvm.options
 sudo sed -i '/#MAX_LOCKED_MEMORY=unlimited/a MAX_LOCKED_MEMORY=unlimited' /etc/default/elasticsearch
 #sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
