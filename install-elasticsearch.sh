@@ -65,6 +65,7 @@ sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/elasticsearch/jvm.options
 echo "-server" | sudo tee -a /etc/elasticsearch/jvm.options
+sudo sed -i 's/-Xss.*/-Xss320k/' /etc/elasticsearch/jvm.options
 sudo sed -i '/#MAX_LOCKED_MEMORY=unlimited/a MAX_LOCKED_MEMORY=unlimited' /etc/default/elasticsearch
 #sudo sed -i '/#LimitMEMLOCK=infinity/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
 sudo sed -i '/\[Service\]/a LimitMEMLOCK=infinity' /usr/lib/systemd/system/elasticsearch.service
