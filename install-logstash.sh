@@ -69,7 +69,10 @@ sudo cp -f /lib/libjffi-1.2.so /usr/share/logstash/vendor/jruby/lib/jni/arm-Linu
 # Set Logstash Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/logstash/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
-echo "-server" | sudo tee -a /etc/logstash/jvm.options
+sudo sed -i 's/^#.*-server.*/-server/' /etc/elasticsearch/jvm.options
+sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo | sudo tee -a /etc/elasticsearch/jvm.options
+sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "# force the server VM" | sudo tee -a /etc/elasticsearch/jvm.options
+sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "-server" | sudo tee -a /etc/elasticsearch/jvm.options
 
 # Set Logstash Node Configuration
 sudo cp -f /opt/elasticpi/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
