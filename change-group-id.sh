@@ -44,8 +44,5 @@ groupid=`getent group $groupname | cut -d: -f 3`
 # Change User ID
 sudo groupmod -g $newid $groupname
 
-# Get user with this principal group
-getent passwd | grep "^.*:x:.*:${groupid}:.*" | cut -d ':' -f 1 | xargs sudo usermod -g $groupname
-
 # Update Owner User Files
 sudo find / -gid $groupid | xargs sudo chown :$groupname
