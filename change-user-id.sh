@@ -32,3 +32,15 @@ if [[ $? -eq 0 ]]; then
   echo "New ID ""$newid"" is already used" >&2
   exit 3
 fi
+
+
+####### CHANGE-USER-ID #######
+
+# Get files owned by user
+sudo find / -user $username >"/tmp/${$username}_usr_files.lst"
+
+# Change User ID
+sudo usermod -u $newid $username
+
+# Update Owner User Files
+cat "/tmp/${$username}_usr_files.lst" | xargs sudo chown $username
