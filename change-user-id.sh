@@ -21,29 +21,28 @@ username=$1
 # Get New ID
 newid=$2
 
+# Check if user exist
 getent passwd $username >/dev/null 2>/dev/null
 if [[ $? -ne 0 ]]; then
   echo "User ""$username"" not exist" >&2
   exit 2
 fi
 
+# Check if new id is free
 getent passwd $newid >/dev/null 2>/dev/null
 if [[ $? -eq 0 ]]; then
   echo "New ID ""$newid"" is already used" >&2
   exit 3
 fi
 
+# Get User ID
+userid=`getent passwd $username | cut -d: -f 3`
+
 
 ####### CHANGE-USER-ID #######
-
-# Get files owned by user
-sudo find / -user $username >"/tmp/${username}_usr_files.lst"
 
 # Change User ID
 sudo usermod -u $newid $username
 
 # Update Owner User Files
-cat "/tmp/${username}_usr_files.lst" | xargs sudo chown $username
-
-# Remove temporary file
-rm -f "/tmp/${username}_usr_files.lst"
+sudo find / -uid $userid | xargs sudo chown $username
