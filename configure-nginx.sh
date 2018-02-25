@@ -102,7 +102,7 @@ done
 # Set Nginx Stream Load Balancing
 sudo sed -i 's/worker_processes.*/worker_processes 1;/' /etc/nginx/nginx.conf
 echo "stream {" | sudo tee -a /etc/nginx/nginx.conf
-services=( "syslog 5000 5010" "squid 5001 5011" "mosquitto 1883 1884" "proxy 3128 3131" )
+services=( "syslog 5000 5010" "squid 5001 5011" "beat 5002 5012" "mosquitto 1883 1884" "proxy 3128 3131" )
 for svc in "${services[@]}"
 do
 set -- $svc
