@@ -37,10 +37,13 @@ fi
 ####### CHANGE-USER-ID #######
 
 # Get files owned by user
-sudo find / -user $username >"/tmp/${$username}_usr_files.lst"
+sudo find / -user $username >"/tmp/${username}_usr_files.lst"
 
 # Change User ID
 sudo usermod -u $newid $username
 
 # Update Owner User Files
-cat "/tmp/${$username}_usr_files.lst" | xargs sudo chown $username
+cat "/tmp/${username}_usr_files.lst" | xargs sudo chown $username
+
+# Remove temporary file
+rm -f "/tmp/${username}_usr_files.lst"
