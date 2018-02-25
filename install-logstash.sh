@@ -74,13 +74,9 @@ sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo | sudo tee -a /et
 sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "# force the server VM" | sudo tee -a /etc/elasticsearch/jvm.options
 sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "-server" | sudo tee -a /etc/elasticsearch/jvm.options
 
-# Set Logstash Node Configuration
-sudo cp -f /opt/elasticpi/Logstash/00-default.conf /etc/logstash/conf.d/00-default.conf
-sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /etc/logstash/conf.d/00-default.conf
-sudo sed -i "s/\[USER\]/$e_user/" /etc/logstash/conf.d/00-default.conf
-sudo sed -i "s/\[PASSWORD\]/$e_password/" /etc/logstash/conf.d/00-default.conf
-
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
-start-logstash
+
+# Set Logstash Node Configuration
+configure-logstash $e_ip $e_user $e_password
