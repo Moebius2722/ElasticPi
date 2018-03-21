@@ -18,9 +18,22 @@ fi
 # Get IP Node
 ipnewnode=$1
 
+# Check if script is run on new node
+if ip addr | grep -q -c $ipnewnode; then
+  echo "Script must be launch on cluster member."
+  exit 2
+fi
+
+# Check if cluster is created
+if [ ! -f /etc/elasticpi/nodes.lst ]; then
+  echo "Create cluster before add New Node"
+  exit 3
+fi
+
+# Check if node is already member of cluster
 if grep -c $ipnewnode /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null; then
     echo "Node $ipnewnode is already member of cluster."
-	exit 1
+	exit 4
 fi
 
 # Get VIP Node
