@@ -113,7 +113,7 @@ if [ -f /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512 ] && [ -f /mnt/e
   popd
 else
   # Get and Compile JNA library for Elasticsearch
-  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512	
+  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512
 fi
 
 # Replace Elasticsearch JNA library
@@ -143,16 +143,16 @@ done
 echo
 if [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
-else
-  # Reenable shard allocation
-  echo "Reenable shard allocation"
-  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
-  {
-    "transient": {
-      "cluster.routing.allocation.enable": "all"
-    }
-  }
-  ' >/dev/null 2>/dev/null
+#else
+#  # Reenable shard allocation
+#  echo "Reenable shard allocation"
+#  curl -XPUT 'localhost:9200/_cluster/settings?pretty' -H 'Content-Type: application/json' -d'
+#  {
+#    "transient": {
+#      "cluster.routing.allocation.enable": "all"
+#    }
+#  }
+#  ' >/dev/null 2>/dev/null
 fi
 
 # Wait for the nodes to recover
