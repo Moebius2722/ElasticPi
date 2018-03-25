@@ -60,7 +60,7 @@ curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install build-essential python-rpi.gpio nodejs -q -y
 
 # Install Lastest Node-RED
-sudo npm cache clean
+sudo npm --force cache clean
 #sudo npm install -g npm@2.x
 hash -r
 sudo npm install -g node-gyp
