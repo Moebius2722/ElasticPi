@@ -56,7 +56,7 @@ sudo apt-get purge npm -q -y
 sudo apt-get autoremove -q -y
 
 # Install Lastest NodeJS and some additional dependencies
-curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 sudo apt-get install build-essential python-rpi.gpio nodejs -q -y
 
 # Install Lastest Node-RED
