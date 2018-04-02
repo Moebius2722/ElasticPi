@@ -11,6 +11,8 @@
 
 # Waiting Elasticsearch Up
 echo "=========================== Wait Elasticsearch Start ==========================="
+date
+echo
 
 # Wait for start-up nodes
 echo "Wait for start-up Elasticsearch nodes"
