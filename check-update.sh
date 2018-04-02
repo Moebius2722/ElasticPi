@@ -13,11 +13,11 @@
 E_VERSION=`get-elasticsearch-lastversion`
 L_VERSION=`get-logstash-lastversion`
 K_VERSION=`get-kibana-lastversion`
-K_MVERSION=`echo $K_VERSION | cut -d . -f 1-2`
-NGX_VERSION=`get-nginx-lastversion`
-N_VERSION=`wget https://raw.githubusercontent.com/elastic/kibana/$K_MVERSION/.node-version -qO-`
+MB_VERSION=`get-metricbeat-lastversion`
+NG_VERSION=`get-nginx-lastversion`
 C_VERSION=`get-cerebro-lastversion`
 NR_VERSION=`get-nodered-lastversion`
+MQ_VERSION=`get-mosquitto-lastversion`
 
 
 ####### ELASTICSEARCH #######
@@ -53,14 +53,25 @@ else
 fi
 
 
+####### METRICBEAT #######
+
+# Check if already up to date
+MB_CVERSION=`get-metricbeat-version`
+if [[ "${MB_VERSION}" = "${MB_CVERSION}" ]]; then
+  echo "Metricbeat : Up to date '${MB_CVERSION}'"
+else
+  echo "Metricbeat : New version '${MB_CVERSION}' => '${MB_VERSION}'"
+fi
+
+
 ####### NGINX #######
 
 # Check if already up to date
-NGX_CVERSION=`get-nginx-version`
-if [[ "${NGX_VERSION}" = "${NGX_CVERSION}" ]]; then
-  echo "Nginx : Up to date '${NGX_CVERSION}'"
+NG_CVERSION=`get-nginx-version`
+if [[ "${NG_VERSION}" = "${NG_CVERSION}" ]]; then
+  echo "Nginx : Up to date '${NG_CVERSION}'"
 else
-  echo "Nginx : New version '${NGX_CVERSION}' => '${NGX_VERSION}'"
+  echo "Nginx : New version '${NG_CVERSION}' => '${NG_VERSION}'"
 fi
 
 
@@ -83,4 +94,26 @@ if [[ "${NR_VERSION}" = "${NR_CVERSION}" ]]; then
   echo "Node-RED : Up to date '${NR_CVERSION}'"
 else
   echo "Node-RED : New version '${NR_CVERSION}' => '${NR_VERSION}'"
+fi
+
+
+####### MOSQUITTO #######
+
+# Check if already up to date
+MQ_CVERSION=`get-mosquitto-version`
+if [[ "${MQ_VERSION}" = "${MQ_CVERSION}" ]]; then
+  echo "Mosquitto : Up to date '${MQ_CVERSION}'"
+else
+  echo "Mosquitto : New version '${MQ_CVERSION}' => '${MQ_VERSION}'"
+fi
+
+
+####### KEEPALIVED #######
+
+# Check if already up to date
+KA_CVERSION=`get-keepalived-version`
+if [[ "${KA_VERSION}" = "${KA_CVERSION}" ]]; then
+  echo "Keepalived : Up to date '${KA_CVERSION}'"
+else
+  echo "Keepalived : New version '${KA_CVERSION}' => '${KA_VERSION}'"
 fi
