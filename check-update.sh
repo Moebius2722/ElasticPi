@@ -7,21 +7,10 @@
 # Full Automated Check Update Script for Elastic Stack on Raspberry Pi 2 or 3
 
 
-####### COMMON #######
-
-# Set Version ELK
-E_VERSION=`get-elasticsearch-lastversion`
-L_VERSION=`get-logstash-lastversion`
-K_VERSION=`get-kibana-lastversion`
-MB_VERSION=`get-metricbeat-lastversion`
-NG_VERSION=`get-nginx-lastversion`
-C_VERSION=`get-cerebro-lastversion`
-NR_VERSION=`get-nodered-lastversion`
-MQ_VERSION=`get-mosquitto-lastversion`
-KA_VERSION=`get-keepalived-lastversion`
-
-
 ####### ELASTICSEARCH #######
+
+# Get Version
+E_VERSION=`get-elasticsearch-lastversion`
 
 # Check if already up to date
 E_CVERSION=`get-elasticsearch-version`
@@ -34,6 +23,9 @@ fi
 
 ####### LOGSTASH #######
 
+# Get Version
+L_VERSION=`get-logstash-lastversion`
+
 # Check if already up to date
 L_CVERSION=`get-logstash-version`
 if [[ "${L_VERSION}" = "${L_CVERSION}" ]]; then
@@ -44,6 +36,9 @@ fi
 
 
 ####### KIBANA #######
+
+# Get Version
+K_VERSION=`get-kibana-lastversion`
 
 # Check if already up to date
 K_CVERSION=`get-kibana-version`
@@ -56,6 +51,9 @@ fi
 
 ####### METRICBEAT #######
 
+# Get Version
+MB_VERSION=`get-metricbeat-lastversion`
+
 # Check if already up to date
 MB_CVERSION=`get-metricbeat-version`
 if [[ "${MB_VERSION}" = "${MB_CVERSION}" ]]; then
@@ -66,6 +64,9 @@ fi
 
 
 ####### NGINX #######
+
+# Get Version
+NG_VERSION=`get-nginx-lastversion`
 
 # Check if already up to date
 NG_CVERSION=`get-nginx-version`
@@ -78,6 +79,9 @@ fi
 
 ####### CEREBRO #######
 
+# Get Version
+C_VERSION=`get-cerebro-lastversion`
+
 # Check if already up to date
 C_CVERSION=`get-cerebro-version`
 if [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
@@ -88,6 +92,9 @@ fi
 
 
 ####### NODERED #######
+
+# Get Version
+NR_VERSION=`get-nodered-lastversion`
 
 # Check if already up to date
 NR_CVERSION=`get-nodered-version`
@@ -100,6 +107,9 @@ fi
 
 ####### MOSQUITTO #######
 
+# Get Version
+MQ_VERSION=`get-mosquitto-lastversion`
+
 # Check if already up to date
 MQ_CVERSION=`get-mosquitto-version`
 if [[ "${MQ_VERSION}" = "${MQ_CVERSION}" ]]; then
@@ -110,6 +120,9 @@ fi
 
 
 ####### KEEPALIVED #######
+
+# Get Version
+KA_VERSION=`get-keepalived-lastversion`
 
 # Check if already up to date
 KA_CVERSION=`get-keepalived-version`
