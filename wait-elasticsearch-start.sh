@@ -16,7 +16,7 @@ if [[ $# -gt 1 ]] ; then
 fi
 
 # Set Node
-if [[ $# = 0 ]]
+if [[ $# = 0 ]] ; then
   node=localhost
 else
   node=$1
