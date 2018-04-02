@@ -14,7 +14,7 @@ E_VERSION=`get-elasticsearch-lastversion`
 
 # Check if already up to date
 E_CVERSION=`get-elasticsearch-version`
-if [[ "${E_VERSION}" = "" ]]; then
+if [[ "${E_CVERSION}" = "" ]]; then
   echo "Elasticsearch : Not installed"
 elif [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
   echo "Elasticsearch : Up to date '${E_CVERSION}'"
@@ -30,7 +30,7 @@ L_VERSION=`get-logstash-lastversion`
 
 # Check if already up to date
 L_CVERSION=`get-logstash-version`
-if [[ "${L_VERSION}" = "" ]]; then
+if [[ "${L_CVERSION}" = "" ]]; then
   echo "Logstash : Not installed"
 elif [[ "${L_VERSION}" = "${L_CVERSION}" ]]; then
   echo "Logstash : Up to date '${L_CVERSION}'"
@@ -46,7 +46,7 @@ K_VERSION=`get-kibana-lastversion`
 
 # Check if already up to date
 K_CVERSION=`get-kibana-version`
-if [[ "${K_VERSION}" = "" ]]; then
+if [[ "${K_CVERSION}" = "" ]]; then
   echo "Kibana : Not installed"
 elif [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
   echo "Kibana : Up to date '${K_CVERSION}'"
@@ -62,7 +62,7 @@ MB_VERSION=`get-metricbeat-lastversion`
 
 # Check if already up to date
 MB_CVERSION=`get-metricbeat-version`
-if [[ "${MB_VERSION}" = "" ]]; then
+if [[ "${MB_CVERSION}" = "" ]]; then
   echo "Metricbeat : Not installed"
 elif [[ "${MB_VERSION}" = "${MB_CVERSION}" ]]; then
   echo "Metricbeat : Up to date '${MB_CVERSION}'"
@@ -78,7 +78,7 @@ NG_VERSION=`get-nginx-lastversion`
 
 # Check if already up to date
 NG_CVERSION=`get-nginx-version`
-if [[ "${NG_VERSION}" = "" ]]; then
+if [[ "${NG_CVERSION}" = "" ]]; then
   echo "Nginx : Not installed"
 elif [[ "${NG_VERSION}" = "${NG_CVERSION}" ]]; then
   echo "Nginx : Up to date '${NG_CVERSION}'"
@@ -94,7 +94,7 @@ C_VERSION=`get-cerebro-lastversion`
 
 # Check if already up to date
 C_CVERSION=`get-cerebro-version`
-if [[ "${C_VERSION}" = "" ]]; then
+if [[ "${C_CVERSION}" = "" ]]; then
   echo "Cerebro : Not installed"
 elif [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
   echo "Cerebro : Up to date '${C_CVERSION}'"
@@ -110,7 +110,7 @@ NR_VERSION=`get-nodered-lastversion`
 
 # Check if already up to date
 NR_CVERSION=`get-nodered-version`
-if [[ "${NR_VERSION}" = "" ]]; then
+if [[ "${NR_CVERSION}" = "" ]]; then
   echo "Node-RED : Not installed"
 elif [[ "${NR_VERSION}" = "${NR_CVERSION}" ]]; then
   echo "Node-RED : Up to date '${NR_CVERSION}'"
@@ -126,7 +126,7 @@ MQ_VERSION=`get-mosquitto-lastversion`
 
 # Check if already up to date
 MQ_CVERSION=`get-mosquitto-version`
-if [[ "${MQ_VERSION}" = "" ]]; then
+if [[ "${MQ_CVERSION}" = "" ]]; then
   echo "Mosquitto : Not installed"
 elif [[ "${MQ_VERSION}" = "${MQ_CVERSION}" ]]; then
   echo "Mosquitto : Up to date '${MQ_CVERSION}'"
@@ -142,7 +142,7 @@ KA_VERSION=`get-keepalived-lastversion`
 
 # Check if already up to date
 KA_CVERSION=`get-keepalived-version`
-if [[ "${KA_VERSION}" = "" ]]; then
+if [[ "${KA_CVERSION}" = "" ]]; then
   echo "Keepalived : Not installed"
 elif [[ "${KA_VERSION}" = "${KA_CVERSION}" ]]; then
   echo "Keepalived : Up to date '${KA_CVERSION}'"
