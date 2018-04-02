@@ -10,7 +10,7 @@
 ####### ELASTICSEARCH #######
 
 # Get Version
-E_VERSION=`get-elasticsearch-lastversion`
+E_VERSION=`get-elasticsearch-lastversion` 2>/dev/null
 
 # Check if already up to date
 E_CVERSION=`get-elasticsearch-version`
@@ -26,7 +26,7 @@ fi
 ####### LOGSTASH #######
 
 # Get Version
-L_VERSION=`get-logstash-lastversion`
+L_VERSION=`get-logstash-lastversion` 2>/dev/null
 
 # Check if already up to date
 L_CVERSION=`get-logstash-version`
@@ -42,7 +42,7 @@ fi
 ####### KIBANA #######
 
 # Get Version
-K_VERSION=`get-kibana-lastversion`
+K_VERSION=`get-kibana-lastversion` 2>/dev/null
 
 # Check if already up to date
 K_CVERSION=`get-kibana-version`
@@ -58,7 +58,7 @@ fi
 ####### METRICBEAT #######
 
 # Get Version
-MB_VERSION=`get-metricbeat-lastversion`
+MB_VERSION=`get-metricbeat-lastversion` 2>/dev/null
 
 # Check if already up to date
 MB_CVERSION=`get-metricbeat-version`
@@ -74,7 +74,7 @@ fi
 ####### NGINX #######
 
 # Get Version
-NG_VERSION=`get-nginx-lastversion`
+NG_VERSION=`get-nginx-lastversion` 2>/dev/null
 
 # Check if already up to date
 NG_CVERSION=`get-nginx-version`
@@ -90,7 +90,7 @@ fi
 ####### CEREBRO #######
 
 # Get Version
-C_VERSION=`get-cerebro-lastversion`
+C_VERSION=`get-cerebro-lastversion` 2>/dev/null
 
 # Check if already up to date
 C_CVERSION=`get-cerebro-version`
@@ -106,7 +106,7 @@ fi
 ####### NODERED #######
 
 # Get Version
-NR_VERSION=`get-nodered-lastversion`
+NR_VERSION=`get-nodered-lastversion` 2>/dev/null
 
 # Check if already up to date
 NR_CVERSION=`get-nodered-version`
@@ -122,7 +122,7 @@ fi
 ####### MOSQUITTO #######
 
 # Get Version
-MQ_VERSION=`get-mosquitto-lastversion`
+MQ_VERSION=`get-mosquitto-lastversion` 2>/dev/null
 
 # Check if already up to date
 MQ_CVERSION=`get-mosquitto-version`
@@ -138,7 +138,7 @@ fi
 ####### KEEPALIVED #######
 
 # Get Version
-KA_VERSION=`get-keepalived-lastversion`
+KA_VERSION=`get-keepalived-lastversion` 2>/dev/null
 
 # Check if already up to date
 KA_CVERSION=`get-keepalived-version`
