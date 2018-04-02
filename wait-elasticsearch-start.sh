@@ -14,7 +14,7 @@ echo "=========================== Wait Elasticsearch Start =====================
 
 # Wait for start-up nodes
 echo "Wait for start-up Elasticsearch nodes"
-s_check=red
+s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
 int_cpt=0
 while [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -lt 120 ]; do
   s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
