@@ -23,7 +23,7 @@ NR_VERSION=`get-nodered-lastversion`
 ####### ELASTICSEARCH #######
 
 # Check if already up to date
-E_CVERSION=`dpkg-query -W -f='${Version}\n' elasticsearch`
+E_CVERSION=`get-elasticsearch-version`
 if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
   echo "Elasticsearch : Up to date '${E_CVERSION}'"
 else
@@ -34,7 +34,7 @@ fi
 ####### LOGSTASH #######
 
 # Check if already up to date
-L_CVERSION=`dpkg-query -W -f='${Version}\n' logstash | cut -d : -f2 | cut -d - -f1`
+L_CVERSION=`get-logstash-version`
 if [[ "${L_VERSION}" = "${L_CVERSION}" ]]; then
   echo "Logstash : Up to date '${L_CVERSION}'"
 else
@@ -45,7 +45,7 @@ fi
 ####### KIBANA #######
 
 # Check if already up to date
-K_CVERSION=`dpkg-query -W -f='${Version}\n' kibana`
+K_CVERSION=`get-kibana-version`
 if [[ "${K_VERSION}" = "${K_CVERSION}" ]]; then
   echo "Kibana : Up to date '${K_CVERSION}'"
 else
@@ -56,7 +56,7 @@ fi
 ####### NGINX #######
 
 # Check if already up to date
-NGX_CVERSION=`/usr/sbin/nginx -v 2>&1 | cut -d / -f 2`
+NGX_CVERSION=`get-nginx-version`
 if [[ "${NGX_VERSION}" = "${NGX_CVERSION}" ]]; then
   echo "Nginx : Up to date '${NGX_CVERSION}'"
 else
@@ -67,7 +67,7 @@ fi
 ####### CEREBRO #######
 
 # Check if already up to date
-C_CVERSION=`ls /usr/share/cerebro/lib/cerebro.cerebro-*-assets.jar | cut -d - -f2`
+C_CVERSION=`get-cerebro-version`
 if [[ "${C_VERSION}" = "${C_CVERSION}" ]]; then
   echo "Cerebro : Up to date '${C_CVERSION}'"
 else
@@ -78,7 +78,7 @@ fi
 ####### NODERED #######
 
 # Check if already up to date
-NR_CVERSION=`npm -g ls --depth=0 node-red | grep -i node-red | cut -d @ -f2 | cut -d ' ' -f1`
+NR_CVERSION=`get-nodered-version`
 if [[ "${NR_VERSION}" = "${NR_CVERSION}" ]]; then
   echo "Node-RED : Up to date '${NR_CVERSION}'"
 else
