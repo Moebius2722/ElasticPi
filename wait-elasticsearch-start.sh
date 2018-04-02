@@ -17,7 +17,7 @@ fi
 
 # Set Node
 if [[ $# = 0 ]] ; then
-  node=localhost
+  node=`hostname -i`
 else
   node=$1
 fi
