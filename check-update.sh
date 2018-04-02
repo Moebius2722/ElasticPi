@@ -9,17 +9,20 @@
 
 ####### ELASTICSEARCH #######
 
-# Get Version
-E_VERSION=`get-elasticsearch-lastversion 2>/dev/null`
-
-# Check if already up to date
+# Get Current Version
 E_CVERSION=`get-elasticsearch-version 2>/dev/null`
 if [[ "${E_CVERSION}" = "" ]]; then
   echo "Elasticsearch : Not installed"
-elif [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
-  echo "Elasticsearch : Up to date '${E_CVERSION}'"
 else
-  echo "Elasticsearch : New version '${E_CVERSION}' => '${E_VERSION}'"
+  # Get Last Version
+  E_VERSION=`get-elasticsearch-lastversion 2>/dev/null`
+
+  # Check if already up to date
+  if [[ "${E_VERSION}" = "${E_CVERSION}" ]]; then
+    echo "Elasticsearch : Up to date '${E_CVERSION}'"
+  else
+    echo "Elasticsearch : New version '${E_CVERSION}' => '${E_VERSION}'"
+  fi
 fi
 
 
