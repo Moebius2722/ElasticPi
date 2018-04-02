@@ -10,14 +10,14 @@
 ####### COMMON #######
 
 # Set Version ELK
-E_VERSION=get-elasticsearch-lastversion
-L_VERSION=get-logstash-lastversion
-K_VERSION=get-kibana-lastversion
+E_VERSION=`get-elasticsearch-lastversion`
+L_VERSION=`get-logstash-lastversion`
+K_VERSION=`get-kibana-lastversion`
 K_MVERSION=`echo $K_VERSION | cut -d . -f 1-2`
-NGX_VERSION=get-nginx-lastversion
+NGX_VERSION=`get-nginx-lastversion`
 N_VERSION=`wget https://raw.githubusercontent.com/elastic/kibana/$K_MVERSION/.node-version -qO-`
-C_VERSION=get-cerebro-lastversion
-NR_VERSION=get-nodered-lastversion
+C_VERSION=`get-cerebro-lastversion`
+NR_VERSION=`get-nodered-lastversion`
 
 
 ####### ELASTICSEARCH #######
