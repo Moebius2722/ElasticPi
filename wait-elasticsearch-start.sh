@@ -7,6 +7,22 @@
 # Full Automated Wait Elasticsearch to Start on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check Parameters
+if [[ $# -gt 1 ]] ; then
+  echo "Usage : $0 [Node]"
+  exit 1
+fi
+
+# Set Node
+if [[ $# = 0 ]]
+  node=localhost
+else
+  node=$1
+fi
+
+
 ####### WAIT-ELASTICSEARCH-START #######
 
 # Waiting Elasticsearch Up
@@ -16,10 +32,10 @@ echo
 
 # Wait for start-up nodes
 echo "Wait for start-up Elasticsearch nodes"
-s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
+s_check=`curl -ss -XGET "$node:9200/_cat/health?pretty"|cut -d ' ' -f 4`
 int_cpt=0
 while [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -lt 120 ]; do
-  s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
+  s_check=`curl -ss -XGET "$node:9200/_cat/health?pretty"|cut -d ' ' -f 4`
   echo -n '.'
   sleep 5
   int_cpt=$[$int_cpt+1]
@@ -33,7 +49,7 @@ else
   echo "Wait for the Elasticsearch nodes to recover"
   int_cpt=0
   while [ "$s_check" != "green" ] && [ $int_cpt -lt 180 ]; do
-    s_check=`curl -ss -XGET 'localhost:9200/_cat/health?pretty'|cut -d ' ' -f 4`
+    s_check=`curl -ss -XGET "$node:9200/_cat/health?pretty"|cut -d ' ' -f 4`
     echo -n '.'
     sleep 10
     int_cpt=$[$int_cpt+1]
