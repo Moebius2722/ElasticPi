@@ -18,6 +18,7 @@ NG_VERSION=`get-nginx-lastversion`
 C_VERSION=`get-cerebro-lastversion`
 NR_VERSION=`get-nodered-lastversion`
 MQ_VERSION=`get-mosquitto-lastversion`
+KA_VERSION=`get-keepalived-lastversion`
 
 
 ####### ELASTICSEARCH #######
