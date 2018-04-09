@@ -6,6 +6,9 @@
 
 # Full Automated Install Script for ElasticPi Tools on Raspberry Pi 2 or 3
 
+# For run on clean installation
+# curl -sL https://github.com/Moebius2722/ElasticPi/raw/master/install-tools.sh | sudo bash -
+
 
 ####### COMMON #######
 
