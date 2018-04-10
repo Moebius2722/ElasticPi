@@ -22,3 +22,8 @@ sudo rm -rf /var/www
 sudo rm -rf /var/log/nginx
 sudo rm -f /usr/sbin/nginx
 sudo rm -f /run/nginx.pid
+
+# Remove PAM Configuration
+sudo rm -f /etc/pam.d/nginx_restricted
+sudo groupdel kibana-usr
+sudo deluser www-data shadow
