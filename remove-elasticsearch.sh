@@ -28,6 +28,7 @@ sudo rm -rf /etc/elasticsearch
 sudo rm -rf /usr/share/elasticsearch
 sudo rm -rf /var/lib/elasticsearch
 sudo rm -rf /var/log/elasticsearch
+sudo rm -f /etc/sysctl.d/96-elasticsearch.conf
 
 # Remove Elasticsearch Backup NFS mount point
 sudo sed -i '/espibackup/d' /etc/fstab
