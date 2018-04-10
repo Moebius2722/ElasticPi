@@ -39,6 +39,12 @@ fi
 # Get VIP Node
 vipnewnode=$2
 
+# Check if VIP is already declared in cluster
+if grep -c $vipnewnode /etc/elasticpi/vip.lst >/dev/null 2>/dev/null; then
+    echo "VIP $vipnewnode is already declared in cluster."
+	exit 5
+fi
+
 # Get Node Password
 nodepwd=$3
 
@@ -77,6 +83,8 @@ allssh "echo -e $ipnewnode\\\t$fqdnnewnode $namenewnode | sudo tee -a /etc/hosts
 scp /etc/hosts $ipnewnode:/tmp/hosts >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo cp /tmp/hosts /etc/hosts && rm /tmp/hosts >/dev/null 2>/dev/null"
 allssh "echo $vipnewnode $ipnewnode | sudo tee -a /etc/elasticpi/vip.lst >/dev/null 2>/dev/null"
+scp /etc/elasticpi/cluster.vip $ipnewnode:/tmp/cluster.vip >/dev/null 2>/dev/null
+ssh $ipnewnode "sudo cp -f /tmp/cluster.vip /etc/elasticpi/cluster.vip && rm -f /tmp/cluster.vip >/dev/null 2>/dev/null"
 scp /etc/elasticpi/vip.lst $ipnewnode:/tmp/vip.lst >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/vip.lst /etc/elasticpi/vip.lst && rm -f /tmp/vip.lst >/dev/null 2>/dev/null"
 allssh "echo $ipnewnode | sudo tee -a /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null"
