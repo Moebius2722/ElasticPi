@@ -13,7 +13,7 @@
 stop-cerebro
 
 # Remove Cerebro Daemon
-sudo rm -f /etc/systemd/system/cerebro.servic
+sudo rm -f /etc/systemd/system/cerebro.service
 sudo /bin/systemctl daemon-reload
 
 # Remove Cerebro
