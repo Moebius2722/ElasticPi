@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Check if not installed
-if get-cerebro-version >/dev/null 2>/dev/null; then
+if ! get-cerebro-version >/dev/null 2>/dev/null; then
   echo "Cerebro isn't installed" >&2
   exit 1
 fi

@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Check if not installed
-if get-logstash-version >/dev/null 2>/dev/null; then
+if ! get-logstash-version >/dev/null 2>/dev/null; then
   echo "Logstash isn't installed" >&2
   exit 1
 fi

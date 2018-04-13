@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Check if not installed
-if get-mosquitto-version >/dev/null 2>/dev/null; then
+if ! get-mosquitto-version >/dev/null 2>/dev/null; then
   echo "Mosquitto isn't installed" >&2
   exit 1
 fi
