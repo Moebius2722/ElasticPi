@@ -7,6 +7,16 @@
 # Full Automated Uninstallation Script for Tools on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if not installed
+
+if [ ! -d /opt/elasticpi ]; then
+  echo "Tools isn't installed" >&2
+  exit 1
+fi
+
+
 ####### TOOLS #######
 
 # Remove Binary Links
