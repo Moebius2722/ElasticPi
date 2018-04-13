@@ -7,6 +7,15 @@
 # Full Automated Uninstallation Script for Metricbeat on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if not installed
+if get-metricbeat-version >/dev/null 2>/dev/null; then
+  echo "Metricbeat isn't installed" >&2
+  exit 1
+fi
+
+
 ####### Metricbeat #######
 
 # Stop Metricbeat

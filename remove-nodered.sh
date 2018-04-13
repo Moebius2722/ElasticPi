@@ -7,6 +7,15 @@
 # Full Automated Uninstallation Script for Node-RED on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if not installed
+if ! get-nodered-version >/dev/null 2>/dev/null; then
+  echo "Node-RED isn't installed" >&2
+  exit 1
+fi
+
+
 ####### NODE-RED #######
 
 # Stop Node-RED

@@ -7,6 +7,15 @@
 # Full Automated Uninstallation Script for Kibana on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if not installed
+if get-kibana-version >/dev/null 2>/dev/null; then
+  echo "Kibana isn't installed" >&2
+  exit 1
+fi
+
+
 ####### KIBANA #######
 
 # Stop Kibana

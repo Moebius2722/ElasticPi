@@ -7,6 +7,15 @@
 # Full Automated Uninstallation Script for Elasticsearch on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if not installed
+if get-elasticsearch-version >/dev/null 2>/dev/null; then
+  echo "Elasticsearch isn't installed" >&2
+  exit 1
+fi
+
+
 ####### ELASTICSEARCH #######
 
 # Remove Curator Job
