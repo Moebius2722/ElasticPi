@@ -11,5 +11,5 @@
 
 # Remove and Unconfigure Repo NFS mount point
 sudo umount -f /mnt/elasticpi
-allssh sudo sed -i "/\/mnt\/elasticpi/d" /etc/fstab
+sudo sed -i "/\/mnt\/elasticpi/d" /etc/fstab
 sudo rm -rf /mnt/elasticpi
