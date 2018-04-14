@@ -85,6 +85,9 @@ ssh $ipnode remove-nginx
 # Remove Keepalived
 ssh $ipnode remove-keepalived
 
+# Remove Repo
+ssh $ipnode remove-repo
+
 # Remove Tools
 ssh $ipnode remove-tools
 
