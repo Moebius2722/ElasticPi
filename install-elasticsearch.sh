@@ -108,17 +108,10 @@ sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_
 sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
 # Create and configure Backup NFS mount point
-sudo mkdir /mnt/espibackup
-sudo chown -R elasticsearch:elasticsearch /mnt/espibackup
-sudo apt-get install nfs-common -q -y
-sudo systemctl enable rpcbind.service
-sudo systemctl start rpcbind.service
-echo '192.168.0.1:/volume1/espibackup /mnt/espibackup nfs rw         0       0' | sudo tee -a /etc/fstab
-sudo mount /mnt/espibackup
-sudo mkdir /mnt/espibackup/repo
-sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/repo
-sudo chmod -R 770 /mnt/espibackup
-sudo sed -i '/path\.logs: .*/a path.repo: ["/mnt/espibackup/repo"]' /etc/elasticsearch/elasticsearch.yml
+sudo mkdir -p /mnt/elasticpi/esbackup
+sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/esbackup
+sudo chmod -R u=rwx,g=rwx,o=- /mnt/elasticpi/esbackup
+sudo sed -i '/path\.logs: .*/a path.repo: ["/mnt/elasticpi/esbackup"]' /etc/elasticsearch/elasticsearch.yml
 
 # Configure and Start Elasticsearch as Daemon
 sudo sed -i '/\[Service\]/a Restart=always' /usr/lib/systemd/system/elasticsearch.service
@@ -129,7 +122,7 @@ start-elasticsearch
 curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{
  "type": "fs",
  "settings": {
-  "location": "/mnt/espibackup/repo"
+  "location": "/mnt/elasticpi/esbackup"
  }
 }'
 
