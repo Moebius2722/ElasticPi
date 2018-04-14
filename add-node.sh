@@ -19,7 +19,7 @@ fi
 ipnewnode=$1
 
 # Check if script is run on new node
-if ip addr | grep -q -c $ipnewnode; then
+if ip addr | grep -q -c "$ipnewnode/"; then
   echo "Script must be launch on cluster member."
   exit 2
 fi
