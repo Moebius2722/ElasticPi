@@ -26,13 +26,22 @@ iphost=`hostname -i`
 idhost=`get-node-id`
 nodescount=`get-nodes-count`
 
+# Get Main Network Interface
+inet=`ip -o -4 route show to default | grep -Po '(?<=dev )(\S+)'`
+
 ####### KEEPALIVED #######
 
 # Stop Keepalived Load Balancer Daemon
 stop-keepalived
 
 # Configure Keepalived Load Balancer
-echo "vrrp_script chk_nlb {
+echo "
+global_defs {
+  #lvs_sync_daemon $inet VI_1
+  router_id elkpi1
+}
+
+vrrp_script chk_nlb {
   script       ""/usr/bin/check-nlb""
   interval 2   # check every 2 seconds
   fall 2       # require 2 failures for KO
@@ -46,7 +55,7 @@ id=0
 for viphip in "${vips[@]}"
 do
   id=$[$id+1]
-  
+
   vip=`echo $viphip | cut -d ';' -f 1`
   hip=`echo $viphip | cut -d ';' -f 2`
   idnode=`get-node-id $hip`
@@ -59,11 +68,11 @@ do
 
   echo "vrrp_instance VI_$id {
   state $state
-  interface eth0
+  interface $inet
   virtual_router_id $id
   priority $priority
   advert_int 1
-  lvs_sync_daemon_interface eth0
+  #lvs_sync_daemon_interface $inet
   virtual_ipaddress {
         $vip/24
   }
