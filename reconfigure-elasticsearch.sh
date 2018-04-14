@@ -25,4 +25,4 @@ fi
 ####### ELASTICSEARCH #######
 
 # Reconfigure Elasticsearch
-allssh "sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt"
+sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt
