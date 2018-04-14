@@ -16,5 +16,5 @@ svcname=`basename $0 | cut -d '.' -f 1 | cut -d '-' -f 2`
 ####### REMOUNT-REPO #######
 
 sudo umount -f /mnt/espibackup
-sudo rm -rf /mnt/espibackup/repo
+sudo rm -rf /mnt/espibackup/*
 sudo mount /mnt/espibackup
