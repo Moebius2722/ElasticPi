@@ -98,7 +98,6 @@ if [ ! -d "/mnt/elasticpi/build/jna/${JNA_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/jna/${JNA_VERSION}
   sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
-
 fi
 
 # Get and Check JNA Library Source

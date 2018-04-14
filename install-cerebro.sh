@@ -55,8 +55,33 @@ fi
 # Install Cerebro Prerequisites
 install-oracle-java
 
-# Get and Install Cerebro
-rm -f /tmp/cerebro-${C_VERSION}.tgz ; wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo tar -xf /tmp/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro && rm -f /tmp/cerebro-${C_VERSION}.tgz
+# Create Cerebro Build Folder
+if [ ! -d "/mnt/elasticpi/build/cerebro/${C_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/cerebro/${C_VERSION}
+  sudo chown -R root:root /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
+fi
+
+# Get and Check Cerebro Source
+if [ -f /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512 ] && [ -f /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz ]; then
+  pushd /mnt/elasticpi/build/cerebro/${C_VERSION}
+  sha512sum -c /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512
+  if [ $? -ne 0 ] ; then
+    # Get Cerebro Source
+    rm -f /tmp/cerebro-${C_VERSION}.tgz
+    wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo cp -f /tmp/cerebro-${C_VERSION}.tgz /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz && rm -f /tmp/cerebro-${C_VERSION}.tgz
+    sudo sha512sum /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz | sudo tee /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512
+  fi
+  popd
+else
+  # Get Cerebro Source
+  rm -f /tmp/cerebro-${C_VERSION}.tgz
+  wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo cp -f /tmp/cerebro-${C_VERSION}.tgz /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz && rm -f /tmp/cerebro-${C_VERSION}.tgz
+  sudo sha512sum /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz | sudo tee /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512
+fi
+
+# Install Cerebro
+sudo tar -xf /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz -C /usr/share && sudo mv /usr/share/cerebro-${C_VERSION} /usr/share/cerebro
 sudo cp -f /opt/elasticpi/Cerebro/application.conf /usr/share/cerebro/conf/.
 sudo sed -i "s/\[IP_ADDRESS\]/$e_ip/" /usr/share/cerebro/conf/application.conf
 sudo sed -i "s/\[USER\]/$e_user/" /usr/share/cerebro/conf/application.conf

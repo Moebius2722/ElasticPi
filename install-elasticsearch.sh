@@ -52,14 +52,77 @@ sudo apt-get install curl jq git dirmngr -q -y
 # Install Elasticsearch Prerequisites
 install-oracle-java
 
-# Get and Install Elasticsearch
-#--force-confold
-rm -f /tmp/elasticsearch-${E_VERSION}.deb ; wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb && sudo dpkg -i /tmp/elasticsearch-${E_VERSION}.deb && rm -f /tmp/elasticsearch-${E_VERSION}.deb
+#Create Elasticsearch Build Folder
+if [ ! -d "/mnt/elasticpi/build/elasticsearch/${E_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/elasticsearch/${E_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
+fi
 
-# Get and Compile JNA library for Elasticsearch
+# Get and Check Elasticsearch Debian Package
+rm -f /tmp/elasticsearch-${E_VERSION}.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb.sha512
+if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb" ]; then
+  pushd /mnt/elasticpi/build/elasticsearch/${E_VERSION}
+  sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
+  if [ $? -ne 0 ] ; then
+    rm -f /tmp/elasticsearch-${E_VERSION}.deb
+    wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb
+    pushd /tmp
+    sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
+    if [ $? -ne 0 ] ; then
+      exit 1
+    fi
+	popd
+	sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+	rm -f /tmp/elasticsearch-${E_VERSION}.deb
+  fi
+  popd
+else
+  rm -f /tmp/elasticsearch-${E_VERSION}.deb
+  wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb
+  pushd /tmp
+  sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
+  if [ $? -ne 0 ] ; then
+    popd
+	exit 1
+  fi
+  popd
+  sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+  rm -f /tmp/elasticsearch-${E_VERSION}.deb
+fi
+rm -f /tmp/elasticsearch-${E_VERSION}.deb.sha512
+
+# Install Elasticsearch
+sudo dpkg -i /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+
+# Get JNA Version
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
 JNA_VERSION=`echo ${JNA_JAR::-4} | cut -d / -f 6 | cut -d - -f 2`
-sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar $JNA_JAR && rm -rf /tmp/jna
+
+#Create JNA Build Folder
+if [ ! -d "/mnt/elasticpi/build/jna/${JNA_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/jna/${JNA_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
+fi
+
+# Get and Check JNA Library Source
+if [ -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 ] && [ -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar ]; then
+  pushd /mnt/elasticpi/build/jna/${JNA_VERSION}
+  sha512sum -c /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
+  if [ $? -ne 0 ] ; then
+    # Get and Compile JNA library for Elasticsearch
+    rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
+  fi
+  popd
+else
+  # Get and Compile JNA library for Elasticsearch
+  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
+fi
+
+# Replace Elasticsearch JNA library
+sudo cp -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar $JNA_JAR
 
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
