@@ -21,6 +21,9 @@ if ! get-keepalived-version >/dev/null 2>/dev/null; then
   exit 1
 fi
 
+# Get Short Hostname
+shost=`hostname -s`
+
 # Get IP Host
 iphost=`hostname -i`
 idhost=`get-node-id`
@@ -38,7 +41,7 @@ stop-keepalived
 echo "
 global_defs {
   #lvs_sync_daemon $inet VI_1
-  router_id elkpi1
+  router_id $shost
 }
 
 vrrp_script chk_nlb {
