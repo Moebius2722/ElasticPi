@@ -7,6 +7,16 @@
 # Create Repo NFS Mount Folder for Elastic Stack on Raspberry Pi 2 or 3
 
 
+####### COMMON #######
+
+# Check if already created
+
+if [ -d /mnt/elasticpi ]; then
+  echo "Repo is already created" >&2
+  exit 1
+fi
+
+
 ####### REPO #######
 
 # Create and configure Repo NFS mount point
