@@ -117,3 +117,6 @@ allssh reconfigure-keepalived
 
 # Reconfigure Nginx
 allssh reconfigure-nginx
+
+# Reconfigure Elasticsearch
+allssh reconfigure-elasticsearch
