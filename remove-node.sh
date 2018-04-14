@@ -88,6 +88,9 @@ ssh $ipnode remove-keepalived
 # Remove Tools
 ssh $ipnode remove-tools
 
+# Remove Unused Packeges
+ssh $ipnode 'sudo apt-get autoremove --purge -q -y'
+
 # Clean Uninstalled Packeges
 ssh $ipnode 'sudo dpkg --purge $(dpkg --get-selections | grep deinstall | cut -f1) >/dev/null 2>/dev/null'
 
