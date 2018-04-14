@@ -103,6 +103,9 @@ ssh $ipnewnode "update-tools >/dev/null 2>/dev/null"
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
 ssh $ipnewnode "/bin/bash /tmp/install-tools.sh ; rm /tmp/install-tools.sh >/dev/null 2>/dev/null"
 
+# Create Repo
+ssh $ipnewnode create-repo
+
 # Install Keepalived
 ssh $ipnewnode install-keepalived
 
