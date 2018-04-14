@@ -23,6 +23,7 @@ stop-keepalived
 
 # Remove Keepalived Load Balancer
 sudo apt-get purge keepalived -q -y
+sudo apt-get autoremove --purge -q -y
 
 # Remove loopback ARP response for Keepalived.
 sudo rm -f /etc/sysctl.d/95-keepalived.conf

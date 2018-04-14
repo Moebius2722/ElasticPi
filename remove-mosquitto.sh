@@ -23,3 +23,4 @@ stop-mosquitto
 
 # Remove Mosquitto MQTT Server
 sudo apt-get purge mosquitto -q -y
+sudo apt-get autoremove --purge -q -y

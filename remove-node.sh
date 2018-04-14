@@ -88,6 +88,9 @@ ssh $ipnode remove-keepalived
 # Remove Tools
 ssh $ipnode remove-tools
 
+# Clean Uninstalled Packeges
+ssh $ipnode 'sudo dpkg --purge $(dpkg --get-selections | grep deinstall | cut -f1) >/dev/null 2>/dev/null'
+
 # Remove Node Autorizations
 ssh $ipnode rm -rf ~/.ssh
 
