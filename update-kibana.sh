@@ -36,18 +36,17 @@ stop-kibana
 ####### KIBANA #######
 
 #Create Kibana Build Folder
-if [ ! -d "/mnt/espibackup/build/kibana/${K_VERSION}" ]; then
-  sudo mkdir -p /mnt/espibackup/build/kibana/${K_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/build
-  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/espibackup/build
-  sudo chmod o=rx /mnt/espibackup
+if [ ! -d "/mnt/elasticpi/build/kibana/${K_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/kibana/${K_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
 # Get and Check Kibana Debian Package
 rm -f /tmp/kibana-${K_VERSION}-amd64.deb.sha512
 wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-${K_VERSION}-amd64.deb.sha512
-if [ -f "/mnt/espibackup/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb" ]; then
-  pushd /mnt/espibackup/build/kibana/${K_VERSION}
+if [ -f "/mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb" ]; then
+  pushd /mnt/elasticpi/build/kibana/${K_VERSION}
   sha512sum -c /tmp/kibana-${K_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     rm -f /tmp/kibana-${K_VERSION}-amd64.deb
@@ -58,7 +57,7 @@ if [ -f "/mnt/espibackup/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
       exit 1
     fi
 	popd
-	sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/espibackup/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
+	sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
 	rm -f /tmp/kibana-${K_VERSION}-amd64.deb
   fi
   popd
@@ -72,20 +71,20 @@ else
 	exit 1
   fi
   popd
-  sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/espibackup/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
+  sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
   rm -f /tmp/kibana-${K_VERSION}-amd64.deb
 fi
 rm -f /tmp/kibana-${K_VERSION}-amd64.deb.sha512
 
 # Update Kibana with amd64 package (Just NodeJS is amd64 in package)
-sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/espibackup/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
+sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
 
 #Create NodeJS Build Folder
-if [ ! -d "/mnt/espibackup/build/nodejs/${N_VERSION}" ]; then
-  sudo mkdir -p /mnt/espibackup/build/nodejs/${N_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/build
-  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/espibackup/build
-  sudo chmod o=rx /mnt/espibackup
+if [ ! -d "/mnt/elasticpi/build/nodejs/${N_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/nodejs/${N_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
+
 fi
 
 # Get and Check NodeJS Binary Archive
@@ -95,8 +94,8 @@ wget -P/tmp https://nodejs.org/download/release/v${N_VERSION}/SHASUMS256.txt
 cat /tmp/SHASUMS256.txt | grep node-v${N_VERSION}-linux-armv7l.tar.gz >/tmp/node-v${N_VERSION}-linux-armv7l.tar.gz.sha256
 rm -f /tmp/SHASUMS256.txt
 
-if [ -f "/mnt/espibackup/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz" ]; then
-  pushd /mnt/espibackup/build/nodejs/${N_VERSION}
+if [ -f "/mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz" ]; then
+  pushd /mnt/elasticpi/build/nodejs/${N_VERSION}
   sha256sum -c /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz.sha256
   if [ $? -ne 0 ] ; then
     rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz
@@ -107,7 +106,7 @@ if [ -f "/mnt/espibackup/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv
       exit 1
     fi
 	popd
-	sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/espibackup/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz
+	sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz
 	rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz
   fi
   popd
@@ -121,13 +120,13 @@ else
 	exit 1
   fi
   popd
-  sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/espibackup/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz
+  sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz
   rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz
 fi
 rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz.sha256
 
 # Replace NodeJS amd64 by ARMv7l in Kibana
-sudo tar xzvf /mnt/espibackup/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz -C /usr/share/kibana && sudo mv /usr/share/kibana/node /usr/share/kibana/node.ori && sudo mv /usr/share/kibana/node-v${N_VERSION}-linux-armv7l /usr/share/kibana/node && sudo chown -R root:root /usr/share/kibana/node && sudo rm -rf /usr/share/kibana/node.ori
+sudo tar xzvf /mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz -C /usr/share/kibana && sudo mv /usr/share/kibana/node /usr/share/kibana/node.ori && sudo mv /usr/share/kibana/node-v${N_VERSION}-linux-armv7l /usr/share/kibana/node && sudo chown -R root:root /usr/share/kibana/node && sudo rm -rf /usr/share/kibana/node.ori
 
 # Configure and Start Kibana as Daemon
 sudo /bin/systemctl daemon-reload

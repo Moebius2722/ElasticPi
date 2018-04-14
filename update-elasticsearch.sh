@@ -46,18 +46,17 @@ stop-elasticsearch
 ####### ELASTICSEARCH #######
 
 #Create Elasticsearch Build Folder
-if [ ! -d "/mnt/espibackup/build/elasticsearch/${E_VERSION}" ]; then
-  sudo mkdir -p /mnt/espibackup/build/elasticsearch/${E_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/build
-  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/espibackup/build
-  sudo chmod o=rx /mnt/espibackup
+if [ ! -d "/mnt/elasticpi/build/elasticsearch/${E_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/elasticsearch/${E_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
 # Get and Check Elasticsearch Debian Package
 rm -f /tmp/elasticsearch-${E_VERSION}.deb.sha512
 wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb.sha512
-if [ -f "/mnt/espibackup/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb" ]; then
-  pushd /mnt/espibackup/build/elasticsearch/${E_VERSION}
+if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb" ]; then
+  pushd /mnt/elasticpi/build/elasticsearch/${E_VERSION}
   sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
     rm -f /tmp/elasticsearch-${E_VERSION}.deb
@@ -68,7 +67,7 @@ if [ -f "/mnt/espibackup/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERS
       exit 1
     fi
 	popd
-	sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/espibackup/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+	sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
 	rm -f /tmp/elasticsearch-${E_VERSION}.deb
   fi
   popd
@@ -82,42 +81,42 @@ else
 	exit 1
   fi
   popd
-  sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/espibackup/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+  sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
   rm -f /tmp/elasticsearch-${E_VERSION}.deb
 fi
 rm -f /tmp/elasticsearch-${E_VERSION}.deb.sha512
 
 # Update Elasticsearch
-sudo dpkg --force-confold --force-overwrite -i /mnt/espibackup/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
 
 # Get JNA Version
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
 JNA_VERSION=`echo ${JNA_JAR::-4} | cut -d / -f 6 | cut -d - -f 2`
 
 #Create JNA Build Folder
-if [ ! -d "/mnt/espibackup/build/jna/${JNA_VERSION}" ]; then
-  sudo mkdir -p /mnt/espibackup/build/jna/${JNA_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/espibackup/build
-  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/espibackup/build
-  sudo chmod o=rx /mnt/espibackup
+if [ ! -d "/mnt/elasticpi/build/jna/${JNA_VERSION}" ]; then
+  sudo mkdir -p /mnt/elasticpi/build/jna/${JNA_VERSION}
+  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
+
 fi
 
 # Get and Check JNA Library Source
-if [ -f /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512 ] && [ -f /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar ]; then
-  pushd /mnt/espibackup/build/jna/${JNA_VERSION}
-  sha512sum -c /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512
+if [ -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 ] && [ -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar ]; then
+  pushd /mnt/elasticpi/build/jna/${JNA_VERSION}
+  sha512sum -c /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
   if [ $? -ne 0 ] ; then
     # Get and Compile JNA library for Elasticsearch
-    rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512
+    rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
   fi
   popd
 else
   # Get and Compile JNA library for Elasticsearch
-  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar.sha512
+  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && sudo sha512sum /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
 fi
 
 # Replace Elasticsearch JNA library
-sudo cp -f /mnt/espibackup/build/jna/${JNA_VERSION}/jna.jar $JNA_JAR
+sudo cp -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar $JNA_JAR
 
 # Update Discovery-File plugin
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin remove discovery-file
