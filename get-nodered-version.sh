@@ -19,7 +19,7 @@ fi
 
 # Check if Node-RED is installed
 
-if ! npm -g ls --depth=0 node-red >/dev/null 2>/dev/null; then
+if ! sudo npm -g ls --depth=0 node-red >/dev/null 2>/dev/null; then
   echo "Node-RED is not installed" >&2
   exit 2
 fi
@@ -29,4 +29,4 @@ fi
 
 # Get Node-RED installed version
 
-npm -g ls --depth=0 node-red | grep -i node-red | cut -d @ -f2 | cut -d ' ' -f1
+sudo npm -g ls --depth=0 node-red | grep -i node-red | cut -d @ -f2 | cut -d ' ' -f1
