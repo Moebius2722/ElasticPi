@@ -72,9 +72,6 @@ else
 fi
 rm -f /tmp/logstash-${L_VERSION}.deb.sha512
 
-# Update Logstash
-sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
-
 # Get JFFI Version
 JFFI_LIB=`ls /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-*.so`
 JFFI_VERSION=`echo ${JFFI_LIB::-3} | cut -d / -f 10 | cut -d - -f 2`
@@ -101,6 +98,12 @@ else
   # Get and Compile JFFI library for Logstash
   rm -rf /tmp/jffi ; sudo apt-get install ant texinfo -y && git clone -b $JFFI_RELEASE https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-${JFFI_VERSION}.so /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so && rm -rf /tmp/jffi && sudo sha512sum /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so | sudo tee /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512
 fi
+
+# Fix Logstash Update Package
+sudo cp -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so /lib/libjffi-1.2.so
+
+# Update Logstash
+sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
 
 # Replace Logstash JFFI library
 sudo cp -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so $JFFI_LIB
