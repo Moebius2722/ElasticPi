@@ -59,7 +59,7 @@ fi
 #Create Kibana Build Folder
 if [ ! -d "/mnt/elasticpi/build/kibana/${K_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/kibana/${K_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
@@ -103,9 +103,8 @@ sudo dpkg --force-architecture -i /mnt/elasticpi/build/kibana/${K_VERSION}/kiban
 #Create NodeJS Build Folder
 if [ ! -d "/mnt/elasticpi/build/nodejs/${N_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/nodejs/${N_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
-
 fi
 
 # Get and Check NodeJS Binary Archive

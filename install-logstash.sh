@@ -60,7 +60,7 @@ install-oracle-java
 #Create Logstash Build Folder
 if [ ! -d "/mnt/elasticpi/build/logstash/${L_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/logstash/${L_VERSION}
-  sudo chown -R logstash:logstash /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
@@ -110,9 +110,8 @@ JFFI_RELEASE=`curl -s "https://api.github.com/repos/jnr/jffi/tags" | jq -r "[ .[
 #Create JFFI Build Folder
 if [ ! -d "/mnt/elasticpi/build/jffi/${JFFI_RELEASE}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/jffi/${JFFI_RELEASE}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
-
 fi
 
 if [ -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512 ] && [ -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so ]; then
@@ -135,10 +134,10 @@ sudo chown logstash:logstash $JFFI_LIB
 # Set Logstash Memory Configuration (Max 200mb of memory)
 sudo sed -i 's/-Xms.*/-Xms200m/' /etc/logstash/jvm.options
 sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/logstash/jvm.options
-sudo sed -i 's/^#.*-server.*/-server/' /etc/elasticsearch/jvm.options
-sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo | sudo tee -a /etc/elasticsearch/jvm.options
-sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "# force the server VM" | sudo tee -a /etc/elasticsearch/jvm.options
-sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "-server" | sudo tee -a /etc/elasticsearch/jvm.options
+sudo sed -i 's/^#.*-server.*/-server/' /etc/logstash/jvm.options
+sudo grep -q '^-server' /etc/logstash/jvm.options || echo | sudo tee -a /etc/logstash/jvm.options
+sudo grep -q '^-server' /etc/logstash/jvm.options || echo "# force the server VM" | sudo tee -a /etc/logstash/jvm.options
+sudo grep -q '^-server' /etc/logstash/jvm.options || echo "-server" | sudo tee -a /etc/logstash/jvm.options
 
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service

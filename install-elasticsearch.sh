@@ -55,7 +55,7 @@ install-oracle-java
 #Create Elasticsearch Build Folder
 if [ ! -d "/mnt/elasticpi/build/elasticsearch/${E_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/elasticsearch/${E_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
@@ -103,7 +103,7 @@ JNA_VERSION=`echo ${JNA_JAR::-4} | cut -d / -f 6 | cut -d - -f 2`
 #Create JNA Build Folder
 if [ ! -d "/mnt/elasticpi/build/jna/${JNA_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/jna/${JNA_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
