@@ -80,7 +80,7 @@ sudo /bin/systemctl daemon-reload
 start-nodered
 
 # Install Node-RED-Admin Tool
-sudo npm install -g node-red-admin
+sudo npm install -g --unsafe-perm node-red-admin
 
 # Install Elasticsearch Node to Node-RED
 node-red-admin install node-red-contrib-elasticsearchcdb

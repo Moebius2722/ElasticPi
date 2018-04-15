@@ -28,7 +28,7 @@ node-red-admin remove node-red-contrib-elasticsearchcdb
 rm -rf /home/pi/.node-red
 
 # Remove Node-RED-Admin Tool
-sudo npm uninstall -g node-red-admin
+sudo npm uninstall -g --unsafe-perm node-red-admin
 
 # Remove Node-RED Daemon
 sudo rm -f /lib/systemd/system/nodered.service

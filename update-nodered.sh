@@ -43,6 +43,7 @@ sudo npm --force cache clean
 hash -r
 sudo npm install -g node-gyp
 sudo npm install -g --unsafe-perm node-red
+sudo npm install -g --unsafe-perm node-red-admin
 cd ~/.node-red
 npm update
 npm rebuild
