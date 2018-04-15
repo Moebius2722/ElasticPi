@@ -99,7 +99,9 @@ fi
 rm -f /tmp/logstash-${L_VERSION}.deb.sha512
 
 # Get JFFI Version
-JFFI_LIB=`ls /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-*.so`
+JFFI_LIB_PKG=`dpkg -c /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb | grep -i arm-Linux/libjffi`
+JFFI_LIB=`echo ${JFFI_LIB_PKG} | cut -d . -f 2-`
+#JFFI_LIB=`ls /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-*.so`
 JFFI_VERSION=`echo ${JFFI_LIB::-3} | cut -d / -f 10 | cut -d - -f 2`
 JFFI_LENGTH=$(( ${#JFFI_VERSION}+1 ))
 JFFI_RELEASE=`curl -s "https://api.github.com/repos/jnr/jffi/tags" | jq -r "[ .[] | if .name | startswith(\"jffi-\") then .version=.name[5:] else .version=.name end | select( .version | startswith(\"$JFFI_VERSION\") ) | .version=.version[$JFFI_LENGTH:] | .version=( .version | tonumber ) ] | sort_by(.version) | reverse | .[0].name"`
