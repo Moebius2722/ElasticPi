@@ -110,6 +110,8 @@ sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/logstash/${L
 sudo cp -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so $JFFI_LIB
 sudo chown logstash:logstash $JFFI_LIB
 
+# Update Input Beats Plugin
+sudo /usr/share/logstash/bin/logstash-plugin update logstash-input-beats
 
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service

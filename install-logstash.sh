@@ -144,6 +144,9 @@ sudo grep -q '^-server' /etc/logstash/jvm.options || echo | sudo tee -a /etc/log
 sudo grep -q '^-server' /etc/logstash/jvm.options || echo "# force the server VM" | sudo tee -a /etc/logstash/jvm.options
 sudo grep -q '^-server' /etc/logstash/jvm.options || echo "-server" | sudo tee -a /etc/logstash/jvm.options
 
+# Update Input Beats Plugin
+sudo /usr/share/logstash/bin/logstash-plugin update logstash-input-beats
+
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
