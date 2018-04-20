@@ -50,7 +50,10 @@ sudo apt-get autoremove -q -y
 
 # Install Lastest NodeJS and some additional dependencies
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
-sudo apt-get install build-essential python-rpi.gpio nodejs -q -y
+sudo apt-get install build-essential nodejs -q -y
+
+# Install GPIO Python Library for Raspberry Pi
+sudo apt-get install python-rpi.gpio -q -y
 
 # Install Lastest Node-RED
 sudo npm --force cache clean
