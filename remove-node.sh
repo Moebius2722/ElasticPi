@@ -31,6 +31,33 @@ vipcluster=`cat /etc/elasticpi/cluster.vip`
 ####### REMOVE NODE #######
 echo '=========================== Remove Node ' $ipnode '==========================='
 
+# Stop Elasticsearch
+ssh $ipnode stop-elasticsearch
+
+# Stop Logstash
+ssh $ipnode stop-logstash
+
+# Stop Kibana
+ssh $ipnode stop-kibana
+
+# Stop Metricbeat
+ssh $ipnode stop-metricbeat
+
+# Stop Cerebro
+ssh $ipnode stop-cerebro
+
+# Stop Node-RED
+ssh $ipnode stop-nodered
+
+# Stop Mosquitto
+ssh $ipnode stop-mosquitto
+
+# Stop Nginx
+ssh $ipnode stop-nginx
+
+# Stop Keepalived
+ssh $ipnode stop-keepalived
+
 # Remove IP Node
 allssh sudo sed -i "/$ipnode/d" /etc/elasticpi/nodes.lst
 
