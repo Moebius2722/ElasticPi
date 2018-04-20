@@ -27,3 +27,6 @@ sudo apt-get autoremove --purge -q -y
 
 # Remove loopback ARP response for Keepalived.
 sudo rm -f /etc/sysctl.d/95-keepalived.conf
+
+# Purge Keepalived configuration
+sudo rm -rf /etc/keepalived
