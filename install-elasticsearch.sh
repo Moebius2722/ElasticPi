@@ -175,6 +175,9 @@ sudo sed -i '/\[Service\]/a Restart=always' /usr/lib/systemd/system/elasticsearc
 sudo /bin/systemctl daemon-reload
 start-elasticsearch
 
+# Wait Elasticsearch Up
+wait-elasticsearch-start
+
 # Create Snapshot Repository for Backup NFS mount point
 curl -XPUT 'http://localhost:9200/_snapshot/espibackup' -d '{
  "type": "fs",
