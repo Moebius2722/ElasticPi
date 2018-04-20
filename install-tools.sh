@@ -21,7 +21,7 @@ fi
 
 # Install Tools Prerequisites
 
-sudo apt-get update && sudo apt-get install git wget -y
+sudo apt-get install git wget -y
 
 
 ####### TOOLS #######
