@@ -141,6 +141,9 @@ sudo grep -q '^-server' /etc/logstash/jvm.options || echo "-server" | sudo tee -
 # Update Plugins
 sudo /usr/share/logstash/bin/logstash-plugin update
 
+# Install logstash-patterns-core Plugin
+sudo /usr/share/logstash/bin/logstash-plugin install logstash-patterns-core
+
 # Configure and Start Logstash as Daemon
 sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
 sudo /bin/systemctl daemon-reload
