@@ -32,10 +32,10 @@ stop-metricbeat
 
 ####### METRICBEAT #######
 
-#Create Metricbeat Build Folder
+# Create Metricbeat Build Folder
 if [ ! -d "/mnt/elasticpi/build/metricbeat/${MB_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/metricbeat/${MB_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
@@ -51,11 +51,12 @@ if [ -f "/mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-
     pushd /tmp
     sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
     if [ $? -ne 0 ] ; then
+      popd
       exit 1
     fi
-	popd
-	sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
-	rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+	  popd
+	  sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
+	  rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
   fi
   popd
 else
@@ -65,7 +66,7 @@ else
   sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
-	exit 1
+	  exit 1
   fi
   popd
   sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
@@ -75,6 +76,9 @@ rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
 
 # Update Metricbeat with amd64 package
 sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
+
+# Update Golang
+update-golang
 
 # Get and Check Metricbeat Source
 if [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm ]; then
@@ -90,7 +94,7 @@ if [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha51
     sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm
     popd
     rm -rf ${GOPATH}/src/github.com/elastic
-    sudo sha512sum /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm | sudo tee /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
+    pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION}/ && sha512sum metricbeat-linux-arm | sudo tee /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 && popd
   fi
   popd
 else
@@ -103,7 +107,7 @@ else
   sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm
   popd
   rm -rf ${GOPATH}/src/github.com/elastic
-  sudo sha512sum /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm | sudo tee /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
+  pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION} && sha512sum metricbeat-linux-arm | sudo tee /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 && popd
 fi
 
 # Replace Metricbeat Binary

@@ -38,7 +38,7 @@ stop-kibana
 #Create Kibana Build Folder
 if [ ! -d "/mnt/elasticpi/build/kibana/${K_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/kibana/${K_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
@@ -54,11 +54,12 @@ if [ -f "/mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb"
     pushd /tmp
     sha512sum -c /tmp/kibana-${K_VERSION}-amd64.deb.sha512
     if [ $? -ne 0 ] ; then
+      popd
       exit 1
     fi
-	popd
-	sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
-	rm -f /tmp/kibana-${K_VERSION}-amd64.deb
+	  popd
+	  sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
+	  rm -f /tmp/kibana-${K_VERSION}-amd64.deb
   fi
   popd
 else
@@ -68,7 +69,7 @@ else
   sha512sum -c /tmp/kibana-${K_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
-	exit 1
+	  exit 1
   fi
   popd
   sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
@@ -82,9 +83,8 @@ sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elastic
 #Create NodeJS Build Folder
 if [ ! -d "/mnt/elasticpi/build/nodejs/${N_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/nodejs/${N_VERSION}
-  sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
-
 fi
 
 # Get and Check NodeJS Binary Archive
@@ -103,11 +103,12 @@ if [ -f "/mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7
     pushd /tmp
     sha256sum -c /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz.sha256
     if [ $? -ne 0 ] ; then
+      popd
       exit 1
     fi
-	popd
-	sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz
-	rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz
+	  popd
+	  sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz
+	  rm -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz
   fi
   popd
 else
@@ -117,7 +118,7 @@ else
   sha256sum -c /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz.sha256
   if [ $? -ne 0 ] ; then
     popd
-	exit 1
+	  exit 1
   fi
   popd
   sudo cp -f /tmp/node-v${N_VERSION}-linux-armv7l.tar.gz /mnt/elasticpi/build/nodejs/${N_VERSION}/node-v${N_VERSION}-linux-armv7l.tar.gz

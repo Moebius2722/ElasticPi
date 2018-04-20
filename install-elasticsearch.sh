@@ -71,11 +71,12 @@ if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSI
     pushd /tmp
     sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
     if [ $? -ne 0 ] ; then
+      popd
       exit 1
     fi
-	popd
-	sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
-	rm -f /tmp/elasticsearch-${E_VERSION}.deb
+	  popd
+	  sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+	  rm -f /tmp/elasticsearch-${E_VERSION}.deb
   fi
   popd
 else
@@ -85,7 +86,7 @@ else
   sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
-	exit 1
+	  exit 1
   fi
   popd
   sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
@@ -113,12 +114,12 @@ if [ -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 ] && [ -f /mnt/el
   sha512sum -c /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512
   if [ $? -ne 0 ] ; then
     # Get and Compile JNA library for Elasticsearch
-    rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && pushd /mnt/elasticpi/build/jna/${JNA_VERSION} && sudo sha512sum jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 && popd
+    rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && pushd /mnt/elasticpi/build/jna/${JNA_VERSION} && sha512sum jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 && popd
   fi
   popd
 else
   # Get and Compile JNA library for Elasticsearch
-  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && pushd /mnt/elasticpi/build/jna/${JNA_VERSION} && sudo sha512sum jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 && popd
+  rm -rf /tmp/jna ; sudo apt-get install ant texinfo -y && git clone -b $JNA_VERSION https://github.com/java-native-access/jna.git /tmp/jna && ant -f /tmp/jna/build.xml jar && sudo cp -f /tmp/jna/build/jna.jar /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar && rm -rf /tmp/jna && pushd /mnt/elasticpi/build/jna/${JNA_VERSION} && sha512sum jna.jar | sudo tee /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar.sha512 && popd
 fi
 
 # Replace Elasticsearch JNA library

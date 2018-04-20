@@ -34,7 +34,7 @@ stop-logstash
 #Create Logstash Build Folder
 if [ ! -d "/mnt/elasticpi/build/logstash/${L_VERSION}" ]; then
   sudo mkdir -p /mnt/elasticpi/build/logstash/${L_VERSION}
-  sudo chown -R logstash:logstash /mnt/elasticpi/build
+  sudo chown -R root:root /mnt/elasticpi/build
   sudo chmod -R u=rwx,g=rwx,o=rx /mnt/elasticpi/build
 fi
 
@@ -50,11 +50,12 @@ if [ -f "/mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb" ]
     pushd /tmp
     sha512sum -c /tmp/logstash-${L_VERSION}.deb.sha512
     if [ $? -ne 0 ] ; then
+      popd
       exit 1
     fi
-	popd
-	sudo cp -f /tmp/logstash-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
-	rm -f /tmp/logstash-${L_VERSION}.deb
+	  popd
+	  sudo cp -f /tmp/logstash-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
+	  rm -f /tmp/logstash-${L_VERSION}.deb
   fi
   popd
 else
@@ -64,7 +65,7 @@ else
   sha512sum -c /tmp/logstash-${L_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
-	exit 1
+	  exit 1
   fi
   popd
   sudo cp -f /tmp/logstash-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
@@ -92,12 +93,12 @@ if [ -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha
   sha512sum -c /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512
   if [ $? -ne 0 ] ; then
     # Get and Compile JFFI library for Logstash
-    rm -rf /tmp/jffi ; sudo apt-get install ant texinfo -y && git clone -b $JFFI_RELEASE https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-${JFFI_VERSION}.so /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so && rm -rf /tmp/jffi && sudo sha512sum /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so | sudo tee /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512
+    rm -rf /tmp/jffi ; sudo apt-get install ant texinfo -y && git clone -b $JFFI_RELEASE https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-${JFFI_VERSION}.so /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so && rm -rf /tmp/jffi && pushd /mnt/elasticpi/build/jffi/${JFFI_RELEASE} && sha512sum libjffi-${JFFI_VERSION}.so | sudo tee /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512 && popd
   fi
   popd
 else
   # Get and Compile JFFI library for Logstash
-  rm -rf /tmp/jffi ; sudo apt-get install ant texinfo -y && git clone -b $JFFI_RELEASE https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-${JFFI_VERSION}.so /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so && rm -rf /tmp/jffi && sudo sha512sum /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so | sudo tee /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512
+  rm -rf /tmp/jffi ; sudo apt-get install ant texinfo -y && git clone -b $JFFI_RELEASE https://github.com/jnr/jffi.git /tmp/jffi && ant -f /tmp/jffi/build.xml jar && sudo cp -f /tmp/jffi/build/jni/libjffi-${JFFI_VERSION}.so /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so && rm -rf /tmp/jffi && pushd /mnt/elasticpi/build/jffi/${JFFI_RELEASE} && sha512sum libjffi-${JFFI_VERSION}.so | sudo tee /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so.sha512 && popd
 fi
 
 # Fix Logstash Update Package

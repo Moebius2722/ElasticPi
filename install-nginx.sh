@@ -54,7 +54,7 @@ if [ -f /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sh
     # Get Nginx Source
     rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
     wget -P/tmp http://nginx.org/download/nginx-${NGX_VERSION}.tar.gz && sudo cp -f /tmp/nginx-${NGX_VERSION}.tar.gz /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz && rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
-    sudo sha512sum /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz | sudo tee /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sha512
+    pushd /mnt/elasticpi/build/nginx/${NGX_VERSION} && sha512sum nginx-${NGX_VERSION}.tar.gz | sudo tee /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sha512 && popd
 
     # Get Auth PAM module
     sudo git clone https://github.com/sto/ngx_http_auth_pam_module.git /mnt/elasticpi/build/nginx/${NGX_VERSION}/ngx_http_auth_pam_module
@@ -70,7 +70,7 @@ else
   # Get Nginx Source
   rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
   wget -P/tmp http://nginx.org/download/nginx-${NGX_VERSION}.tar.gz && sudo cp -f /tmp/nginx-${NGX_VERSION}.tar.gz /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz && rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
-  sudo sha512sum /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz | sudo tee /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sha512
+  pushd /mnt/elasticpi/build/nginx/${NGX_VERSION} && sha512sum nginx-${NGX_VERSION}.tar.gz | sudo tee /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sha512 && popd
 
   # Get Auth PAM module
   sudo git clone https://github.com/sto/ngx_http_auth_pam_module.git /mnt/elasticpi/build/nginx/${NGX_VERSION}/ngx_http_auth_pam_module

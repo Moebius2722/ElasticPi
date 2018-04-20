@@ -36,16 +36,12 @@ if [ -f /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar
   sha512sum -c /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz.sha512
   if [ $? -ne 0 ] ; then
     # Get Golang Source
-    rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz
-    wget -P/tmp https://redirector.gvt1.com/edgedl/go/${GO_VERSION}.linux-armv6l.tar.gz && sudo cp -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz && rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz
-    sudo sha512sum /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz | sudo tee /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz.sha512
+    rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz ; wget -P/tmp https://redirector.gvt1.com/edgedl/go/${GO_VERSION}.linux-armv6l.tar.gz && sudo cp -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz && rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz && pushd /mnt/elasticpi/build/golang/${GO_VERSION} && sha512sum ${GO_VERSION}.linux-armv6l.tar.gz | sudo tee /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz.sha512 && popd
   fi
   popd
 else
   # Get Golang Source
-  rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz
-  wget -P/tmp https://redirector.gvt1.com/edgedl/go/${GO_VERSION}.linux-armv6l.tar.gz && sudo cp -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz && rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz
-  sudo sha512sum /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz | sudo tee /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz.sha512
+  rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz ; wget -P/tmp https://redirector.gvt1.com/edgedl/go/${GO_VERSION}.linux-armv6l.tar.gz && sudo cp -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz && rm -f /tmp/${GO_VERSION}.linux-armv6l.tar.gz && pushd /mnt/elasticpi/build/golang/${GO_VERSION} && sha512sum ${GO_VERSION}.linux-armv6l.tar.gz | sudo tee /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz.sha512 && popd
 fi
 
 # Install Golang

@@ -49,14 +49,14 @@ if [ -f /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha51
     # Get Cerebro Source
     rm -f /tmp/cerebro-${C_VERSION}.tgz
     wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo cp -f /tmp/cerebro-${C_VERSION}.tgz /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz && rm -f /tmp/cerebro-${C_VERSION}.tgz
-    sudo sha512sum /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz | sudo tee /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512
+    pushd /mnt/elasticpi/build/cerebro/${C_VERSION} && sha512sum cerebro-${C_VERSION}.tgz | sudo tee /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512 && popd
   fi
   popd
 else
   # Get Cerebro Source
   rm -f /tmp/cerebro-${C_VERSION}.tgz
   wget -P/tmp https://github.com/lmenezes/cerebro/releases/download/v${C_VERSION}/cerebro-${C_VERSION}.tgz && sudo cp -f /tmp/cerebro-${C_VERSION}.tgz /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz && rm -f /tmp/cerebro-${C_VERSION}.tgz
-  sudo sha512sum /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz | sudo tee /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512
+  pushd /mnt/elasticpi/build/cerebro/${C_VERSION} && sha512sum cerebro-${C_VERSION}.tgz | sudo tee /mnt/elasticpi/build/cerebro/${C_VERSION}/cerebro-${C_VERSION}.tgz.sha512 && popd
 fi
 
 # Update Cerebro
