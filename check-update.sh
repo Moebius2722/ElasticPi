@@ -176,3 +176,22 @@ else
     echo "Keepalived : New version '${KA_CVERSION}' => '${KA_VERSION}'"
   fi
 fi
+
+
+####### SQUID #######
+
+# Get Current Version
+SQ_CVERSION=`get-squid-version 2>/dev/null`
+if [[ "${SQ_CVERSION}" = "" ]]; then
+  echo "Squid : Not installed"
+else
+  # Get Last Version
+  SQ_VERSION=`get-squid-lastversion 2>/dev/null`
+
+  # Check if already up to date
+  if [[ "${SQ_VERSION}" = "${SQ_CVERSION}" ]]; then
+    echo "Squid : Up to date '${SQ_CVERSION}'"
+  else
+    echo "Squid : New version '${SQ_CVERSION}' => '${SQ_VERSION}'"
+  fi
+fi
