@@ -27,8 +27,13 @@ if [[ ${NGX_VERSION} = '' ]]; then
   NGX_VERSION=`get-nginx-lastversion`
 fi
 
-# Get and Install GCC and MAKE
-sudo apt-get install gcc g++ make -y
+# Purge Nginx Debian Installation
+sudo apt-get purge nginx nginx-common nginx-doc nginx-extras nginx-full nginx-light -q -y
+sudo apt-get autoremove --purge -q -y
+sudo dpkg --purge $(dpkg --get-selections | grep deinstall | cut -f1) >/dev/null 2>/dev/nul
+
+# Add Nginx Requirements
+sudo apt-get install libpcre3 libpcre3-dev libperl5.24 libperl-dev zlib1g zlib1g-dev libssl-dev libssl1.0.2 libxml2 libxml2-dev libxslt1.1 libxslt1-dev libjpeg62-turbo libjpeg62-turbo-dev libgd3 libgd-dev libgeoip1 libgeoip-dev libgoogle-perftools4 libgoogle-perftools-dev libpam0g libpam0g-dev -q -y
 
 
 ####### NGINX #######
@@ -45,6 +50,9 @@ if [ -f /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sh
   pushd /mnt/elasticpi/build/nginx/${NGX_VERSION}
   sha512sum -c /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sha512
   if [ $? -ne 0 ] ; then
+    # Get and Install GCC and MAKE
+    sudo apt-get install gcc g++ make -y
+
     # Get Nginx Source
     rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
     wget -P/tmp http://nginx.org/download/nginx-${NGX_VERSION}.tar.gz && sudo cp -f /tmp/nginx-${NGX_VERSION}.tar.gz /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz && rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
@@ -61,6 +69,9 @@ if [ -f /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz.sh
   fi
   popd
 else
+  # Get and Install GCC and MAKE
+  sudo apt-get install gcc g++ make -y
+
   # Get Nginx Source
   rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
   wget -P/tmp http://nginx.org/download/nginx-${NGX_VERSION}.tar.gz && sudo cp -f /tmp/nginx-${NGX_VERSION}.tar.gz /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}.tar.gz && rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
