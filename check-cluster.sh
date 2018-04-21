@@ -9,7 +9,7 @@
 
 ####### COMMON #######
 
-echo " HOST             ES LS KB MB NG CB NR MQ KA"
+echo " HOST             ES LS KB MB NG CB NR MQ KA SQ"
 
 
 # Get IP Nodes
@@ -88,5 +88,12 @@ do
   else
     ska=KO
   fi
-  printf "$ska\n"
+  printf "$ska "
+  ssh -t $ipnode check-squid >/dev/null 2>/dev/null
+  if [[ $? = 0 ]] ; then
+    ssq=ok
+  else
+    ssq=KO
+  fi
+  printf "$ssq\n"
 done
