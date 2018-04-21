@@ -12,4 +12,4 @@
 # Get Mosquitto last version
 
 sudo apt-get update >/dev/null 2>/dev/null
-sudo apt-cache madison mosquitto | cut -d '|' -f 2 | tr -d ' '
+sudo apt-cache madison mosquitto | cut -d '|' -f 2 | tr -d ' ' | cut -d ':' -f 2 | cut -d '-' -f 1
