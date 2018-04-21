@@ -11,7 +11,7 @@
 
 # Check if Keepalived is installed
 
-if ! dpkg-query -W -f='${Version}\n' keepalived >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show keepalived >/dev/null 2>/dev/null; then
   echo "Keepalived is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Keepalived installed version
 
-dpkg-query -W -f='${Version}\n' keepalived
+dpkg-query --showformat='${source:Upstream-Version}\n' --show keepalived

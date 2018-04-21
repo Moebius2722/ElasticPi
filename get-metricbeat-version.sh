@@ -11,7 +11,7 @@
 
 # Check if Metricbeat is installed
 
-if ! dpkg-query -W -f='${Version}\n' metricbeat >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show metricbeat >/dev/null 2>/dev/null; then
   echo "Metricbeat is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Metricbeat installed version
 
-dpkg-query -W -f='${Version}\n' metricbeat
+dpkg-query --showformat='${source:Upstream-Version}\n' --show metricbeat
