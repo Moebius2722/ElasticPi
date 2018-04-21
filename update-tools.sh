@@ -34,7 +34,7 @@ do
 echo "/usr/bin/$tool => /opt/elasticpi/$tool.sh"
 sudo ln -sf "/opt/elasticpi/$tool.sh" "/usr/bin/$tool"
 done
-for svc in elasticsearch logstash kibana nginx cerebro nodered mosquitto keepalived metricbeat
+for svc in elasticsearch logstash kibana nginx cerebro nodered mosquitto keepalived metricbeat squid
 do
 echo "/usr/bin/check-$svc => /usr/bin/check-service"
 sudo ln -sf "/usr/bin/check-service" "/usr/bin/check-$svc"
