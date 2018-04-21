@@ -9,6 +9,7 @@
 
 ####### COMMON #######
 
+
 ####### SQUID #######
 
 # Install Squid
@@ -42,7 +43,6 @@ sudo apt-get install squidguard -q -y
 rm -f /tmp/blacklists.tar.gz ; wget -P/tmp http://dsi.ut-capitole.fr/blacklists/download/blacklists.tar.gz && sudo rm -rf /var/lib/squidguard/db/blacklists && sudo tar -xzvf /tmp/blacklists.tar.gz -C /var/lib/squidguard/db
 
 # Configure SquidGuard with Parents Class Exception
-
 echo "#
 # CONFIG FILE FOR SQUIDGUARD
 #
@@ -78,7 +78,6 @@ src parents {
 " | sudo tee /etc/squidguard/squidGuard.conf
 
 # Configure SquidGuard Class Blacklists
-
 if [ -d $SQUIDLIB_BLACKLISTS ]; then
     for folderName in `ls $SQUIDLIB_BLACKLISTS`; do
         if [ -d "$SQUIDLIB_BLACKLISTS/${folderName}" ]; then
@@ -96,7 +95,6 @@ if [ -d $SQUIDLIB_BLACKLISTS ]; then
 fi
 
 # Configure SquidGuard Access Rules
-
 echo -e '
 #
 # ACL RULES:
@@ -116,15 +114,17 @@ acl {
 
 
 # Configure Squid for use SquidGuard
-
 echo -e 'url_rewrite_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf' | sudo tee -a /etc/squid/squid.conf
 echo -e 'access_log tcp://192.168.0.10:5011' | sudo tee -a /etc/squid/squid.conf
 
 
 # Compile and Load Squid Configuration and Cache
-
 sudo systemctl stop squid.service
 sudo squidGuard -C all
 sudo chown -R proxy:proxy /var/lib/squidguard/db
 sudo squid3 -z
 sudo systemctl start squid.service
+
+
+# Add Update Blacklists and System Daily Task
+echo -e "0 2    * * *   root    auto-update-proxy" | sudo tee -a /etc/crontab && sudo /bin/systemctl restart cron.service
