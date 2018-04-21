@@ -103,6 +103,10 @@ ssh $ipnewnode "update-tools >/dev/null 2>/dev/null"
 scp /opt/elasticpi/install-tools.sh $ipnewnode:/tmp/install-tools.sh
 ssh $ipnewnode "/bin/bash /tmp/install-tools.sh ; rm /tmp/install-tools.sh >/dev/null 2>/dev/null"
 
+# Disable IPv6
+ssh $ipnewnode "echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/97-disableipv6.conf"
+ssh $ipnewnode "sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1"
+
 # Update System
 ssh $ipnewnode "update-system"
 
