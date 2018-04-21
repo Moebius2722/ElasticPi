@@ -9,7 +9,7 @@
 
 ####### COMMON #######
 
-echo " HOST             ES       LS       KB       MB       NG       CB       NR       MQ       KA"
+echo " HOST             ES       LS       KB       MB       NG       CB       NR       MQ       KA       SQ"
 
 
 # Get IP Nodes
@@ -113,6 +113,16 @@ do
     vka="N/A"
   fi
   printf $vka
+  ilen=${#vka}
+  iend=$((9-ilen))
+  printf "%${iend}s"
+  vsq=`ssh $ipnode get-squid-version 2>/dev/null`
+  if [[ $? = 0 ]] ; then
+    vsq="$vsq"
+  else
+    vsq="N/A"
+  fi
+  printf $vsq
   printf "\n"
 done
 printf " Last Version"
@@ -205,4 +215,14 @@ else
   vka="N/A"
 fi
 printf $vka
+ilen=${#vka}
+iend=$((9-ilen))
+printf "%${iend}s"
+vsq=`ssh $ipnode get-squid-lastversion 2>/dev/null`
+if [[ $? = 0 ]] ; then
+  vsq="$vsq"
+else
+  vsq="N/A"
+fi
+printf $vsq
 printf "\n"
