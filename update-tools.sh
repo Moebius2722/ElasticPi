@@ -28,7 +28,7 @@ echo "/usr/bin/$tool => /opt/elasticpi.ori/$tool.sh"
 sudo ln -sf "/opt/elasticpi.ori/$tool.sh" "/usr/bin/$tool"
 done
 
-sudo rm -rf /opt/elasticpi ; sudo git clone https://github.com/Moebius2722/ElasticPi.git /opt/elasticpi ; sudo chmod -R a+x /opt/elasticpi/*.sh
+sudo rm -rf /opt/elasticpi && sudo git clone https://github.com/Moebius2722/ElasticPi.git /opt/elasticpi && sudo chmod -R a+x /opt/elasticpi/*.sh || exit 2
 for tool in `sudo ls /opt/elasticpi/*.sh  | cut -d '/' -f 4 | cut -d '.' -f 1`
 do
 echo "/usr/bin/$tool => /opt/elasticpi/$tool.sh"
