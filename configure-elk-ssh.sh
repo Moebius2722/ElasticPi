@@ -31,12 +31,12 @@ echo 'Cluster ===========================' $ipcluster '=========================
 
 # Remove old cluster in SSH known_hosts
 ssh-keygen -R $ipcluster >/dev/null 2>/dev/null
-  
+
 # Add new cluster in SSH known_hosts
 ssh-keyscan -H $ipcluster >> ~/.ssh/known_hosts 2>/dev/null
 
 # Get IP Nodes
-ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort | tr "\n" " "'`
+ipnodes=`sshpass -p $clusterpwd ssh -t $ipcluster 'sudo cat /etc/elasticsearch/discovery-file/unicast_hosts.txt | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort -V | tr "\n" " "'`
 
 # Nodes Initialisation
 for ipnode in ${ipnodes[@]}

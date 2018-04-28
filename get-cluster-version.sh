@@ -13,7 +13,7 @@ echo " HOST             ES       LS       KB       MB       NG       CB       NR
 
 
 # Get IP Nodes
-ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort` )
+ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort -V` )
 
 
 ####### GET-CLUSTER-VERSION #######

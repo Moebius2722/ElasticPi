@@ -11,4 +11,4 @@
 
 # Get Golang last version
 
-wget https://golang.org/dl/ -qO-  | grep -i "<div class=\"toggleVisible\" id=\"" | cut -d '"' -f 4 | sort -rV | head -n 1
+wget https://golang.org/dl/ -qO-  | grep -i "<div class=\"toggleVisible\" id=\"" | cut -d '"' -f 4 | sort -V -r | head -n 1

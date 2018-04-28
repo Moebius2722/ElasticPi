@@ -16,7 +16,7 @@ if [ ! -f /etc/elasticpi/nodes.lst ]; then
 fi
 
 # Get IP Nodes
-ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort | tr "\n" " "`
+ipnodes=`sudo cat /etc/elasticpi/nodes.lst | grep -e "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$" | sort -V | tr "\n" " "`
 
 
 ####### GET-NODERED-VERSION #######
