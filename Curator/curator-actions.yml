@@ -16,19 +16,13 @@ actions:
       continue_if_exception: False
       disable_action: False
     filters:
-    - filtertype: age
+    - filtertype: period
+      period_type: relative
       source: name
-      direction: younger
+      range_from: -1
+      range_to: -1
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 2
-      exclude:
-    - filtertype: age
-      source: name
-      direction: older
-      timestring: '%Y.%m.%d'
-      unit: days
-      unit_count: 1
       exclude:
   2:
     action: snapshot
