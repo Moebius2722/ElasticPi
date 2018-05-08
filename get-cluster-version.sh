@@ -218,7 +218,7 @@ printf $vka
 ilen=${#vka}
 iend=$((9-ilen))
 printf "%${iend}s"
-vsq=`ssh $ipnode get-squid-lastversion 2>/dev/null`
+vsq=`get-squid-lastversion 2>/dev/null`
 if [[ $? = 0 ]] ; then
   vsq="$vsq"
 else
