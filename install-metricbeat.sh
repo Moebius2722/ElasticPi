@@ -10,19 +10,13 @@
 ####### COMMON #######
 
 # Check Parameters
-if [[ ! $# = 3 ]] ; then
-  echo "Usage : $0 Elasticsearch_IP Elasticsearch_User Elasticsearch_Password"
+if [[ ! $# = 1 ]] ; then
+  echo "Usage : $0 Logstash_IP"
   exit 1
 fi
 
-# Get Elasticsearch IP
-e_ip=$1
-
-# Get Elasticsearch User
-e_user=$2
-
-# Get Elasticsearch Password
-e_password=$3
+# Get Logstash IP
+l_ip=$1
 
 # Check if already installed
 if get-metricbeat-version >/dev/null 2>/dev/null; then
@@ -124,31 +118,10 @@ fi
 # Replace Metricbeat Binary
 sudo cp -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
 
-
-# Configure Metricbeat
-
-# Configure Metricbeat for Kibana
-sudo sed -i 's/  index.number_of_shards: 1/  index.number_of_shards: 5/' /etc/metricbeat/metricbeat.yml
-sudo sed -i '/  index.number_of_shards: 5/a\  index.auto_expand_replicas: 0-3' /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  #host: \"localhost:5601\"/a\  host: \"https:\/\/${e_ip}:443\"" /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  host: \"https:\/\/${e_ip}:443\"/a\  username: \"${e_user}\"" /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  username: \"${e_user}\"/a\  password: \"${e_password}\"" /etc/metricbeat/metricbeat.yml
-
-# Configure Metricbeat for Elasticsearch
-sudo sed -i 's/  hosts: \["localhost:9200"\]/  #hosts: ["localhost:9200"]/' /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  #hosts: \[\"localhost:9200\"\]/a\  hosts: [\"${e_ip}:9202\"]" /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  #protocol: \"https\"/a\  protocol: \"https\"" /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  #username: \"elastic\"/a\  username: \"${e_user}\"" /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  #password: \"changeme\"/a\  password: \"${e_password}\"" /etc/metricbeat/metricbeat.yml
-
-# Configure Metricbeat SSL
-sudo sed -i "/  password: \"${e_password}\"/a\  ssl.enabled: true" /etc/metricbeat/metricbeat.yml
-sudo sed -i "/  ssl.enabled: true/a\  ssl.verification_mode: none" /etc/metricbeat/metricbeat.yml
-
-# Configure Metricbeat Period
-sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
-
-
 # Configure and Start Metricbeat as Daemon
 sudo /bin/systemctl daemon-reload
+
+# Configure Metricbeat
+configure-metricbeat ${l_ip}
+
 restart-metricbeat
