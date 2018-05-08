@@ -11,7 +11,7 @@
 
 # Check if Mosquitto is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show mosquitto  | head -n 1 >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show mosquitto >/dev/null 2>/dev/null; then
   echo "Mosquitto is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Mosquitto installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show mosquitto | head -n 1
+dpkg-query --showformat='${source:Upstream-Version}\n' --show mosquitto 2>/dev/null | head -n 1

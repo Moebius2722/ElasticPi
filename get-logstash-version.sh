@@ -11,7 +11,7 @@
 
 # Check if Logstash is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show logstash | head -n 1 >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show logstash >/dev/null 2>/dev/null; then
   echo "Logstash is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Logstash installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show logstash | cut -d : -f2 | cut -d - -f1 | head -n 1
+dpkg-query --showformat='${source:Upstream-Version}\n' --show logstash 2>/dev/null | head -n 1
