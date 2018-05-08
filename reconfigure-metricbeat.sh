@@ -37,7 +37,6 @@ sudo cp -f /etc/metricbeat/metricbeat.yml /etc/metricbeat/metricbeat.yml.ori
 # Set Metricbeat Node Configuration
 
 # Clean Old Configuration
-output.elasticsearch:
 sudo sed -i "s/setup.kibana:/#setup.kibana:/" /etc/metricbeat/metricbeat.yml
 sudo sed -i "s/^output.elasticsearch:/#output.elasticsearch:/" /etc/metricbeat/metricbeat.yml
 sudo sed -i '/\ host:/d' /etc/metricbeat/metricbeat.yml
