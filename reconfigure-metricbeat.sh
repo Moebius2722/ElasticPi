@@ -37,6 +37,9 @@ sudo cp -f /etc/metricbeat/metricbeat.yml /etc/metricbeat/metricbeat.yml.ori
 # Set Metricbeat Node Configuration
 
 # Clean Old Configuration
+output.elasticsearch:
+sudo sed -i "s/setup.kibana:/#setup.kibana:/" /etc/metricbeat/metricbeat.yml
+sudo sed -i "s/^output.elasticsearch:/#output.elasticsearch:/" /etc/metricbeat/metricbeat.yml
 sudo sed -i '/\ host:/d' /etc/metricbeat/metricbeat.yml
 sudo sed -i '/\ hosts:/d' /etc/metricbeat/metricbeat.yml
 sudo sed -i '/\ protocol:/d' /etc/metricbeat/metricbeat.yml
@@ -52,6 +55,9 @@ sudo sed -i '/index.auto_expand_replicas:/d' /etc/metricbeat/metricbeat.yml
 sudo sed -i '/  index.number_of_shards: 5/a\  index.auto_expand_replicas: 0-1' /etc/metricbeat/metricbeat.yml
 
 # Configure Metricbeat for Logstash
+sudo sed -i "s/^#output.logstash:/output.logstash:/" /etc/metricbeat/metricbeat.yml
+
+#output.logstash:
 sudo sed -i "/  #hosts: \[\"localhost:5044\"\]/a\  hosts: [\"${l_ip}:5012\"]" /etc/metricbeat/metricbeat.yml
 
 # Configure Metricbeat Period
