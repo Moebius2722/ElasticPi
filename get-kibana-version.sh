@@ -11,7 +11,7 @@
 
 # Check if Kibana is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show kibana >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show kibana | head -n 1 >/dev/null 2>/dev/null; then
   echo "Kibana is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Kibana installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show kibana
+dpkg-query --showformat='${source:Upstream-Version}\n' --show kibana | head -n 1

@@ -11,7 +11,7 @@
 
 # Check if Oracle Java is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show oracle-java8-installer >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show oracle-java8-installer | head -n 1 >/dev/null 2>/dev/null; then
   echo "Oracle Java is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Oracle Java installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show oracle-java8-installer
+dpkg-query --showformat='${source:Upstream-Version}\n' --show oracle-java8-installer | head -n 1

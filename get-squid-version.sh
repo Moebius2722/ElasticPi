@@ -11,7 +11,7 @@
 
 # Check if Squid is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show squid >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show squid | head -n 1 >/dev/null 2>/dev/null; then
   echo "Squid is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Squid installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show squid
+dpkg-query --showformat='${source:Upstream-Version}\n' --show squid | head -n 1

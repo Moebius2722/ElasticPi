@@ -12,4 +12,4 @@
 # Get Keepalived last version
 
 sudo apt-get update >/dev/null 2>/dev/null
-sudo apt-cache madison keepalived | cut -d '|' -f 2 | tr -d ' ' | cut -d ':' -f 2 | cut -d '-' -f 1
+sudo apt-cache madison keepalived | cut -d '|' -f 2 | tr -d ' ' | cut -d ':' -f 2 | cut -d '-' -f 1 | head -n 1

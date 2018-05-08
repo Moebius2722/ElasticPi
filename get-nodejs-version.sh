@@ -11,7 +11,7 @@
 
 # Check if NodeJS is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show nodejs >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show nodejs | head -n 1 >/dev/null 2>/dev/null; then
   echo "NodeJS is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get NodeJS installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show nodejs
+dpkg-query --showformat='${source:Upstream-Version}\n' --show nodejs | head -n 1
