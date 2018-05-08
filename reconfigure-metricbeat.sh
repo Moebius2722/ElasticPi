@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Author : Moebius2722
+# Mail : moebius2722@laposte.net
+# Git : https://github.com/Moebius2722/ElasticPi.git
+
+# Full Automated Configure Script for Metricbeat on Raspberry Pi 2 or 3
+
+
+####### COMMON #######
+
+# Check Parameters
+if [[ ! $# = 1 ]] ; then
+  echo "Usage : $0 Logstash_IP"
+  exit 1
+fi
+
+# Get Logstash IP
+l_ip=$1
+
+# Check if installed
+if ! get-metricbeat-version >/dev/null 2>/dev/null; then
+  echo "Metricbeat isn't installed" >&2
+  exit 1
+fi
+
+
+####### METRICBEAT #######
+
+# Stop Metricbeat Daemon
+stop-metricbeat
+
+# Backup Olg Configuration
+sudo cp -f /etc/metricbeat/metricbeat.yml /etc/metricbeat/metricbeat.yml.ori
+
+
+# Set Metricbeat Node Configuration
+
+# Clean Old Configuration
+sudo sed -i '/\ host:/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/\ hosts:/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/\ protocol:/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/\ username:/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/\ password:/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/ssl.enabled: true/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/ssl.enabled: true/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/ssl.verification_mode: none/d' /etc/metricbeat/metricbeat.yml
+
+# Configure Metricbeat for Elasticsearch Template
+sudo sed -i 's/  index.number_of_shards:.*/  index.number_of_shards: 5/' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/index.auto_expand_replicas:/d' /etc/metricbeat/metricbeat.yml
+sudo sed -i '/  index.number_of_shards: 5/a\  index.auto_expand_replicas: 0-1' /etc/metricbeat/metricbeat.yml
+
+# Configure Metricbeat for Logstash
+sudo sed -i "/  #hosts: \[\"localhost:5044\"\]/a\  hosts: [\"${l_ip}:5012\"]" /etc/metricbeat/metricbeat.yml
+
+# Configure Metricbeat Period
+sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
+
+
+# Start Metricbeat Load Balancer
+start-metricbeat
