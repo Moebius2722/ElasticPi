@@ -11,7 +11,7 @@
 
 # Check if Tools is installed
 
-if [ ! -d /opt/elasticpi ]; then
+if [ ! -d /opt/elasticpi ] && [ ! -d /opt/elasticpi.ori ]; then
   echo "Tools are not installed" >&2
   exit 1
 fi
