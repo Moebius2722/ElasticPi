@@ -113,6 +113,11 @@ fi
 # Replace Metricbeat Binary
 sudo cp -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
 
+# Load Index Template
+sudo metricbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["localhost:9200"]'
+
+# Set up dashboards for Logstash output
+sudo metricbeat setup -e -E output.logstash.enabled=false -E output.elasticsearch.hosts=['localhost:9200'] -E setup.kibana.host=localhost:5601
 
 # Configure and Start Metricbeat as Daemon
 sudo /bin/systemctl daemon-reload
