@@ -164,6 +164,16 @@ sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_pr
 sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
+# Disable X-Pack Modules
+echo 'xpack.graph.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.logstash.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.ml.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.monitoring.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.rollup.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.security.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.sql.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'xpack.watcher.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+
 # Create and configure Backup NFS mount point
 sudo mkdir -p /mnt/elasticpi/esbackup
 sudo chown -R elasticsearch:elasticsearch /mnt/elasticpi/esbackup
