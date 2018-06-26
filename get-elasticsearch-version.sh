@@ -11,7 +11,7 @@
 
 # Check if Elasticsearch is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show elasticsearch >/dev/null 2>/dev/null; then
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show elasticsearch-oss >/dev/null 2>/dev/null; then
   echo "Elasticsearch is not installed" >&2
   exit 1
 fi
@@ -21,4 +21,4 @@ fi
 
 # Get Elasticsearch installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show elasticsearch 2>/dev/null | head -n 1
+dpkg-query --showformat='${source:Upstream-Version}\n' --show elasticsearch-oss 2>/dev/null | head -n 1
