@@ -139,8 +139,8 @@ sudo grep -q '^-server' /etc/logstash/jvm.options || echo "# force the server VM
 sudo grep -q '^-server' /etc/logstash/jvm.options || echo "-server" | sudo tee -a /etc/logstash/jvm.options
 
 # Disable X-Pack
-echo 'xpack.management.enabled: false' | sudo tee -a /etc/logstash/logstash.yml
-echo 'xpack.monitoring.enabled: false' | sudo tee -a /etc/logstash/logstash.yml
+#echo 'xpack.management.enabled: false' | sudo tee -a /etc/logstash/logstash.yml
+#echo 'xpack.monitoring.enabled: false' | sudo tee -a /etc/logstash/logstash.yml
 
 # Update Plugins
 sudo /usr/share/logstash/bin/logstash-plugin update
