@@ -22,7 +22,7 @@ fi
 stop-kibana
 
 # Remove Kibana
-sudo dpkg --purge kibana
+sudo dpkg --purge kibana-oss
 
 # Purge Kibana configuration
 sudo rm -rf /etc/kibana

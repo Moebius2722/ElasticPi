@@ -30,7 +30,7 @@ sudo pip uninstall elasticsearch-curator -y
 stop-elasticsearch
 
 # Remove Elasticsearch
-sudo dpkg --purge elasticsearch
+sudo dpkg --purge elasticsearch-oss
 
 # Purge Elasticsearch configuration
 sudo rm -rf /etc/elasticsearch
