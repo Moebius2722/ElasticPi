@@ -11,4 +11,4 @@
 
 # Get Filebeat last version
 
-wget https://www.elastic.co/downloads/beats/filebeat/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 7 | cut -d - -f 2 | cut -d . -f 1-3 | head -n 1
+wget https://www.elastic.co/downloads/beats/filebeat-oss/ -qO- | grep -i "\.deb\" class=\"zip-link\">" | cut -d '"' -f 2 | cut -d / -f 7 | cut -d - -f 3 | cut -d . -f 1-3 | head -n 1
