@@ -39,42 +39,42 @@ if [ ! -d "/mnt/elasticpi/build/logstash/${L_VERSION}" ]; then
 fi
 
 # Get and Check Logstash Debian Package
-rm -f /tmp/logstash-${L_VERSION}.deb.sha512
-wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION}.deb.sha512
-if [ -f "/mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb" ]; then
+rm -f /tmp/logstash-oss-${L_VERSION}.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-oss-${L_VERSION}.deb.sha512
+if [ -f "/mnt/elasticpi/build/logstash/${L_VERSION}/logstash-oss-${L_VERSION}.deb" ]; then
   pushd /mnt/elasticpi/build/logstash/${L_VERSION}
-  sha512sum -c /tmp/logstash-${L_VERSION}.deb.sha512
+  sha512sum -c /tmp/logstash-oss-${L_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
-    rm -f /tmp/logstash-${L_VERSION}.deb
-    wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION}.deb
+    rm -f /tmp/logstash-oss-${L_VERSION}.deb
+    wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-oss-${L_VERSION}.deb
     pushd /tmp
-    sha512sum -c /tmp/logstash-${L_VERSION}.deb.sha512
+    sha512sum -c /tmp/logstash-oss-${L_VERSION}.deb.sha512
     if [ $? -ne 0 ] ; then
       popd
       exit 1
     fi
 	  popd
-	  sudo cp -f /tmp/logstash-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
-	  rm -f /tmp/logstash-${L_VERSION}.deb
+	  sudo cp -f /tmp/logstash-oss-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-oss-${L_VERSION}.deb
+	  rm -f /tmp/logstash-oss-${L_VERSION}.deb
   fi
   popd
 else
-  rm -f /tmp/logstash-${L_VERSION}.deb
-  wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-${L_VERSION}.deb
+  rm -f /tmp/logstash-oss-${L_VERSION}.deb
+  wget -P/tmp https://artifacts.elastic.co/downloads/logstash/logstash-oss-${L_VERSION}.deb
   pushd /tmp
-  sha512sum -c /tmp/logstash-${L_VERSION}.deb.sha512
+  sha512sum -c /tmp/logstash-oss-${L_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
 	  exit 1
   fi
   popd
-  sudo cp -f /tmp/logstash-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
-  rm -f /tmp/logstash-${L_VERSION}.deb
+  sudo cp -f /tmp/logstash-oss-${L_VERSION}.deb /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-oss-${L_VERSION}.deb
+  rm -f /tmp/logstash-oss-${L_VERSION}.deb
 fi
-rm -f /tmp/logstash-${L_VERSION}.deb.sha512
+rm -f /tmp/logstash-oss-${L_VERSION}.deb.sha512
 
 # Get JFFI Version
-JFFI_LIB_PKG=`dpkg -c /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb | grep -i arm-Linux/libjffi`
+JFFI_LIB_PKG=`dpkg -c /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-oss-${L_VERSION}.deb | grep -i arm-Linux/libjffi`
 JFFI_LIB=`echo ${JFFI_LIB_PKG} | cut -d . -f 2-`
 #JFFI_LIB=`ls /usr/share/logstash/vendor/jruby/lib/jni/arm-Linux/libjffi-*.so`
 JFFI_VERSION=`echo ${JFFI_LIB::-3} | cut -d / -f 10 | cut -d - -f 2`
@@ -105,7 +105,7 @@ fi
 sudo cp -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so /lib/libjffi-1.2.so
 
 # Update Logstash
-sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-${L_VERSION}.deb
+sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/logstash/${L_VERSION}/logstash-oss-${L_VERSION}.deb
 
 # Replace Logstash JFFI library
 sudo cp -f /mnt/elasticpi/build/jffi/${JFFI_RELEASE}/libjffi-${JFFI_VERSION}.so $JFFI_LIB

@@ -57,42 +57,42 @@ if [ ! -d "/mnt/elasticpi/build/kibana/${K_VERSION}" ]; then
 fi
 
 # Get and Check Kibana Debian Package
-rm -f /tmp/kibana-${K_VERSION}-amd64.deb.sha512
-wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-${K_VERSION}-amd64.deb.sha512
-if [ -f "/mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb" ]; then
+rm -f /tmp/kibana-oss-${K_VERSION}-amd64.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-oss-${K_VERSION}-amd64.deb.sha512
+if [ -f "/mnt/elasticpi/build/kibana/${K_VERSION}/kibana-oss-${K_VERSION}-amd64.deb" ]; then
   pushd /mnt/elasticpi/build/kibana/${K_VERSION}
-  sha512sum -c /tmp/kibana-${K_VERSION}-amd64.deb.sha512
+  sha512sum -c /tmp/kibana-oss-${K_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
-    rm -f /tmp/kibana-${K_VERSION}-amd64.deb
-    wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-${K_VERSION}-amd64.deb
+    rm -f /tmp/kibana-oss-${K_VERSION}-amd64.deb
+    wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-oss-${K_VERSION}-amd64.deb
     pushd /tmp
-    sha512sum -c /tmp/kibana-${K_VERSION}-amd64.deb.sha512
+    sha512sum -c /tmp/kibana-oss-${K_VERSION}-amd64.deb.sha512
     if [ $? -ne 0 ] ; then
       popd
       exit 1
     fi
 	  popd
-	  sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
-	  rm -f /tmp/kibana-${K_VERSION}-amd64.deb
+	  sudo cp -f /tmp/kibana-oss-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-oss-${K_VERSION}-amd64.deb
+	  rm -f /tmp/kibana-oss-${K_VERSION}-amd64.deb
   fi
   popd
 else
-  rm -f /tmp/kibana-${K_VERSION}-amd64.deb
-  wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-${K_VERSION}-amd64.deb
+  rm -f /tmp/kibana-oss-${K_VERSION}-amd64.deb
+  wget -P/tmp https://artifacts.elastic.co/downloads/kibana/kibana-oss-${K_VERSION}-amd64.deb
   pushd /tmp
-  sha512sum -c /tmp/kibana-${K_VERSION}-amd64.deb.sha512
+  sha512sum -c /tmp/kibana-oss-${K_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
 	  exit 1
   fi
   popd
-  sudo cp -f /tmp/kibana-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
-  rm -f /tmp/kibana-${K_VERSION}-amd64.deb
+  sudo cp -f /tmp/kibana-oss-${K_VERSION}-amd64.deb /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-oss-${K_VERSION}-amd64.deb
+  rm -f /tmp/kibana-oss-${K_VERSION}-amd64.deb
 fi
-rm -f /tmp/kibana-${K_VERSION}-amd64.deb.sha512
+rm -f /tmp/kibana-oss-${K_VERSION}-amd64.deb.sha512
 
 # Install Kibana with amd64 package (Just NodeJS is amd64 in package)
-sudo dpkg --force-architecture -i /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-${K_VERSION}-amd64.deb
+sudo dpkg --force-architecture -i /mnt/elasticpi/build/kibana/${K_VERSION}/kibana-oss-${K_VERSION}-amd64.deb
 
 #Create NodeJS Build Folder
 if [ ! -d "/mnt/elasticpi/build/nodejs/${N_VERSION}" ]; then

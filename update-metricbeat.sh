@@ -40,42 +40,42 @@ if [ ! -d "/mnt/elasticpi/build/metricbeat/${MB_VERSION}" ]; then
 fi
 
 # Get and Check Metricbeat Debian Package
-rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
-wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb.sha512
-if [ -f "/mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb" ]; then
+rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
+if [ -f "/mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-oss-${MB_VERSION}-amd64.deb" ]; then
   pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION}
-  sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+  sha512sum -c /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
-    rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
-    wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb
+    rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb
+    wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-oss-${MB_VERSION}-amd64.deb
     pushd /tmp
-    sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+    sha512sum -c /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
     if [ $? -ne 0 ] ; then
       popd
       exit 1
     fi
 	  popd
-	  sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
-	  rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+	  sudo cp -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-oss-${MB_VERSION}-amd64.deb
+	  rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb
   fi
   popd
 else
-  rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
-  wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${MB_VERSION}-amd64.deb
+  rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb
+  wget -P/tmp https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-oss-${MB_VERSION}-amd64.deb
   pushd /tmp
-  sha512sum -c /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+  sha512sum -c /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
 	  exit 1
   fi
   popd
-  sudo cp -f /tmp/metricbeat-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
-  rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb
+  sudo cp -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-oss-${MB_VERSION}-amd64.deb
+  rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb
 fi
-rm -f /tmp/metricbeat-${MB_VERSION}-amd64.deb.sha512
+rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
 
 # Update Metricbeat with amd64 package
-sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-${MB_VERSION}-amd64.deb
+sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-oss-${MB_VERSION}-amd64.deb
 
 # Update Golang
 update-golang

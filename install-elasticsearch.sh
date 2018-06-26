@@ -53,42 +53,42 @@ if [ ! -d "/mnt/elasticpi/build/elasticsearch/${E_VERSION}" ]; then
 fi
 
 # Get and Check Elasticsearch Debian Package
-rm -f /tmp/elasticsearch-${E_VERSION}.deb.sha512
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb.sha512
-if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb" ]; then
+rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${E_VERSION}.deb.sha512
+if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb" ]; then
   pushd /mnt/elasticpi/build/elasticsearch/${E_VERSION}
-  sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
+  sha512sum -c /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
-    rm -f /tmp/elasticsearch-${E_VERSION}.deb
-    wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb
+    rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb
+    wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${E_VERSION}.deb
     pushd /tmp
-    sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
+    sha512sum -c /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
     if [ $? -ne 0 ] ; then
       popd
       exit 1
     fi
 	  popd
-	  sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
-	  rm -f /tmp/elasticsearch-${E_VERSION}.deb
+	  sudo cp -f /tmp/elasticsearch-oss-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb
+	  rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb
   fi
   popd
 else
-  rm -f /tmp/elasticsearch-${E_VERSION}.deb
-  wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${E_VERSION}.deb
+  rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb
+  wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${E_VERSION}.deb
   pushd /tmp
-  sha512sum -c /tmp/elasticsearch-${E_VERSION}.deb.sha512
+  sha512sum -c /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
 	  exit 1
   fi
   popd
-  sudo cp -f /tmp/elasticsearch-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
-  rm -f /tmp/elasticsearch-${E_VERSION}.deb
+  sudo cp -f /tmp/elasticsearch-oss-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb
+  rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb
 fi
-rm -f /tmp/elasticsearch-${E_VERSION}.deb.sha512
+rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
 
 # Install Elasticsearch
-sudo dpkg -i /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-${E_VERSION}.deb
+sudo dpkg -i /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb
 
 # Get JNA Version
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
@@ -165,13 +165,9 @@ sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_
 sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt
 
 # Disable X-Pack Modules
-echo 'xpack.graph.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-echo 'xpack.logstash.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 echo 'xpack.ml.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 echo 'xpack.monitoring.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-echo 'xpack.rollup.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 echo 'xpack.security.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-echo 'xpack.sql.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 echo 'xpack.watcher.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
 # Create and configure Backup NFS mount point
