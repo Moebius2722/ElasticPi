@@ -10,7 +10,7 @@
 ####### COMMON #######
 
 # Get IP Nodes
-ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort` )
+ipnodes=( `sudo cat /etc/elasticpi/nodes.lst | grep -e '^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$' | sort -V` )
 
 
 ####### STOP-CLUSTER #######
