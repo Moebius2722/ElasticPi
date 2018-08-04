@@ -148,7 +148,7 @@
         "z": "84d9ba49.e15a58",
         "command": "vcgencmd",
         "addpay": false,
-        "append": "measure_temp",
+        "append": "get-cpu-temp",
         "useSpawn": "",
         "timer": "",
         "name": "Get CPU Temp",
@@ -172,7 +172,7 @@
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "temp=",
+                "from": "CPU Temp: ",
                 "fromt": "re",
                 "to": "",
                 "tot": "str"
@@ -181,7 +181,7 @@
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "'C\\n",
+                "from": "°C\n",
                 "fromt": "re",
                 "to": "",
                 "tot": "str"
@@ -1040,32 +1040,12 @@
                 "tot": "msg"
             },
             {
-                "t": "change",
-                "p": "documentType",
-                "pt": "msg",
-                "from": "CPU Temp",
-                "fromt": "str",
-                "to": "temp",
-                "tot": "str"
-            },
-            {
-                "t": "change",
-                "p": "documentType",
-                "pt": "msg",
-                "from": "Memory",
-                "fromt": "str",
-                "to": "memory",
-                "tot": "str"
-            },
-            {
-                "t": "change",
-                "p": "documentType",
-                "pt": "msg",
-                "from": "CPU Load",
-                "fromt": "str",
-                "to": "stats",
-                "tot": "str"
-            },
+	        			"t": "set",
+				        "p": "documentType",
+				        "pt": "msg",
+				        "to": "stats",
+				        "tot": "str"
+			      },
             {
                 "t": "set",
                 "p": "documentId",
