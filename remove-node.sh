@@ -29,7 +29,7 @@ vipcluster=`cat /etc/elasticpi/cluster.vip`
 
 
 ####### REMOVE NODE #######
-echo '=========================== Remove Node ' $ipnode '==========================='
+echo '=========================== Remove Node' $ipnode '==========================='
 
 # Stop Elasticsearch
 ssh $ipnode stop-elasticsearch
