@@ -13,8 +13,8 @@
 ####### COMMON #######
 
 # Check Parameters
-if [[ ! $# = 2 ]] ; then
-  echo "Usage : $0 VIpCluster VIpFirstNode"
+if [[ ! $# = 3 ]] ; then
+  echo "Usage : $0 IdCluster VIpCluster VIpFirstNode"
   exit 1
 fi
 
@@ -24,8 +24,11 @@ if [ -f /etc/elasticpi/nodes.lst ]; then
   exit 1
 fi
 
+# Get ID Cluster
+idcluster=$1
+
 # Get VIP Cluster
-vipcluster=$1
+vipcluster=$2
 
 # Check Free Cluster VIP
 ping -q -c 1 $vipcluster &>/dev/null
@@ -35,7 +38,7 @@ if [[ $? -eq 0 ]]; then
 fi
 
 # Get VIP First Node
-vipfirstnode=$2
+vipfirstnode=$3
 
 # Check Free First Node VIP
 ping -q -c 1 $vipfirstnode &>/dev/null
@@ -54,6 +57,7 @@ ipnode=`hostname -I | cut -d ' ' -f 1`
 sudo mkdir /etc/elasticpi
 
 # Set Cluster VIP
+echo $idcluster | sudo tee /etc/elasticpi/cluster.id >/dev/null 2>/dev/null
 echo $vipcluster | sudo tee /etc/elasticpi/cluster.vip >/dev/null 2>/dev/null
 echo $vipcluster $ipnode | sudo tee /etc/elasticpi/vip.lst >/dev/null 2>/dev/null
 

@@ -25,6 +25,7 @@ fi
 iphost=`hostname -i`
 idhost=`get-node-id`
 nodescount=`get-nodes-count`
+idcluster=`get-cluster-id`
 
 ####### KEEPALIVED #######
 
@@ -42,8 +43,8 @@ id=0
 
 for viphip in "${vips[@]}"
 do
-  id=$[$id+1]
-  
+  id=$[$id+$idcluster]
+
   vip=`echo $viphip | cut -d ';' -f 1`
   hip=`echo $viphip | cut -d ';' -f 2`
   idnode=`get-node-id $hip`

@@ -83,8 +83,10 @@ allssh "echo -e $ipnewnode\\\t$fqdnnewnode $namenewnode | sudo tee -a /etc/hosts
 scp /etc/hosts $ipnewnode:/tmp/hosts >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo cp /tmp/hosts /etc/hosts && rm /tmp/hosts >/dev/null 2>/dev/null"
 allssh "echo $vipnewnode $ipnewnode | sudo tee -a /etc/elasticpi/vip.lst >/dev/null 2>/dev/null"
+scp /etc/elasticpi/cluster.id $ipnewnode:/tmp/cluster.id >/dev/null 2>/dev/null
+ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/cluster.id /etc/elasticpi/cluster.id && rm -f /tmp/cluster.id >/dev/null 2>/dev/null"
 scp /etc/elasticpi/cluster.vip $ipnewnode:/tmp/cluster.vip >/dev/null 2>/dev/null
-ssh $ipnewnode "sudo mkdir /etc/elasticpi ; sudo cp -f /tmp/cluster.vip /etc/elasticpi/cluster.vip && rm -f /tmp/cluster.vip >/dev/null 2>/dev/null"
+ssh $ipnewnode "sudo cp -f /tmp/cluster.vip /etc/elasticpi/cluster.vip && rm -f /tmp/cluster.vip >/dev/null 2>/dev/null"
 scp /etc/elasticpi/vip.lst $ipnewnode:/tmp/vip.lst >/dev/null 2>/dev/null
 ssh $ipnewnode "sudo cp -f /tmp/vip.lst /etc/elasticpi/vip.lst && rm -f /tmp/vip.lst >/dev/null 2>/dev/null"
 allssh "echo $ipnewnode | sudo tee -a /etc/elasticpi/nodes.lst >/dev/null 2>/dev/null"
