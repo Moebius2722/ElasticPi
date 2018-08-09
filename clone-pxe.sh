@@ -6,6 +6,8 @@
 
 # Full Automated Clone PXE Install for Raspberry Pi 2 or 3
 
+# curl -sL https://raw.githubusercontent.com/Moebius2722/ElasticPi/master/clone-pxe.sh | bash -
+
 
 ####### CLONE-PXE #######
 
