@@ -20,10 +20,10 @@ if [[ $# = 0 ]] ; then
     echo "Flush Elasticsearch Indices"
     curl -XPOST 'localhost:9200/_flush/synced?pretty'
   fi
-  
+
   # Stop Services
   #for svc in logstash nodered kibana cerebro elasticsearch mosquitto keepalived nginx
-  for svc in metricbeat logstash kibana cerebro elasticsearch keepalived nginx
+  for svc in nodered mosquitto metricbeat logstash kibana cerebro elasticsearch squid keepalived nginx
   do
     echo "================================= $svc ================================"
     echo "Stop $svc"
@@ -36,7 +36,7 @@ else
     echo "Flush Elasticsearch Indices"
     ssh -t $1 "curl -XPOST 'localhost:9200/_flush/synced?pretty'"
   fi
-  
+
   # Stop Services
   #for svc in logstash nodered kibana cerebro elasticsearch mosquitto keepalived nginx
   for svc in metricbeat logstash kibana cerebro elasticsearch keepalived nginx

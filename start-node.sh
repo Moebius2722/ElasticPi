@@ -16,7 +16,7 @@ date
 if [[ $# = 0 ]] ; then
   # Start Services
   #for svc in nginx keepalived mosquitto elasticsearch cerebro kibana nodered logstash
-  for svc in nginx keepalived elasticsearch cerebro kibana logstash metricbeat
+  for svc in nginx keepalived squid elasticsearch cerebro kibana logstash metricbeat mosquitto nodered
   do
     echo "================================= $svc ================================"
     echo "Start $svc"
