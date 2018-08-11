@@ -21,7 +21,7 @@ date
 
 # Stop Services
 #for svc in keepalived nginx kibana logstash nodered mosquitto cerebro
-for svc in keepalived nginx kibana logstash metricbeat cerebro
+for svc in nodered mosquitto metricbeat logstash kibana cerebro squid keepalived nginx
 do
 echo "================================= $svc ================================"
 for ipnode in "${ipnodes[@]}"

@@ -39,7 +39,7 @@ else
 
   # Stop Services
   #for svc in logstash nodered kibana cerebro elasticsearch mosquitto keepalived nginx
-  for svc in metricbeat logstash kibana cerebro elasticsearch keepalived nginx
+  for svc in nodered mosquitto metricbeat logstash kibana cerebro elasticsearch squid keepalived nginx
   do
     echo "================================= $svc ================================"
     echo "$1 : Stop $svc"
