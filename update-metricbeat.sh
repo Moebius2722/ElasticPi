@@ -15,8 +15,7 @@ if [[ ${MB_VERSION} = '' ]]; then
 fi
 
 # Check if already up to date
-#MB_CVERSION=`get-metricbeat-version`
-MB_CVERSION=`/usr/share/metricbeat/bin/metricbeat version | cut -d ' ' -f 3`
+MB_CVERSION=`get-metricbeat-version`
 if [ $? -ne 0 ] ; then
   exit 1
 fi
