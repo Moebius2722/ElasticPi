@@ -25,7 +25,7 @@ if get-metricbeat-version >/dev/null 2>/dev/null; then
 fi
 
 # Set Version
-if [[ ${MB_VERSION} = '' ]]; then
+if [[ "${MB_VERSION}" = "" ]]; then
   # Check if cluster is created
   if [ -f /etc/elasticpi/nodes.lst ]; then
     MB_VERSION=`get-metricbeat-maxversion`
@@ -34,6 +34,7 @@ if [[ ${MB_VERSION} = '' ]]; then
   fi
 fi
 
+echo Install Metricbeat ${MB_VERSION}
 
 ####### METRICBEAT #######
 
