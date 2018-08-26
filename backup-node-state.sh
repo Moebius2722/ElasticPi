@@ -16,7 +16,7 @@ echo "================================= BACKUP-NODE-STATE ======================
 for svc in nginx keepalived squid elasticsearch cerebro kibana logstash metricbeat mosquitto nodered
 do
 echo "================================= $svc ================================"
-sudo systemctl is-enabled metricbeat.service
+sudo systemctl is-enabled $svc.service
 done
 
 
