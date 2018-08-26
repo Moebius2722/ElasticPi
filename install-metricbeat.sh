@@ -82,38 +82,8 @@ rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
 # Install Metricbeat with amd64 package
 sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-oss-${MB_VERSION}-amd64.deb
 
-# Install Golang
-install-golang
-
-# Get and Check Metricbeat Source
-if [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm ]; then
-  pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION}
-  sha512sum -c /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
-  if [ $? -ne 0 ] ; then
-    # Get and Compile Metricbeat Binary for ARM
-    rm -rf ${GOPATH}/src/github.com/elastic ; mkdir -p ${GOPATH}/src/github.com/elastic && git clone -b v${MB_VERSION} https://github.com/elastic/beats.git ${GOPATH}/src/github.com/elastic/beats
-    pushd ${GOPATH}/src/github.com/elastic/beats/metricbeat
-    export GOX_OSARCH='!netbsd/386 !linux/amd64 !windows/386 !linux/386 !windows/amd64 !netbsd/arm !linux/ppc64le !solaris/amd64 !netbsd/amd64 !linux/ppc64 !freebsd/arm !darwin/amd64 !darwin/386 !openbsd/amd64 !freebsd/386 !openbsd/386 !freebsd/amd64'
-    make clean
-    make crosscompile
-    sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm
-    popd
-    rm -rf ${GOPATH}/src/github.com/elastic
-    pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION}/ && sha512sum metricbeat-linux-arm | sudo tee /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 && popd
-  fi
-  popd
-else
-  # Get and Compile Metricbeat Binary for ARM
-  rm -rf ${GOPATH}/src/github.com/elastic ; mkdir -p ${GOPATH}/src/github.com/elastic && git clone -b v${MB_VERSION} https://github.com/elastic/beats.git ${GOPATH}/src/github.com/elastic/beats
-  pushd ${GOPATH}/src/github.com/elastic/beats/metricbeat
-  export GOX_OSARCH='!netbsd/386 !linux/amd64 !windows/386 !linux/386 !windows/amd64 !netbsd/arm !linux/ppc64le !solaris/amd64 !netbsd/amd64 !linux/ppc64 !freebsd/arm !darwin/amd64 !darwin/386 !openbsd/amd64 !freebsd/386 !openbsd/386 !freebsd/amd64'
-  make clean
-  make crosscompile
-  sudo cp -f ${GOPATH}/src/github.com/elastic/beats/metricbeat/build/bin/metricbeat-linux-arm /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm
-  popd
-  rm -rf ${GOPATH}/src/github.com/elastic
-  pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION} && sha512sum metricbeat-linux-arm | sudo tee /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 && popd
-fi
+# Buid Metricbeat Binary
+build-metricbeat ${MB_VERSION}
 
 # Replace Metricbeat Binary
 sudo cp -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
@@ -130,4 +100,5 @@ sudo /bin/systemctl daemon-reload
 # Configure Metricbeat
 configure-metricbeat ${l_ip}
 
+# restart Metricbeat Daemon
 restart-metricbeat

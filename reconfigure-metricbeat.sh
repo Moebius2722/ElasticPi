@@ -71,5 +71,5 @@ else
 fi
 
 
-# Start Metricbeat Load Balancer
+# Start Metricbeat Daemon
 start-metricbeat

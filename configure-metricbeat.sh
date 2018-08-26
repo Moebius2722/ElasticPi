@@ -62,7 +62,3 @@ else
   # Configure Metricbeat Period
   sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
 fi
-
-
-# Start Metricbeat Load Balancer
-restart-metricbeat
