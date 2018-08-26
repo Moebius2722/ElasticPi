@@ -4,23 +4,21 @@
 # Mail : moebius2722@laposte.net
 # Git : https://github.com/Moebius2722/ElasticPi.git
 
-# Full Automated Start Cluster Services Script for Elasticsearch on Raspberry Pi 2 or 3
+# Full Automated Backup Services Node State Script for Elasticsearch on Raspberry Pi 2 or 3
 
 
-####### START-CLUSTER #######
+####### BACKUP-NODE-STATE #######
 
-# Check and Start Cluster Services
-sudo rm -f /etc/elasticpi/node.state
-echo "================================= BACKUP-NODE-STATE ================================"
-# Start Services
-#for svc in nginx keepalived elasticsearch cerebro mosquitto nodered logstash kibana
+# Remove Old Backup State
+sudo rm -f /etc/elasticpi/node.state >/dev/null 2>/dev/null
+
+# Check Services State
 for svc in nginx keepalived squid elasticsearch cerebro kibana logstash metricbeat mosquitto nodered
 do
-echo "================================= $svc ================================"
-sudo systemctl is-enabled $svc.service >/dev/null 2>/dev/null
-if [ $? -eq 0 ] ; then
-  echo $svc | sudo tee -a /etc/elasticpi/node.state >/dev/null 2>/dev/null
-fi
+  # Check Service State
+  sudo systemctl is-enabled $svc.service >/dev/null 2>/dev/null
+  if [ $? -eq 0 ] ; then
+    # Backup Service State
+    echo $svc | sudo tee -a /etc/elasticpi/node.state >/dev/null 2>/dev/null
+  fi
 done
-
-echo "================================= CLUSTER-NODE-BACKUPs ================================"
