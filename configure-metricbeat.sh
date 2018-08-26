@@ -52,8 +52,16 @@ sudo sed -i "s/^#output.logstash:/output.logstash:/" /etc/metricbeat/metricbeat.
 #output.logstash:
 sudo sed -i "/  #hosts: \[\"localhost:5044\"\]/a\  hosts: [\"${l_ip}:5012\"]" /etc/metricbeat/metricbeat.yml
 
-# Configure Metricbeat Period
-sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
+# Fix Modules Path for 6.4.0
+if [ ! -d /etc/metricbeat/modules.d ]; then
+  # Fix Modules Path for 6.4.0
+  sudo sed -i "s/\${path\.config}\/modules.d\/\*\.yml/\/usr\/share\/metricbeat\/modules.d\/\*\.yml/" /etc/metricbeat/metricbeat.yml
+  # Configure Metricbeat Period
+  sudo sed -i 's/  period: 10s/  period: 30s/' /usr/share/metricbeat/modules.d/system.yml
+else
+  # Configure Metricbeat Period
+  sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
+fi
 
 
 # Start Metricbeat Load Balancer
