@@ -22,7 +22,8 @@ fi
 stop-logstash
 
 # Remove Logstash
-sudo dpkg --purge logstash-oss
+sudo dpkg --force-all --purge logstash-oss
+sudo dpkg --force-all --purge logstash
 
 # Purge Logstash configuration
 sudo rm -rf /etc/logstash

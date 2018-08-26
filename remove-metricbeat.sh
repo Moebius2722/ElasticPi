@@ -22,7 +22,8 @@ fi
 stop-metricbeat
 
 # Remove Metricbeat
-sudo dpkg --purge metricbeat
+sudo dpkg --force-all --purge metricbeat-oss
+sudo dpkg --force-all --purge metricbeat
 
 # Purge Metricbeat configuration
 sudo rm -rf /etc/metricbeat
