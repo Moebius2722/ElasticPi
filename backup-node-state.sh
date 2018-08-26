@@ -19,7 +19,7 @@ do
 echo "================================= $svc ================================"
 sudo systemctl is-enabled $svc.service >/dev/null 2>/dev/null
 if [ $? -eq 0 ] ; then
-  echo $svc | sudo tee -a /etc/elasticpi/node.state
+  echo $svc | sudo tee -a /etc/elasticpi/node.state >/dev/null 2>/dev/null
 fi
 done
 
