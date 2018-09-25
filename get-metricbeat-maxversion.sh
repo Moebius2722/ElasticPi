@@ -32,5 +32,10 @@ do
   fi
 done
 
+# Get Metricbeat Last Version if not installed on cluster
+if [[ "${MB_VERSION}" = "" ]]; then
+  MB_VERSION=`get-metricbeat-lastversion`
+fi
+
 echo $MB_VERSION
 exit 0
