@@ -21,6 +21,18 @@ MB_VERSION=$1
 
 ####### BUILD-METRICBEAT #######
 
+# Check If Already Build
+if [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/ && sha512sum metricbeat-linux-arm ]; then
+  pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION}
+  sha512sum -c /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
+  if [ $? -eq 0 ] ; then
+    popd
+    exit 0
+    # Exit Build
+  fi
+  popd
+fi
+
 # Backup Node State and Stop Node
 backup-node-state
 stop-node
