@@ -22,7 +22,7 @@ MB_VERSION=$1
 ####### BUILD-METRICBEAT #######
 
 # Check If Already Build
-if [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/ && sha512sum metricbeat-linux-arm ]; then
+if [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512 ] && [ -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm ]; then
   pushd /mnt/elasticpi/build/metricbeat/${MB_VERSION}
   sha512sum -c /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm.sha512
   if [ $? -eq 0 ] ; then
