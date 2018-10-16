@@ -46,4 +46,6 @@ echo "/usr/bin/restart-$svc => /usr/bin/restart-service"
 sudo ln -sf "/usr/bin/restart-service" "/usr/bin/restart-$svc"
 done
 
+sleep 5
+
 sudo rm -rf /opt/elasticpi.ori
