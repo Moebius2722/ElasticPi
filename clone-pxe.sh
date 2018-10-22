@@ -26,6 +26,10 @@ sudo sed -i "s/\/volume1\/rpi\/rpi/\/volume1\/rpi\/$cpuserial/" /mnt/tftp/$cpuse
 sudo umount /mnt/tftp
 sudo rm -rf /mnt/tftp
 
+sudo apt-get clean
+sudo apt-get autoclean
+sudo apt-get autoremove
+
 sudo umount /mnt/pxe
 sudo rm -rf /mnt/pxe
 sudo mkdir /mnt/pxe
