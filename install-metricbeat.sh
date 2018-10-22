@@ -93,6 +93,10 @@ sudo metricbeat setup --template -E output.logstash.enabled=false -E 'output.ela
 
 # Set up dashboards for Logstash output
 sudo metricbeat setup -e -E output.logstash.enabled=false -E output.elasticsearch.hosts=['localhost:9200'] -E setup.kibana.host=localhost:5601
+# sudo metricbeat setup --dashboards -e -E setup.dashboards.retry.enabled=true -E output.logstash.enabled=false -E output.elasticsearch.hosts=['https://192.168.0.17:9202'] -E output.elasticsearch.ssl.enabled=true -E output.elasticsearch.ssl.verification_mode=none -E setup.kibana.ssl.enabled=true -E setup.kibana.ssl.verification_mode=none -E setup.kibana.host='https://192.168.0.17:443' -E output.elasticsearch.username=pi -E output.elasticsearch.password=######
+
+
+
 
 # Configure and Start Metricbeat as Daemon
 sudo /bin/systemctl daemon-reload
