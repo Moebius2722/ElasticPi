@@ -33,10 +33,10 @@ set 4 lvm on
 sudo apt-get install lvm2 -q -y
 sudo pvcreate -ffy /dev/sda4
 sudo vgcreate -y vg0 /dev/sda4
-sudo lvcreate -L 1G -n lvusrlocal vg0
-sudo lvcreate -L 1G -n lvtmp vg0
-sudo lvcreate -L 1G -n lvvar vg0
-sudo lvcreate -L 1G -n lvhome vg0
+sudo lvcreate -L 1G -n lvusrlocal -W y vg0
+sudo lvcreate -L 1G -n lvtmp -W y vg0
+sudo lvcreate -L 1G -n lvvar -W y vg0
+sudo lvcreate -L 1G -n lvhome -W y vg0
 
 
 # Format USB Drive Partitions
@@ -77,6 +77,8 @@ sudo mount /dev/vg0/lvhome /mnt/target/home
 #sudo mkdir /mnt/target/boot
 #sudo mount /dev/sda1 /mnt/target/boot/
 # Copy SD Card OS Installation on USB Drive
+
+sudo apt-get install rsync -q -y
 sudo rsync -ax --progress / /boot /mnt/target
 
 # Preparation for Upgrade USB Drive OS Installation
