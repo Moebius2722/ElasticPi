@@ -22,6 +22,7 @@ sudo mount -t nfs 192.168.0.1:/volume1/tftp /mnt/tftp
 sudo mkdir /mnt/tftp/$cpuserial
 sudo rsync -ax --progress --exclude */ /mnt/tftp/ /mnt/tftp/$cpuserial
 sudo rsync -ax --progress /mnt/tftp/overlays /mnt/tftp/$cpuserial
+sudo sed -i "s/\/volume1\/rpi\/rpi/\/volume1\/rpi\/$cpuserial/" /mnt/tftp/$cpuserial/cmdline.txt
 sudo umount /mnt/tftp
 sudo rm -rf /mnt/tftp
 
@@ -31,10 +32,8 @@ sudo mkdir /mnt/pxe
 sudo mount -t nfs 192.168.0.1:/volume1/rpi /mnt/pxe
 sudo mkdir /mnt/pxe/$cpuserial
 sudo rsync -ax --progress  --exclude mnt/* --exclude boot/* --exclude boot/.* --exclude boot.bak/ /mnt/pxe/rpi/ /mnt/pxe/$cpuserial
+sudo sed -i "s/\/volume1\/tftp/\/volume1\/tftp\/$cpuserial/" /mnt/pxe/$cpuserial/etc/fstab
 sudo umount /mnt/pxe
 sudo rm -rf /mnt/pxe
-
-sudo sed -i "s/\/volume1\/rpi\/rpi/\/volume1\/rpi\/$cpuserial/" /mnt/tftp/$cpuserial/cmdline.txt
-sudo sed -i "s/\/volume1\/tftp/\/volume1\/tftp\/$cpuserial/" /mnt/pxe/$cpuserial/etc/fstab
 
 sudo reboot
