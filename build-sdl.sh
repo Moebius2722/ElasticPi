@@ -6,6 +6,8 @@
 
 # Full Automated Build Script for SDL on Raspberry Pi 2 or 3
 
+# For run on clean installation
+# curl -sL https://github.com/Moebius2722/ElasticPi/raw/master/build-sdl.sh | sudo bash -
 
 ####### COMMON #######
 
