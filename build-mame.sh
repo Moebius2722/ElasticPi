@@ -39,7 +39,7 @@ git clone -b mame${MAME_VERSION} --depth 1 https://github.com/mamedev/mame.git $
 
 # Build MAME
 pushd ${MAME_DIR}
-make -j1
+make REGENIE=1 TOOLS=1 -j1
 
 # Install MAME
 #sudo make install
