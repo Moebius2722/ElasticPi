@@ -14,7 +14,7 @@
 # Sync All Folders
 
 echo '============================= Sync "Comics" ===================================='
-rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Comics/ /media/media/Comics
+rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Comics/ /media/usb1to/Comics
 echo '============================= Sync "Documentaires" ============================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Documentaires/ /media/usb1to/Documentaires
 echo '============================= Sync "Enfants" ==================================='
