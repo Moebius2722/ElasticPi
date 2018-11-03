@@ -13,10 +13,17 @@
 
 # Sync All Folders
 
+echo '============================= Sync "Comics" ===================================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Comics/ /media/media/Comics
+echo '============================= Sync "Documentaires" ============================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Documentaires/ /media/usb1to/Documentaires
+echo '============================= Sync "Enfants" ==================================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Enfants/ /media/pidrive/Enfants
+echo '============================= Sync "Films" ====================================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Films/ /media/usb1to/Films
+echo '============================= Sync "Mangas" ===================================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Mangas/ /media/usb1to/Mangas
+echo '============================= Sync "Séries" ===================================='
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Séries/ /media/usb1to/Séries
+echo '============================= Sync "Spectacles" ================================'
 rsync -rtvn --progress --del --stats --force --exclude '@eaDir' --exclude '.DS_Store' /mnt/synovideo/Spectacles/ /media/usb1to/Spectacles
