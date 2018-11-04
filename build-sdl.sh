@@ -20,7 +20,7 @@ sudo apt-get remove -y --force-yes libsdl2-dev
 sudo apt-get autoremove -y
 
 # Install Prerequisites
-sudo apt-get install libfontconfig-dev qt5-default automake mercurial libtool libfreeimage-dev libopenal-dev libpango1.0-dev libsndfile-dev libudev-dev libtiff5-dev libwebp-dev libasound2-dev libaudio-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxss-dev libesd0-dev freeglut3-dev libmodplug-dev libsmpeg-dev libjpeg-dev -y -q
+sudo apt-get install checkinstall libfontconfig-dev qt5-default automake mercurial libtool libfreeimage-dev libopenal-dev libpango1.0-dev libsndfile-dev libudev-dev libtiff5-dev libwebp-dev libasound2-dev libaudio-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxss-dev libesd0-dev freeglut3-dev libmodplug-dev libsmpeg-dev libjpeg-dev -y -q
 
 # Set Working Directory Variable
 WORKDIR=${HOME}/buid-sdl
@@ -71,8 +71,21 @@ pushd ${SDL_DIR}
 ./configure --disable-pulseaudio --disable-esd --disable-video-mir --disable-video-wayland --disable-video-opengl --host=arm-raspberry-linux-gnueabihf
 make
 
+# Create SDL Debian Package
+SDL_VERSION=`echo ${SDL_RELEASE} | cut -d '-' -f 2`
+echo 'Simple DirectMedia Layer
+ SDL is a library that allows programs portable low level access to a video
+ framebuffer, audio output, mouse, and keyboard.
+ .
+ This version of SDL is compiled with X11 and Wayland graphics drivers and OSS,
+ ALSA, sndio and PulseAudio sound drivers.' | sudo tee description-pak
+sudo checkinstall -D --install=no -y --pkgname="libsdl2-${SDL_VERSION}" --pkgversion="${SDL_VERSION}" --pkgarch='armhf' --pkgrelease="${SDL_VERSION}" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
+sudo rm -f description-pak
+cp "libsdl2-${SDL_VERSION}_${SDL_VERSION}-${SDL_VERSION}_armhf.deb"  ../.
+sudo rm -f "libsdl2-${SDL_VERSION}_${SDL_VERSION}-${SDL_VERSION}_armhf.deb"
+
 # Install New SDL
-sudo make install
+sudo dpkg -i ../"libsdl2-${SDL_VERSION}_${SDL_VERSION}-${SDL_VERSION}_armhf.deb"
 popd
 
 
@@ -91,8 +104,21 @@ pushd ${SDL_image_DIR}
 ./configure
 make
 
+# Create SDL_image Debian Package
+SDL_image_VERSION=`echo ${SDL_image_RELEASE} | cut -d '-' -f 2`
+echo 'Image loading library for Simple DirectMedia Layer 2, libraries
+  This is a simple library to load images of various formats as SDL surfaces.  It
+  supports the following formats: BMP, GIF, JPEG, LBM, PCX, PNG, PNM, TGA, TIFF,
+  WEBP, XCF, XPM, XV.
+  .
+  This package contains the shared library.' | sudo tee description-pak
+sudo checkinstall -D --install=no -y --pkgname="libsdl2-image-${SDL_image_VERSION}" --pkgversion="${SDL_image_VERSION}" --pkgarch='armhf' --pkgrelease="${SDL_image_VERSION}" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-image' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
+sudo rm -f description-pak
+cp "libsdl2-image-${SDL_image_VERSION}_${SDL_image_VERSION}-${SDL_image_VERSION}_armhf.deb"  ../.
+sudo rm -f "libsdl2-image-${SDL_image_VERSION}_${SDL_image_VERSION}-${SDL_image_VERSION}_armhf.deb"
+
 # Install New SDL_image
-sudo make install
+sudo dpkg -i ../"libsdl2-image-${SDL_image_VERSION}_${SDL_image_VERSION}-${SDL_image_VERSION}_armhf.deb"
 popd
 
 
@@ -111,8 +137,22 @@ pushd ${SDL_mixer_DIR}
 ./configure
 make
 
+# Create SDL_mixer Debian Package
+SDL_mixer_VERSION=`echo ${SDL_mixer_RELEASE} | cut -d '-' -f 2`
+echo 'Mixer library for Simple DirectMedia Layer 2, libraries
+  SDL_mixer is a sample multi-channel audio mixer library.  It supports any
+  number of simultaneously playing channels of 16 bit stereo audio, plus a single
+  channel of music, mixed by the popular FLAC, modplug MOD, FluidSynth and
+  Timidity MIDI, Ogg Vorbis, and MAD or SMPEG MP3 libraries.
+  .
+  This package contains the shared library.' | sudo tee description-pak
+sudo checkinstall -D --install=no -y --pkgname="libsdl2-mixer-${SDL_mixer_VERSION}" --pkgversion="${SDL_mixer_VERSION}" --pkgarch='armhf' --pkgrelease="${SDL_mixer_VERSION}" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-mixer' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
+sudo rm -f description-pak
+cp "libsdl2-mixer-${SDL_mixer_VERSION}_${SDL_mixer_VERSION}-${SDL_mixer_VERSION}_armhf.deb"  ../.
+sudo rm -f "libsdl2-mixer-${SDL_mixer_VERSION}_${SDL_mixer_VERSION}-${SDL_mixer_VERSION}_armhf.deb"
+
 # Install New SDL_mixer
-sudo make install
+sudo dpkg -i ../"libsdl2-mixer-${SDL_mixer_VERSION}_${SDL_mixer_VERSION}-${SDL_mixer_VERSION}_armhf.deb"
 popd
 
 
@@ -131,8 +171,20 @@ pushd ${SDL_net_DIR}
 ./configure
 make
 
+# Create SDL_net Debian Package
+SDL_net_VERSION=`echo ${SDL_net_RELEASE} | cut -d '-' -f 2`
+echo 'Network library for Simple DirectMedia Layer 2, libraries
+  This is a small, low-level, cross-platform networking library, that can be used
+  with the Simple DirectMedia Layer library.
+  .
+  This package contains the shared library.' | sudo tee description-pak
+sudo checkinstall -D --install=no -y --pkgname="libsdl2-net-${SDL_net_VERSION}" --pkgversion="${SDL_net_VERSION}" --pkgarch='armhf' --pkgrelease="${SDL_net_VERSION}" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-net' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
+sudo rm -f description-pak
+cp "libsdl2-net-${SDL_net_VERSION}_${SDL_net_VERSION}-${SDL_net_VERSION}_armhf.deb"  ../.
+sudo rm -f "libsdl2-net-${SDL_net_VERSION}_${SDL_net_VERSION}-${SDL_net_VERSION}_armhf.deb"
+
 # Install New SDL_net
-sudo make install
+sudo dpkg -i ../"libsdl2-net-${SDL_net_VERSION}_${SDL_net_VERSION}-${SDL_net_VERSION}_armhf.deb"
 popd
 
 
@@ -151,6 +203,18 @@ pushd ${SDL_ttf_DIR}
 ./configure
 make
 
+# Create SDL_ttf Debian Package
+SDL_ttf_VERSION=`echo ${SDL_ttf_RELEASE} | cut -d '-' -f 2`
+echo 'TrueType Font library for Simple DirectMedia Layer 2, libraries
+  Wrapper around FreeType 2.0 library, making possible to use TrueType fonts to
+  render text in SDL applications.
+  .
+  This package contains the shared library.' | sudo tee description-pak
+sudo checkinstall -D --install=no -y --pkgname="libsdl2-ttf-${SDL_ttf_VERSION}" --pkgversion="${SDL_ttf_VERSION}" --pkgarch='armhf' --pkgrelease="${SDL_ttf_VERSION}" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-ttf' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
+sudo rm -f description-pak
+cp "libsdl2-ttf-${SDL_ttf_VERSION}_${SDL_ttf_VERSION}-${SDL_ttf_VERSION}_armhf.deb"  ../.
+sudo rm -f "libsdl2-ttf-${SDL_ttf_VERSION}_${SDL_ttf_VERSION}-${SDL_ttf_VERSION}_armhf.deb"
+
 # Install New SDL_ttf
-sudo make install
+sudo dpkg -i ../"libsdl2-ttf-${SDL_ttf_VERSION}_${SDL_ttf_VERSION}-${SDL_ttf_VERSION}_armhf.deb"
 popd
