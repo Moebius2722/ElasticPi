@@ -18,14 +18,14 @@ sudo systemctl restart dphys-swapfile.service
 # Install Prerequisites
 sudo apt-get install git build-essential libfontconfig-dev qt5-default -q -y
 
-# Set MAME Version
-MAME_VERSION=0202
+# Get MAME Last Version
+MAME_VERSION=`curl --silent "https://api.github.com/repos/mamedev/mame/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
 
 # Set Working Directory Variable
 WORKDIR=${HOME}/buid-mame
 
 # Set MAME Git Directory
-MAME_DIR=${WORKDIR}/mame${MAME_VERSION}
+MAME_DIR=${WORKDIR}/${MAME_VERSION}
 
 
 ####### BUILD-MAME #######
@@ -35,7 +35,7 @@ sudo rm -rf ${MAME_DIR}
 mkdir -p ${MAME_DIR}
 
 # Get MAME Sources
-git clone -b mame${MAME_VERSION} --depth 1 https://github.com/mamedev/mame.git ${MAME_DIR}
+git clone -b ${MAME_VERSION} --depth 1 https://github.com/mamedev/mame.git ${MAME_DIR}
 
 # Build MAME
 pushd ${MAME_DIR}

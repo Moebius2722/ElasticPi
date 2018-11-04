@@ -25,20 +25,35 @@ sudo apt-get install libfontconfig-dev qt5-default automake mercurial libtool li
 # Set Working Directory Variable
 WORKDIR=${HOME}/buid-sdl
 
+# Get Last SDL Release
+SDL_RELEASE=`curl --silent "http://hg.libsdl.org/SDL/tags" | grep 'release-' | cut -d '>' -f 4 | cut -d '<' -f 1 | sort -V -r | head -1`
+
 # Set SDL Mercurial Directory
-SDL_DIR=${WORKDIR}/sdl
+SDL_DIR=${WORKDIR}/sdl/${SDL_RELEASE}
+
+# Get Last SDL_image Release
+SDL_image_RELEASE=`curl --silent "http://hg.libsdl.org/SDL_image/tags" | grep 'release-' | cut -d '>' -f 4 | cut -d '<' -f 1 | sort -V -r | head -1`
 
 # Set SDL_image Mercurial Directory
-SDL_image_DIR=${WORKDIR}/sdl_image
+SDL_image_DIR=${WORKDIR}/sdl_image/${SDL_image_RELEASE}
+
+# Get Last SDL_mixer Release
+SDL_mixer_RELEASE=`curl --silent "http://hg.libsdl.org/SDL_mixer/tags" | grep 'release-' | cut -d '>' -f 4 | cut -d '<' -f 1 | sort -V -r | head -1`
 
 # Set SDL_mixer Mercurial Directory
-SDL_mixer_DIR=${WORKDIR}/sdl_mixer
+SDL_mixer_DIR=${WORKDIR}/sdl_mixer/${SDL_mixer_RELEASE}
+
+# Get Last SDL_net Release
+SDL_net_RELEASE=`curl --silent "http://hg.libsdl.org/SDL_net/tags" | grep 'release-' | cut -d '>' -f 4 | cut -d '<' -f 1 | sort -V -r | head -1`
 
 # Set SDL_net Mercurial Directory
-SDL_net_DIR=${WORKDIR}/sdl_net
+SDL_net_DIR=${WORKDIR}/sdl_net/${SDL_net_RELEASE}
+
+# Get Last SDL_ttf Release
+SDL_ttf_RELEASE=`curl --silent "http://hg.libsdl.org/SDL_ttf/tags" | grep 'release-' | cut -d '>' -f 4 | cut -d '<' -f 1 | sort -V -r | head -1`
 
 # Set SDL_ttf Mercurial Directory
-SDL_ttf_DIR=${WORKDIR}/sdl_ttf
+SDL_ttf_DIR=${WORKDIR}/sdl_ttf/${SDL_ttf_RELEASE}
 
 
 ####### BUILD-SDL #######
@@ -48,7 +63,7 @@ sudo rm -rf ${SDL_DIR}
 mkdir -p ${SDL_DIR}
 
 # Get SDL Sources
-hg clone http://hg.libsdl.org/SDL ${SDL_DIR}
+hg clone -u ${SDL_RELEASE} http://hg.libsdl.org/SDL ${SDL_DIR}
 
 # Build SDL
 pushd ${SDL_DIR}
@@ -68,7 +83,7 @@ sudo rm -rf ${SDL_image_DIR}
 mkdir -p ${SDL_image_DIR}
 
 # Get SDL_image Sources
-hg clone http://hg.libsdl.org/SDL_image ${SDL_image_DIR}
+hg clone -u ${SDL_image_RELEASE} http://hg.libsdl.org/SDL_image ${SDL_image_DIR}
 
 # Build SDL_image
 pushd ${SDL_image_DIR}
@@ -88,7 +103,7 @@ sudo rm -rf ${SDL_mixer_DIR}
 mkdir -p ${SDL_mixer_DIR}
 
 # Get SDL_mixer Sources
-hg clone http://hg.libsdl.org/SDL_mixer ${SDL_mixer_DIR}
+hg clone -u ${SDL_mixer_RELEASE} http://hg.libsdl.org/SDL_mixer ${SDL_mixer_DIR}
 
 # Build SDL_mixer
 pushd ${SDL_mixer_DIR}
@@ -108,7 +123,7 @@ sudo rm -rf ${SDL_net_DIR}
 mkdir -p ${SDL_net_DIR}
 
 # Get SDL_net Sources
-hg clone http://hg.libsdl.org/SDL_net ${SDL_net_DIR}
+hg clone -u ${SDL_net_RELEASE} http://hg.libsdl.org/SDL_net ${SDL_net_DIR}
 
 # Build SDL_net
 pushd ${SDL_net_DIR}
@@ -128,7 +143,7 @@ sudo rm -rf ${SDL_ttf_DIR}
 mkdir -p ${SDL_ttf_DIR}
 
 # Get SDL_ttf Sources
-hg clone http://hg.libsdl.org/SDL_ttf ${SDL_ttf_DIR}
+hg clone -u ${SDL_ttf_RELEASE} http://hg.libsdl.org/SDL_ttf ${SDL_ttf_DIR}
 
 # Build SDL_ttf
 pushd ${SDL_ttf_DIR}
