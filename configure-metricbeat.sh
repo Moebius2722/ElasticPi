@@ -57,8 +57,14 @@ if [ ! -d /etc/metricbeat/modules.d ]; then
   # Fix Modules Path for 6.4.0
   sudo sed -i "s/\${path\.config}\/modules.d\/\*\.yml/\/usr\/share\/metricbeat\/modules.d\/\*\.yml/" /etc/metricbeat/metricbeat.yml
   # Configure Metricbeat Period
-  sudo sed -i 's/  period: 10s/  period: 30s/' /usr/share/metricbeat/modules.d/system.yml
+  # sudo sed -i 's/  period: 10s/  period: 30s/' /usr/share/metricbeat/modules.d/system.yml
+  sudo sed -i 's/  \#\- core/  \- core/' /usr/share/metricbeat/modules.d/system.yml
+  sudo sed -i 's/  \#\- diskio/  \- diskio/' /usr/share/metricbeat/modules.d/system.yml
+  sudo sed -i 's/  \#\- socket/  \- socket/' /usr/share/metricbeat/modules.d/system.yml
 else
   # Configure Metricbeat Period
-  sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
+  # sudo sed -i 's/  period: 10s/  period: 30s/' /etc/metricbeat/modules.d/system.yml
+  sudo sed -i 's/  \#\- core/  \- core/' /etc/metricbeat/modules.d/system.yml
+  sudo sed -i 's/  \#\- diskio/  \- diskio/' /etc/metricbeat/modules.d/system.yml
+  sudo sed -i 's/  \#\- socket/  \- socket/' /etc/metricbeat/modules.d/system.yml
 fi
