@@ -88,15 +88,15 @@ build-metricbeat ${MB_VERSION}
 # Replace Metricbeat Binary
 sudo cp -f /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-linux-arm /usr/share/metricbeat/bin/metricbeat
 
-# Load Index Template
-sudo metricbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["localhost:9200"]'
+# Check if cluster is created
+if [ -f /etc/elasticpi/nodes.lst ]; then
+  # Load Index Template
+  sudo metricbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["localhost:9200"]'
 
-# Set up dashboards for Logstash output
-sudo metricbeat setup -e -E output.logstash.enabled=false -E output.elasticsearch.hosts=['localhost:9200'] -E setup.kibana.host=localhost:5601
-# sudo metricbeat setup --dashboards -e -E setup.dashboards.retry.enabled=true -E output.logstash.enabled=false -E output.elasticsearch.hosts=['https://192.168.0.17:9202'] -E output.elasticsearch.ssl.enabled=true -E output.elasticsearch.ssl.verification_mode=none -E setup.kibana.ssl.enabled=true -E setup.kibana.ssl.verification_mode=none -E setup.kibana.host='https://192.168.0.17:443' -E output.elasticsearch.username=pi -E output.elasticsearch.password=######
-
-
-
+  # Set up dashboards for Logstash output
+  sudo metricbeat setup -e -E output.logstash.enabled=false -E output.elasticsearch.hosts=['localhost:9200'] -E setup.kibana.host=localhost:5601
+  # sudo metricbeat setup --dashboards -e -E setup.dashboards.retry.enabled=true -E output.logstash.enabled=false -E output.elasticsearch.hosts=['https://192.168.0.17:9202'] -E output.elasticsearch.ssl.enabled=true -E output.elasticsearch.ssl.verification_mode=none -E setup.kibana.ssl.enabled=true -E setup.kibana.ssl.verification_mode=none -E setup.kibana.host='https://192.168.0.17:443' -E output.elasticsearch.username=pi -E output.elasticsearch.password=######
+fi
 
 # Configure and Start Metricbeat as Daemon
 sudo /bin/systemctl daemon-reload
