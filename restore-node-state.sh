@@ -11,7 +11,7 @@
 
 # Check if node state is backup
 if [ ! -f /etc/elasticpi/node.state ]; then
-  echo "Backup Node State Befoe Restore"
+  echo "Backup Node State Before Restore"
   exit 1
 fi
 
