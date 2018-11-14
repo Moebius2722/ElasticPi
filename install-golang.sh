@@ -45,7 +45,7 @@ else
 fi
 
 # Install Golang
-sudo tar -C /usr/local -xzf /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz && echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a /etc/profile && echo 'export GOPATH=$HOME/go' | sudo tee -a /etc/profile && echo 'export PATH=$PATH:$GOPATH/bin' | sudo tee -a /etc/profile && sudo ln -sf /usr/local/go/bin/go /usr/bin/go
+sudo tar -C /usr/local -xzf /mnt/elasticpi/build/golang/${GO_VERSION}/${GO_VERSION}.linux-armv6l.tar.gz && echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee /etc/profile.d/go.sh && echo 'export GOPATH=$HOME/go' | sudo tee -a /etc/profile.d/go.sh && echo 'export PATH=$PATH:$GOPATH/bin' | sudo tee -a /etc/profile.d/go.sh && sudo chmod a+x /etc/profile.d/go.sh && sudo ln -sf /etc/profile.d/go.sh /etc/bashrc.d/go.sh && sudo ln -sf /usr/local/go/bin/go /usr/bin/go
 export PATH=$PATH:/usr/local/go/bin
 mkdir -p $HOME/go
 export GOPATH=$HOME/go
