@@ -149,8 +149,7 @@ sudo /usr/share/logstash/bin/logstash-plugin update
 sudo /usr/share/logstash/bin/logstash-plugin install logstash-patterns-core
 
 # Configure and Start Logstash as Daemon
-sudo sed -i 's/Nice=.*/Nice=1/' /etc/systemd/system/logstash.service
-sudo /bin/systemctl daemon-reload
+sudo sed -i 's/LS_NICE=.*/LS_NICE=1/' /etc/logstash/startup.options
 
 # Set Logstash Node Configuration
 configure-logstash $e_ip $e_user $e_password
