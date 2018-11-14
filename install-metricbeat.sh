@@ -83,6 +83,7 @@ rm -f /tmp/metricbeat-oss-${MB_VERSION}-amd64.deb.sha512
 sudo dpkg --force-architecture --force-confold --force-overwrite -i /mnt/elasticpi/build/metricbeat/${MB_VERSION}/metricbeat-oss-${MB_VERSION}-amd64.deb
 
 # Buid Metricbeat Binary
+echo GOPATH=${GOPATH}
 build-metricbeat ${MB_VERSION}
 
 # Replace Metricbeat Binary
