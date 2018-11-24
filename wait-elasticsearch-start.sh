@@ -50,6 +50,9 @@ done
 echo
 if [ "$s_check" != "yellow" ] && [ "$s_check" != "green" ] && [ $int_cpt -eq 120 ]; then
   echo "Time Out for start-up nodes"
+  date
+  echo "========================= End Wait Elasticsearch Start ========================="
+  exit 2
 else
   echo "Elasticsearch Started"
   # Wait for the nodes to recover
@@ -64,6 +67,9 @@ else
   echo
   if [ "$s_check" != "green" ] && [ $int_cpt -eq 180 ]; then
     echo "Time Out for the node to recover."
+    date
+    echo "========================= End Wait Elasticsearch Start ========================="
+    exit 3
   else
     echo "Elasticsearch Recovered"
   fi
@@ -71,3 +77,4 @@ fi
 
 date
 echo "========================= End Wait Elasticsearch Start ========================="
+exit 0
