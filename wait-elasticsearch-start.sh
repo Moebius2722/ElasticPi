@@ -57,6 +57,7 @@ else
   echo "Elasticsearch Started"
   # Wait for the nodes to recover
   echo "Wait for the Elasticsearch nodes to recover"
+  sleep 10
   int_cpt=0
   while [ "$s_check" != "green" ] && [ $int_cpt -lt 180 ]; do
     s_check=`curl -ss -XGET "$node:9200/_cat/health?pretty"|cut -d ' ' -f 4`
