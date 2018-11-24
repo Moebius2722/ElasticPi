@@ -36,6 +36,9 @@ echo "Update Elasticsearch ${E_CVERSION} to ${E_VERSION}"
 #
 #sleep 10
 
+# Wait for start-up nodes and cluster state is green
+wait-elasticsearch-start
+
 # Stop non-essential indexing and perform a synced flush
 curl -XPOST 'localhost:9200/_flush/synced?pretty'
 
