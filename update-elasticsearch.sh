@@ -38,6 +38,10 @@ echo "Update Elasticsearch ${E_CVERSION} to ${E_VERSION}"
 
 # Wait for start-up nodes and cluster state is green
 wait-elasticsearch-start
+if [ $? -ne 0 ] ; then
+  echo "Elasticsearch isn't ready for update" >&2
+  exit 1
+fi
 
 # Stop non-essential indexing and perform a synced flush
 curl -XPOST 'localhost:9200/_flush/synced?pretty'
@@ -68,7 +72,8 @@ if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_V
     sha512sum -c /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
     if [ $? -ne 0 ] ; then
       popd
-      exit 1
+      echo "Elasticsearch package corrupted" >&2
+      exit 2
     fi
 	  popd
 	  sudo cp -f /tmp/elasticsearch-oss-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb
@@ -82,7 +87,8 @@ else
   sha512sum -c /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
   if [ $? -ne 0 ] ; then
     popd
-	  exit 1
+    echo "Elasticsearch package corrupted" >&2
+	  exit 2
   fi
   popd
   sudo cp -f /tmp/elasticsearch-oss-${E_VERSION}.deb /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb
@@ -92,6 +98,10 @@ rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
 
 # Update Elasticsearch
 sudo dpkg --force-confold --force-overwrite -i /mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}.deb
+if [[ $? -ne 0 ]] ; then
+  echo "Elasticsearch installation package failed." >&2
+  exit 3
+fi
 
 # Get JNA Version
 JNA_JAR=`ls /usr/share/elasticsearch/lib/jna-*.jar`
@@ -134,3 +144,9 @@ sudo pip install --upgrade PySocks && sudo pip install --upgrade elasticsearch-c
 
 # Wait for start-up nodes
 wait-elasticsearch-start
+if [ $? -ne 0 ] ; then
+  echo "Elasticsearch update failed" >&2
+  exit 4
+fi
+echo "Elasticsearch update successful"
+exit 0
