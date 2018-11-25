@@ -46,7 +46,7 @@ do
     sls=KO
   fi
   printf "$sls "
-  ssh -t $ipnode check-kiba'  ' >/dev/null 2>/dev/null
+  ssh -t $ipnode check-kibana >/dev/null 2>/dev/null
   ekb=$?
   if [[ $ekb = 0 ]] ; then
     skb=ok
