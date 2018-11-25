@@ -37,81 +37,90 @@ do
   fi
   printf "$ses "
   ssh -t $ipnode check-logstash >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  els=$?
+  if [[ $els = 0 ]] ; then
     sls=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $els = 4 ]] ; then
     sls='  '
   else
     sls=KO
   fi
   printf "$sls "
   ssh -t $ipnode check-kiba'  ' >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  ekb=$?
+  if [[ $ekb = 0 ]] ; then
     skb=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $ekb = 4 ]] ; then
     skb='  '
   else
     skb=KO
   fi
   printf "$skb "
   ssh -t $ipnode check-metricbeat >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  emb=$?
+  if [[ $emb = 0 ]] ; then
     smb=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $emb = 4 ]] ; then
     smb='  '
   else
     smb=KO
   fi
   printf "$smb "
   ssh -t $ipnode check-nginx >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  eng=$?
+  if [[ $eng = 0 ]] ; then
     sng=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $eng = 4 ]] ; then
     sng='  '
   else
     sng=KO
   fi
   printf "$sng "
   ssh -t $ipnode check-cerebro >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  ecb=$?
+  if [[ $ecb = 0 ]] ; then
     scb=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $ecb = 4 ]] ; then
     scb='  '
   else
     scb=KO
   fi
   printf "$scb "
   ssh -t $ipnode check-nodered >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  enr=$?
+  if [[ $enr = 0 ]] ; then
     snr=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $enr = 4 ]] ; then
     snr='  '
   else
     snr=KO
   fi
   printf "$snr "
   ssh -t $ipnode check-mosquitto >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  emq=$?
+  if [[ $emq = 0 ]] ; then
     smq=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $emq = 4 ]] ; then
     smq='  '
   else
     smq=KO
   fi
   printf "$smq "
   ssh -t $ipnode check-keepalived >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  eka=$?
+  if [[ $eka = 0 ]] ; then
     ska=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $eka = 4 ]] ; then
     ska='  '
   else
     ska=KO
   fi
   printf "$ska "
   ssh -t $ipnode check-squid >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  esq=$?
+  if [[ $esq = 0 ]] ; then
     ssq=ok
-  elif [[ $? = 4 ]] ; then
+  elif [[ $esq = 4 ]] ; then
     ssq='  '
   else
     ssq=KO
