@@ -27,10 +27,11 @@ do
   iend=$((17-ilen))
   printf "%${iend}s"
   ssh -t $ipnode check-elasticsearch >/dev/null 2>/dev/null
-  if [[ $? = 0 ]] ; then
+  ees=$?
+  if [[ $ees = 0 ]] ; then
     ses=ok
-  elif [[ $? = 4 ]] ; then
-    ses=NA
+  elif [[ $ees = 4 ]] ; then
+    ses='  '
   else
     ses=KO
   fi
@@ -39,16 +40,16 @@ do
   if [[ $? = 0 ]] ; then
     sls=ok
   elif [[ $? = 4 ]] ; then
-    sls=NA
+    sls='  '
   else
     sls=KO
   fi
   printf "$sls "
-  ssh -t $ipnode check-kibana >/dev/null 2>/dev/null
+  ssh -t $ipnode check-kiba'  ' >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     skb=ok
   elif [[ $? = 4 ]] ; then
-    skb=NA
+    skb='  '
   else
     skb=KO
   fi
@@ -57,7 +58,7 @@ do
   if [[ $? = 0 ]] ; then
     smb=ok
   elif [[ $? = 4 ]] ; then
-    smb=NA
+    smb='  '
   else
     smb=KO
   fi
@@ -66,7 +67,7 @@ do
   if [[ $? = 0 ]] ; then
     sng=ok
   elif [[ $? = 4 ]] ; then
-    sng=NA
+    sng='  '
   else
     sng=KO
   fi
@@ -75,7 +76,7 @@ do
   if [[ $? = 0 ]] ; then
     scb=ok
   elif [[ $? = 4 ]] ; then
-    scb=NA
+    scb='  '
   else
     scb=KO
   fi
@@ -84,7 +85,7 @@ do
   if [[ $? = 0 ]] ; then
     snr=ok
   elif [[ $? = 4 ]] ; then
-    snr=NA
+    snr='  '
   else
     snr=KO
   fi
@@ -93,7 +94,7 @@ do
   if [[ $? = 0 ]] ; then
     smq=ok
   elif [[ $? = 4 ]] ; then
-    smq=NA
+    smq='  '
   else
     smq=KO
   fi
@@ -102,7 +103,7 @@ do
   if [[ $? = 0 ]] ; then
     ska=ok
   elif [[ $? = 4 ]] ; then
-    ska=NA
+    ska='  '
   else
     ska=KO
   fi
@@ -111,7 +112,7 @@ do
   if [[ $? = 0 ]] ; then
     ssq=ok
   elif [[ $? = 4 ]] ; then
-    ssq=NA
+    ssq='  '
   else
     ssq=KO
   fi
