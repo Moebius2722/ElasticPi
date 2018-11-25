@@ -29,6 +29,8 @@ do
   ssh -t $ipnode check-elasticsearch >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     ses=ok
+  elif [[ $? = 4 ]] ; then
+    ses=NA
   else
     ses=KO
   fi
@@ -36,6 +38,8 @@ do
   ssh -t $ipnode check-logstash >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     sls=ok
+  elif [[ $? = 4 ]] ; then
+    sls=NA
   else
     sls=KO
   fi
@@ -43,6 +47,8 @@ do
   ssh -t $ipnode check-kibana >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     skb=ok
+  elif [[ $? = 4 ]] ; then
+    skb=NA
   else
     skb=KO
   fi
@@ -50,6 +56,8 @@ do
   ssh -t $ipnode check-metricbeat >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     smb=ok
+  elif [[ $? = 4 ]] ; then
+    smb=NA
   else
     smb=KO
   fi
@@ -57,6 +65,8 @@ do
   ssh -t $ipnode check-nginx >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     sng=ok
+  elif [[ $? = 4 ]] ; then
+    sng=NA
   else
     sng=KO
   fi
@@ -64,6 +74,8 @@ do
   ssh -t $ipnode check-cerebro >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     scb=ok
+  elif [[ $? = 4 ]] ; then
+    scb=NA
   else
     scb=KO
   fi
@@ -71,6 +83,8 @@ do
   ssh -t $ipnode check-nodered >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     snr=ok
+  elif [[ $? = 4 ]] ; then
+    snr=NA
   else
     snr=KO
   fi
@@ -78,6 +92,8 @@ do
   ssh -t $ipnode check-mosquitto >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     smq=ok
+  elif [[ $? = 4 ]] ; then
+    smq=NA
   else
     smq=KO
   fi
@@ -85,6 +101,8 @@ do
   ssh -t $ipnode check-keepalived >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     ska=ok
+  elif [[ $? = 4 ]] ; then
+    ska=NA
   else
     ska=KO
   fi
@@ -92,6 +110,8 @@ do
   ssh -t $ipnode check-squid >/dev/null 2>/dev/null
   if [[ $? = 0 ]] ; then
     ssq=ok
+  elif [[ $? = 4 ]] ; then
+    ssq=NA
   else
     ssq=KO
   fi
