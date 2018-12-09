@@ -22,7 +22,7 @@ fi
 stop-nginx
 
 # Remove Nginx Daemon
-sudo apt-get purge nginx-common -q -y
+sudo apt-get purge nginx-common nginx -q -y
 sudo apt-get autoremove --purge -q -y
 sudo /bin/systemctl daemon-reload
 
