@@ -22,7 +22,8 @@ NGX_VERSION=$1
 ####### BUILD-NGINX #######
 
 # Check If Already Build
-if [ -f /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb ] && [ -d /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb.sha512 ]; then
+
+if [ -f /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb ] && [ -f /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb.sha512 ]; then
   pushd /mnt/elasticpi/build/nginx/${NGX_VERSION}
   sha512sum -c /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb.sha512
   if [ $? -eq 0 ] ; then
