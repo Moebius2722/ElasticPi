@@ -44,9 +44,7 @@ stop-nginx
 build-nginx ${NGX_VERSION}
 
 # Install Nginx Reverse Proxy
-pushd /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}
-sudo make install
-popd
+sudo dpkg -i /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb
 
 # Start Nginx Daemon
 start-nginx
