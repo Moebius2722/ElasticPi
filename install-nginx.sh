@@ -42,9 +42,7 @@ sudo apt-get install libpcre3 libpcre3-dev libperl5.24 libperl-dev zlib1g zlib1g
 build-nginx ${NGX_VERSION}
 
 # Install Nginx Reverse Proxy
-pushd /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx-${NGX_VERSION}
-sudo make install
-popd
+sudo dpkg -i /mnt/elasticpi/build/nginx/${NGX_VERSION}/nginx_${NGX_VERSION}-1_armhf.deb
 
 # Configure Nginx Daemon
 sudo apt-get -o Dpkg::Options::="--force-overwrite" -o Dpkg::Options::="--force-confnew" install nginx-common -q -y
