@@ -74,7 +74,8 @@ pushd /mnt/elasticpi/build/nginx/${NGX_VERSION}
 sha512sum nginx_${NGX_VERSION}-1_armhf.deb | sudo tee nginx_${NGX_VERSION}-1_armhf.deb.sha512
 popd
 
-# Clean Working Directories
+# Clean Temp
+sudo rm -f /tmp/nginx-${NGX_VERSION}.tar.gz
 sudo rm -rf /tmp/nginx-${NGX_VERSION}
 sudo rm -rf /tmp/ngx_http_auth_pam_module
 
