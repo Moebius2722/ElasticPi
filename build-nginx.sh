@@ -65,7 +65,7 @@ echo 'Small, powerful, scalable web/proxy server
 Nginx ("engine X") is a high-performance web and reverse proxy server created by Igor Sysoev. It can be used both as a standalone web server and as a proxy to reduce the load on back-end HTTP or mail servers.
 
 This is a dependency package to install either nginx-full (by default), nginx-light or nginx-extras.' | sudo tee description-pak
-sudo checkinstall -D --install=no -y --pkgname="nginx" --pkgversion="${NGX_VERSION}" --pkgarch='armhf' --pkgrelease="1" --pkglicense='BSD' --pkggroup='httpd' --pkgsource='nginx' --pkgaltsource='' --maintainer='pkg-nginx-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
+sudo checkinstall -D --install=no -y --pkgname="nginx" --pkgversion="${NGX_VERSION}" --pkgarch='armhf' --pkgrelease="1" --pkglicense='BSD' --pkggroup='httpd' --pkgsource='nginx' --pkgaltsource='' --maintainer='pkg-nginx-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no --exclude=/etc/nginx/koi-utf
 popd
 
 # Copy Nginx Package to Repository
