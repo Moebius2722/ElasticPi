@@ -82,11 +82,11 @@ echo 'Simple DirectMedia Layer
  ALSA, sndio and PulseAudio sound drivers.' | sudo tee description-pak
 sudo checkinstall -D --install=no -y --pkgname="libsdl2-${SDL_SVERSION}-0" --pkgversion="${SDL_VERSION}" --pkgarch='armhf' --pkgrelease="0" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
 sudo rm -f description-pak
-cp "libsdl2-${SDL_SVERSION}-0_${SDL_VERSION}-0_armhf.deb"  ../.
+cp "libsdl2-${SDL_SVERSION}-0_${SDL_VERSION}-0_armhf.deb"  ../../.
 sudo rm -f "libsdl2-${SDL_SVERSION}-0_${SDL_VERSION}-0_armhf.deb"
 
 # Install New SDL
-sudo dpkg -i ../"libsdl2-${SDL_SVERSION}-0_${SDL_VERSION}-0_armhf.deb"
+sudo dpkg -i ../../"libsdl2-${SDL_SVERSION}-0_${SDL_VERSION}-0_armhf.deb"
 popd
 
 
@@ -116,11 +116,11 @@ echo 'Image loading library for Simple DirectMedia Layer 2, libraries
   This package contains the shared library.' | sudo tee description-pak
 sudo checkinstall -D --install=no -y --pkgname="libsdl2-image-${SDL_image_SVERSION}-0" --pkgversion="${SDL_image_VERSION}" --pkgarch='armhf' --pkgrelease="0" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-image' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
 sudo rm -f description-pak
-cp "libsdl2-image-${SDL_image_SVERSION}-0_${SDL_image_VERSION}-0_armhf.deb"  ../.
+cp "libsdl2-image-${SDL_image_SVERSION}-0_${SDL_image_VERSION}-0_armhf.deb"  ../../.
 sudo rm -f "libsdl2-image-${SDL_image_SVERSION}-0_${SDL_image_VERSION}-0_armhf.deb"
 
 # Install New SDL_image
-sudo dpkg -i ../"libsdl2-image-${SDL_image_SVERSION}-0_${SDL_image_VERSION}-0_armhf.deb"
+sudo dpkg -i ../../"libsdl2-image-${SDL_image_SVERSION}-0_${SDL_image_VERSION}-0_armhf.deb"
 popd
 
 
@@ -151,11 +151,11 @@ echo 'Mixer library for Simple DirectMedia Layer 2, libraries
   This package contains the shared library.' | sudo tee description-pak
 sudo checkinstall -D --install=no -y --pkgname="libsdl2-mixer-${SDL_mixer_SVERSION}-0" --pkgversion="${SDL_mixer_VERSION}" --pkgarch='armhf' --pkgrelease="0" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-mixer' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
 sudo rm -f description-pak
-cp "libsdl2-mixer-${SDL_mixer_SVERSION}-0_${SDL_mixer_VERSION}-0_armhf.deb"  ../.
+cp "libsdl2-mixer-${SDL_mixer_SVERSION}-0_${SDL_mixer_VERSION}-0_armhf.deb"  ../../.
 sudo rm -f "libsdl2-mixer-${SDL_mixer_SVERSION}-0_${SDL_mixer_VERSION}-0_armhf.deb"
 
 # Install New SDL_mixer
-sudo dpkg -i ../"libsdl2-mixer-${SDL_mixer_SVERSION}-0_${SDL_mixer_VERSION}-0_armhf.deb"
+sudo dpkg -i ../../"libsdl2-mixer-${SDL_mixer_SVERSION}-0_${SDL_mixer_VERSION}-0_armhf.deb"
 popd
 
 
@@ -184,11 +184,11 @@ echo 'Network library for Simple DirectMedia Layer 2, libraries
   This package contains the shared library.' | sudo tee description-pak
 sudo checkinstall -D --install=no -y --pkgname="libsdl2-net-${SDL_net_SVERSION}-0" --pkgversion="${SDL_net_VERSION}" --pkgarch='armhf' --pkgrelease="0" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-net' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
 sudo rm -f description-pak
-cp "libsdl2-net-${SDL_net_SVERSION}-0_${SDL_net_VERSION}-0_armhf.deb"  ../.
+cp "libsdl2-net-${SDL_net_SVERSION}-0_${SDL_net_VERSION}-0_armhf.deb"  ../../.
 sudo rm -f "libsdl2-net-${SDL_net_SVERSION}-0_${SDL_net_VERSION}-0_armhf.deb"
 
 # Install New SDL_net
-sudo dpkg -i ../"libsdl2-net-${SDL_net_SVERSION}-0_${SDL_net_VERSION}-0_armhf.deb"
+sudo dpkg -i ../../"libsdl2-net-${SDL_net_SVERSION}-0_${SDL_net_VERSION}-0_armhf.deb"
 popd
 
 
@@ -217,9 +217,9 @@ echo 'TrueType Font library for Simple DirectMedia Layer 2, libraries
   This package contains the shared library.' | sudo tee description-pak
 sudo checkinstall -D --install=no -y --pkgname="libsdl2-ttf-${SDL_ttf_SVERSION}-0" --pkgversion="${SDL_ttf_VERSION}" --pkgarch='armhf' --pkgrelease="0" --pkglicense='ZLIB' --pkggroup='libs' --pkgsource='libsdl2-ttf' --pkgaltsource='' --maintainer='pkg-sdl-maintainers@lists.alioth.debian.org' --provides='' --requires='' --conflicts='' --replaces='' --nodoc --deldoc=yes --deldesc=yes --delspec=yes --backup=no
 sudo rm -f description-pak
-cp "libsdl2-ttf-${SDL_ttf_SVERSION}-0_${SDL_ttf_VERSION}-0_armhf.deb"  ../.
+cp "libsdl2-ttf-${SDL_ttf_SVERSION}-0_${SDL_ttf_VERSION}-0_armhf.deb"  ../../.
 sudo rm -f "libsdl2-ttf-${SDL_ttf_SVERSION}-0_${SDL_ttf_VERSION}-0_armhf.deb"
 
 # Install New SDL_ttf
-sudo dpkg -i ../"libsdl2-ttf-${SDL_ttf_SVERSION}-0_${SDL_ttf_VERSION}-0_armhf.deb"
+sudo dpkg -i ../../"libsdl2-ttf-${SDL_ttf_SVERSION}-0_${SDL_ttf_VERSION}-0_armhf.deb"
 popd
