@@ -25,7 +25,7 @@ MAME_VERSION=`curl --silent "https://api.github.com/repos/mamedev/mame/releases/
 MAME_RELEASE=`echo ${MAME_VERSION} | cut -c5-`
 
 # Set Working Directory Variable
-WORKDIR=${HOME}/buid-mame
+WORKDIR=${HOME}/build-mame
 
 # Set MAME Git Directory
 MAME_DIR=${WORKDIR}/${MAME_VERSION}

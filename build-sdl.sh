@@ -23,7 +23,7 @@ sudo apt-get autoremove -y
 sudo apt-get install checkinstall libfontconfig-dev qt5-default automake mercurial libtool libfreeimage-dev libopenal-dev libpango1.0-dev libsndfile-dev libudev-dev libtiff5-dev libwebp-dev libasound2-dev libaudio-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxss-dev libesd0-dev freeglut3-dev libmodplug-dev libsmpeg-dev libjpeg-dev -y -q
 
 # Set Working Directory Variable
-WORKDIR=${HOME}/buid-sdl
+WORKDIR=${HOME}/build-sdl
 
 # Get Last SDL Release
 SDL_RELEASE=`curl --silent "http://hg.libsdl.org/SDL/tags" | grep 'release-' | cut -d '>' -f 4 | cut -d '<' -f 1 | sort -V -r | head -1`
