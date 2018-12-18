@@ -7,7 +7,8 @@ actions:
     options:
       repository: 'espibackup'
       name: 'all-%Y-%m-%d-%H-%M'
-      ignore_unavailable: False
+      ignore_empty_list: True
+      ignore_unavailable: True
       include_global_state: True
       partial: False
       wait_for_completion: True
@@ -32,7 +33,8 @@ actions:
     options:
       repository: 'espibackup'
       name: 'kibana-%Y-%m-%d-%H-%M'
-      ignore_unavailable: False
+      ignore_empty_list: True
+      ignore_unavailable: True
       include_global_state: True
       partial: False
       wait_for_completion: True
@@ -48,7 +50,7 @@ actions:
   3:
     action: delete_snapshots
     description:  >-
-      Delete snapshots from 'espibackup' older than 12 months
+      Delete snapshots from 'espibackup' older than 3 months
     options:
       repository: 'espibackup'
       ignore_empty_list: True
@@ -56,12 +58,10 @@ actions:
       disable_action: False
     filters:
     - filtertype: age
-      source: name
+      source: creation_date
       direction: older
-      timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
-      exclude:
+      unit_count: 3
   4:
     action: close
     description: >-
@@ -88,7 +88,7 @@ actions:
   5:
     action: delete_indices
     description: >-
-      Delete indices older than 12 months (based on index name), for squid-
+      Delete indices older than 3 months (based on index name), for squid-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -106,7 +106,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
+      unit_count: 3
       exclude:
   6:
     action: close
@@ -134,7 +134,7 @@ actions:
   7:
     action: delete_indices
     description: >-
-      Delete indices older than 12 months (based on index name), for syslog-
+      Delete indices older than 3 months (based on index name), for syslog-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -152,7 +152,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
+      unit_count: 3
       exclude:
   8:
     action: close
@@ -180,7 +180,7 @@ actions:
   9:
     action: delete_indices
     description: >-
-      Delete indices older than 12 months (based on index name), for logstash-
+      Delete indices older than 3 months (based on index name), for logstash-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -198,7 +198,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
+      unit_count: 3
       exclude:
   10:
     action: close
@@ -226,7 +226,7 @@ actions:
   11:
     action: delete_indices
     description: >-
-      Delete indices older than 12 months (based on index name), for measure-
+      Delete indices older than 3 months (based on index name), for measure-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -244,9 +244,9 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
+      unit_count: 3
       exclude:
-  12:
+  3:
     action: close
     description: >-
       Close indices older than 7 days (based on index name), for grokparsefailure-
@@ -272,7 +272,7 @@ actions:
   13:
     action: delete_indices
     description: >-
-      Delete indices older than 12 months (based on index name), for grokparsefailure-
+      Delete indices older than 3 months (based on index name), for grokparsefailure-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -290,7 +290,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
+      unit_count: 3
       exclude:
   14:
     action: close
@@ -318,7 +318,7 @@ actions:
   15:
     action: delete_indices
     description: >-
-      Delete indices older than 12 months (based on index name), for metricbeat-
+      Delete indices older than 3 months (based on index name), for metricbeat-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -336,5 +336,5 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: months
-      unit_count: 12
+      unit_count: 3
       exclude:
