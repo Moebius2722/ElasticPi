@@ -150,6 +150,8 @@ sudo sed -i "/^transport\.bind_host: .*/a transport.publish_host: $iphost" /etc/
 sudo sed -i "/^transport\.publish_host: .*/a transport.host: $iphost" /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#node\.max_local_storage_nodes: .*/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
+echo 'cluster.routing.allocation.disk.threshold_enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+
 
 # Enable Site Plugins
 echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
@@ -163,12 +165,6 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-file
 sudo sed -i '/#discovery\.zen\.ping\.unicast\.hosts: .*/a discovery.zen.hosts_provider: file' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#discovery\.zen\.minimum_master_nodes: .*/a discovery.zen.minimum_master_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 sudo cp -f /etc/elasticpi/nodes.lst /etc/elasticsearch/discovery-file/unicast_hosts.txt
-
-# Disable X-Pack Modules
-#echo 'xpack.ml.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-#echo 'xpack.monitoring.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-#echo 'xpack.security.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-#echo 'xpack.watcher.enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
 # Create and configure Backup NFS mount point
 sudo mkdir -p /mnt/elasticpi/esbackup
