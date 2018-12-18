@@ -119,8 +119,8 @@ fi
 sudo cp -f /mnt/elasticpi/build/jna/${JNA_VERSION}/jna.jar $JNA_JAR
 
 # Set Elasticsearch Memory Configuration (Max 200mb of memory)
-sudo sed -i 's/-Xms.*/-Xms200m/' /etc/elasticsearch/jvm.options
-sudo sed -i 's/-Xmx.*/-Xmx200m/' /etc/elasticsearch/jvm.options
+sudo sed -i 's/-Xms.*/-Xms300m/' /etc/elasticsearch/jvm.options
+sudo sed -i 's/-Xmx.*/-Xmx300m/' /etc/elasticsearch/jvm.options
 sudo sed -i 's/^#.*-server.*/-server/' /etc/elasticsearch/jvm.options
 sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo | sudo tee -a /etc/elasticsearch/jvm.options
 sudo grep -q '^-server' /etc/elasticsearch/jvm.options || echo "# force the server VM" | sudo tee -a /etc/elasticsearch/jvm.options
