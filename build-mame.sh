@@ -16,7 +16,7 @@ sudo sed -i "s/CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2048/" /etc/dphys-swapfile
 sudo systemctl restart dphys-swapfile.service
 
 # Install Prerequisites
-sudo apt-get install git build-essential libfontconfig-dev qt5-default p7zip -q -y
+sudo apt-get install git build-essential libfontconfig-dev qt5-default p7zip-full -q -y
 
 # Get MAME Last Version
 MAME_VERSION=`curl --silent "https://api.github.com/repos/mamedev/mame/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'`
@@ -71,17 +71,16 @@ mkdir ${RELEASE_DIR}/samples
 cp -rf samples/* ${RELEASE_DIR}/samples
 mkdir ${RELEASE_DIR}/ini/examples
 cp -rf ini/examples/* ${RELEASE_DIR}/ini/examples
+popd
 
 echo Packing ${MAME_ARCHIVE}
-pushd ${RELEASE_DIR}
+pushd ${MAME_DIR}/${RELEASE_DIR}
 7za a -mpass=4 -mfb=255 -y -tzip  "../../../${MAME_ARCHIVE}"
 popd
 
 echo Calculating digests....
-pushd build/release
+pushd ${MAME_DIR}/build/release
 sha1sum ${MAME_ARCHIVE} > ${MAME_ARCHIVE}.sha1
 sha256sum ${MAME_ARCHIVE} > ${MAME_ARCHIVE}.sha256
 rm -rf x32
-popd
-
 popd
