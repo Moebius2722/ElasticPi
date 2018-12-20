@@ -47,7 +47,9 @@ git clone -b ${MAME_VERSION} --depth 1 https://github.com/mamedev/mame.git ${MAM
 
 # Build MAME
 pushd ${MAME_DIR}
-make REGENIE=1 TOOLS=1 -j1
+#make REGENIE=1 TOOLS=1 -j1
+make TARGET=mame TOOLS=1 SEPARATE_BIN=1 PTR64=0 OPTIMIZE=3 SYMBOLS=1 SYMLEVEL=1 REGENIE=1 -j1
+make -f dist.mak PTR64=0
 
 # Get MAME Build Package Tools
 git clone https://github.com/mamedev/build.git ${WORKDIR}/build
@@ -55,22 +57,30 @@ git clone https://github.com/mamedev/build.git ${WORKDIR}/build
 # Create Package
 echo Starting release of MAME ${MAME_RELEASE} ...
 echo Remove old release directories ...
-rm -rf build/release
+rm -f build\release\*.zip build\release\*.txt
+
+echo Creating release directories ...
+mkdir build\release\x32\Release\mame 2>/dev/null
+cp -f ../build/whatsnew/whatsnew_${MAME_RELEASE}.txt ${RELEASE_DIR}/whatsnew.txt >/dev/null
 echo Copy files MAME 32-bit Release build ...
-make -f dist.mak all
-cp -f ../build/whatsnew/whatsnew_${MAME_RELEASE}.txt ${RELEASE_DIR}/whatsnew.txt
-mkdir ${RELEASE_DIR}/artwork
+mkdir ${RELEASE_DIR}/artwork 2>/dev/null
 cp -rf artwork/* ${RELEASE_DIR}/artwork
-mkdir ${RELEASE_DIR}/bgfx
+mkdir ${RELEASE_DIR}/bgfx 2>/dev/null
 cp -rf bgfx/* ${RELEASE_DIR}/bgfx
-mkdir ${RELEASE_DIR}/hlsl
+mkdir ${RELEASE_DIR}/hlsl 2>/dev/null
 cp -rf hlsl/* ${RELEASE_DIR}/hlsl
-mkdir ${RELEASE_DIR}/plugins
+mkdir ${RELEASE_DIR}/plugins 2>/dev/null
 cp -rf plugins/* ${RELEASE_DIR}/plugins
-mkdir ${RELEASE_DIR}/samples
+mkdir ${RELEASE_DIR}/samples 2>/dev/null
 cp -rf samples/* ${RELEASE_DIR}/samples
-mkdir ${RELEASE_DIR}/ini/examples
+# Add Missing files and folders in dist.mak
+mkdir ${RELEASE_DIR}/ini/examples 2>/dev/null
 cp -rf ini/examples/* ${RELEASE_DIR}/ini/examples
+cp -fR pngcmp ${RELEASE_DIR}/pngcmp
+cp -fR regrep ${RELEASE_DIR}/regrep
+cp -fR split ${RELEASE_DIR}/split
+cp -fR src2html ${RELEASE_DIR}/src2html
+cp -fR srcclean ${RELEASE_DIR}/srcclean
 popd
 
 echo Packing ${MAME_ARCHIVE}
