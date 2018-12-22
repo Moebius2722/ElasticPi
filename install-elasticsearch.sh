@@ -151,7 +151,11 @@ sudo sed -i "/^transport\.publish_host: .*/a transport.host: $iphost" /etc/elast
 sudo sed -i '/#http\.port: .*/a http.port: 9200' /etc/elasticsearch/elasticsearch.yml
 sudo sed -i '/#node\.max_local_storage_nodes: .*/a node.max_local_storage_nodes: 1' /etc/elasticsearch/elasticsearch.yml
 echo 'cluster.routing.allocation.disk.threshold_enabled: false' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
-
+echo 'cluster.routing.allocation.cluster_concurrent_rebalance: 1' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'cluster.routing.allocation.node_initial_primaries_recoveries: 1' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'cluster.routing.allocation.node_concurrent_incoming_recoveries: 1' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'cluster.routing.allocation.node_concurrent_outgoing_recoveries: 1' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo 'cluster.routing.allocation.node_concurrent_recoveries: 1' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
 # Enable Site Plugins
 echo 'http.cors.enabled: true' | sudo tee -a /etc/elasticsearch/elasticsearch.yml
