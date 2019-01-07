@@ -11,7 +11,7 @@
 RED='\033[0;31m' # RED Color
 GREEN='\033[0;32m' # GREEN Color
 NC='\033[0m'     # No Color
-NA=${NA}
+NA='  '
 KO="${RED}KO${NC}"
 OK="${GREEN}ok${NC}"
 
