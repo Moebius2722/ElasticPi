@@ -39,7 +39,7 @@ backup-node-state
 stop-node
 
 # Add Nginx Build Requirements
-sudo apt-get install checkinstall gcc g++ make libpcre3 libpcre3-dev perl libperl-dev zlib1g zlib1g-dev libssl-dev libssl1.0.2 libxml2 libxml2-dev libxslt1.1 libxslt1-dev libjpeg62-turbo libjpeg62-turbo-dev libgd3 libgd-dev libgeoip1 libgeoip-dev libgoogle-perftools4 libgoogle-perftools-dev libpam0g libpam0g-dev -q -y
+sudo apt-get install checkinstall gcc g++ make libpcre3 libpcre3-dev libperl-dev zlib1g zlib1g-dev libssl-dev libssl1.0.2 libxml2 libxml2-dev libxslt1.1 libxslt1-dev libjpeg62-turbo libjpeg62-turbo-dev libgd3 libgd-dev libgeoip1 libgeoip-dev libgoogle-perftools4 libgoogle-perftools-dev libpam0g libpam0g-dev -q -y
 
 # Create Nginx Build Folder
 if [ ! -d "/mnt/elasticpi/build/nginx/${NGX_VERSION}" ]; then
