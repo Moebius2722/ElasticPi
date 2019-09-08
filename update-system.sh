@@ -11,4 +11,4 @@
 
 ####### FULL SYSTEM UPDATE #######
 
-sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y && sudo rpi-update
+sudo apt-get update && sudo apt-get upgrade -q -y && sudo apt-get dist-upgrade -q -y
