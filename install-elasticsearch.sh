@@ -54,8 +54,8 @@ if [ ! -d "/mnt/elasticpi/build/elasticsearch/${E_VERSION}" ]; then
 fi
 
 # Get and Check Elasticsearch Debian Package
-rm -f /tmp/elasticsearch-oss-${E_VERSION}.deb.sha512
-wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${E_VERSION}.sha512
+rm -f /tmp/elasticsearch-oss-${E_VERSION}-no-jdk-amd64.deb.sha512
+wget -P/tmp https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-${E_VERSION}-no-jdk-amd64.deb.sha512
 if [ -f "/mnt/elasticpi/build/elasticsearch/${E_VERSION}/elasticsearch-oss-${E_VERSION}-no-jdk-amd64.deb" ]; then
   pushd /mnt/elasticpi/build/elasticsearch/${E_VERSION}
   sha512sum -c /tmp/elasticsearch-oss-${E_VERSION}-no-jdk-amd64.deb.sha512
