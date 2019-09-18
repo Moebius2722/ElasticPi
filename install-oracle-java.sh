@@ -22,9 +22,11 @@ fi
 sudo apt-get install dirmngr -q -y
 
 # Get and Install Oracle Java
-echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list
-echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list.d/webupd8team-java.list
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+# echo "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main" | sudo tee /etc/apt/sources.list.d/linuxuprising-java.list
+# echo "deb-src http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main" | sudo tee -a /etc/apt/sources.list.d/linuxuprising-java.list
+# sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 73C3DB2A
 sudo apt-get update
-echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-sudo apt-get install oracle-java8-set-default oracle-java8-installer -q -y --allow-unauthenticated
+# echo oracle-java12-installer shared/accepted-oracle-license-v1-2 select true | sudo /usr/bin/debconf-set-selections
+# sudo apt-get install oracle-java12-set-default oracle-java12-installer -q -y
+sudo apt-get install openjdk-11-jdk -q -y
+#--allow-unauthenticated
