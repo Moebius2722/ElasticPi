@@ -4,21 +4,21 @@
 # Mail : moebius2722@laposte.net
 # Git : https://github.com/Moebius2722/ElasticPi.git
 
-# Get Oracle Java installed version
+# Get OpenJDK installed version
 
 
 ####### COMMON #######
 
-# Check if Oracle Java is installed
+# Check if OpenJDK is installed
 
-if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show oracle-java8-installer >/dev/null 2>/dev/null; then
-  echo "Oracle Java is not installed" >&2
+if ! dpkg-query --showformat='${source:Upstream-Version}\n' --show openjdk-11-jdk >/dev/null 2>/dev/null; then
+  echo "OpenJDK is not installed" >&2
   exit 1
 fi
 
 
 ####### GET-ORACLE-JAVA-VERSION #######
 
-# Get Oracle Java installed version
+# Get OpenJDK installed version
 
-dpkg-query --showformat='${source:Upstream-Version}\n' --show oracle-java8-installer 2>/dev/null | head -n 1
+dpkg-query --showformat='${source:Upstream-Version}\n' --show openjdk-11-jdk 2>/dev/null | head -n 1
