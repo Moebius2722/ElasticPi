@@ -24,4 +24,4 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 sudo apt update
 
 # Install Squid
-sudo apt install ansible
+sudo apt install ansible -y -q
